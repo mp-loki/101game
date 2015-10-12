@@ -2,20 +2,24 @@ package com.valeriisosliuk.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.valeriisosliuk.model.Player;
 
 @Controller
 public class GameController {
 
-	@RequestMapping("/")
-	public String index() {
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String index(Model model) {
+		model.addAttribute("player", new Player());
 		return "index";
 	}
 	
-	@RequestMapping("/game/name") 
-	public String joinGame(@RequestParam(value="name", required=true) String name, Model model) {
-		model.addAttribute("name", name);
+	@RequestMapping(value="/game", method=RequestMethod.POST) 
+	public String joinGame(@ModelAttribute Player player, Model model) {
+		model.addAttribute("name", player.getName());
 		return "game";
 	}
 }

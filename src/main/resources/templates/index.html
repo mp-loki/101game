@@ -5,6 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <p th:text="'Here will be sign in'" />
+    <form action="#" th:action="@{/game}" th:object="${player}" method="post">
+        <p>Enter your name: <input type="text" th:field="*{name}" /></p>
+        <p><input type="submit" value="Submit" /></p>
+    </form>
 </body>
 </html>
