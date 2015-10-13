@@ -1,25 +1,43 @@
 package com.valeriisosliuk.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.valeriisosliuk.model.Player;
+import com.valeriisosliuk.service.UserService;
 
 @Controller
 public class GameController {
+    /*
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+    */
+    @Autowired
+    private UserService userService;
+    
+    @RequestMapping(value = "/")
+    public String root(Model model) {
+        return "index";
+    }
+    
+    @RequestMapping(value = "/index")
+    public String index(Model model) {
+        return "index";
+    }
+    @RequestMapping(value = "/login")
+    public String login(Model model) {
+        return "login";
+    }
 
-	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String index(Model model) {
-		model.addAttribute("player", new Player());
-		return "index";
-	}
-	
-	@RequestMapping(value="/game", method=RequestMethod.POST) 
-	public String joinGame(@ModelAttribute Player player, Model model) {
-		model.addAttribute("name", player.getName());
-		return "game";
-	}
+    @RequestMapping(value = "/game")
+    public String game(Model model) {
+        model.addAttribute("name", userService.getCurrentUserName());
+        model.addAttribute("users", userService.getLoggedInUserNames());
+        return "game";
+    }
+
+    
+   
 }

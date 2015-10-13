@@ -1,13 +1,11 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Welcome | 101 Game</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-    <form action="#" th:action="@{/game}" th:object="${player}" method="post">
-        <p>Enter your name: <input type="text" th:field="*{name}" /></p>
-        <p><input type="submit" value="Submit" /></p>
-    </form>
-</body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Spring Security Example</title>
+    </head>
+    <body>
+        <h1>Welcome!</h1>
+
+        <p>Click <a th:href="@{/game}">here</a> to start game!.</p>
+    </body>
 </html>
