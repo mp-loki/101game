@@ -37,7 +37,4 @@ public class GameController {
         model.addAttribute("users", userService.getLoggedInUserNames());
         return "game";
     }
-
-    
-   
 }

@@ -1,15 +1,76 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>Hello 101!!!</title>
-    </head>
-    <body>
-        <h1 th:inline="text" th:text="'Hello ' + ${name}"></h1>
-        <p>Logged in users:</p>
-        <p th:text="${users}"></p>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Hello 101!!!</title>
+<script src="sockjs-0.3.4.js"></script>
+<script src="stomp.js"></script>
+<script type="text/javascript">
+	var stompClient = null;
+
+	function setConnected(connected) {
+		document.getElementById('connect').disabled = connected;
+		document.getElementById('disconnect').disabled = !connected;
+		document.getElementById('conversationDiv').style.visibility = connected ? 'visible'
+				: 'hidden';
+		document.getElementById('response').innerHTML = '';
+	}
+
+	function connect() {
+		var socket = new SockJS('/gameQueue');
+		stompClient = Stomp.over(socket);
+		stompClient.connect({}, function(frame) {
+			setConnected(true);
+			console.log('Connected: ' + frame);
+			stompClient.subscribe('/user/queue/messages', function(greeting) {
+				showGreeting(JSON.parse(greeting.body).message);
+			});
+		});
+	}
+
+	function disconnect() {
+		if (stompClient != null) {
+			stompClient.disconnect();
+		}
+		setConnected(false);
+		console.log("Disconnected");
+	}
+
+	function sendMessage() {
+		var message = document.getElementById('message').value;
+		stompClient.send("/app/gameQueue", {}, JSON.stringify({
+			'message' : message
+		}));
+	}
+
+	function showGreeting(message) {
+		var response = document.getElementById('response');
+		var p = document.createElement('p');
+		p.style.wordWrap = 'break-word';
+		p.appendChild(document.createTextNode(message));
+		response.appendChild(p);
+	}
+</script>
+</head>
+<body onload="disconnect()">
+	<h1 th:inline="text" th:text="'Hello ' + ${name}"></h1>
+	<p>Logged in users:</p>
+	<p th:text="${users}"></p>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out" />
+	</form>
+	
+	<div>
+    <div>
+        <button id="connect" onclick="connect();">Connect</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+    </div>
+    <div id="conversationDiv">
+        <label>Send your message:</label><input type="text" id="message" />
+        <button id="sendMessage" onclick="sendMessage();">Send</button>
+        <p id="response"></p>
+    </div>
+</div>
+</body>
 </html>
