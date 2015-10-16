@@ -8,6 +8,18 @@ function setConnected(connected) {
 	document.getElementById('response').innerHTML = '';
 }
 
+function connect() {
+	var socket = new SockJS('/game');
+	stompClient = Stomp.over(socket);
+	stompClient.connect({}, function(frame) {
+		setConnected(true);
+		console.log('Connected: ' + frame);
+		stompClient.subscribe('/user/queue/messages', function(greeting) {
+			showGreeting(JSON.parse(greeting.body).message);
+		});
+	});
+}
+
 function disconnect() {
 	if (stompClient != null) {
 		stompClient.disconnect();
@@ -16,10 +28,10 @@ function disconnect() {
 	console.log("Disconnected");
 }
 
-function sendName() {
-	var name = document.getElementById('name').value;
-	stompClient.send("/app/hello", {}, JSON.stringify({
-		'name' : name
+function sendMessage() {
+	var message = document.getElementById('message').value;
+	stompClient.send("/app/game", {}, JSON.stringify({
+		'message' : message
 	}));
 }
 

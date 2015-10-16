@@ -18,7 +18,7 @@
 	}
 
 	function connect() {
-		var socket = new SockJS('/gameQueue');
+		var socket = new SockJS('/game');
 		stompClient = Stomp.over(socket);
 		stompClient.connect({}, function(frame) {
 			setConnected(true);
@@ -39,7 +39,7 @@
 
 	function sendMessage() {
 		var message = document.getElementById('message').value;
-		stompClient.send("/app/gameQueue", {}, JSON.stringify({
+		stompClient.send("/app/game", {}, JSON.stringify({
 			'message' : message
 		}));
 	}
