@@ -18,4 +18,11 @@ public class CardDeck {
 			return Optional.empty();
 		}
 	}
+
+	public Hand getInitialHand() {
+		List<Card> cardsToHand = cards.subList(0, 4);
+		Hand hand = new Hand(cardsToHand);
+		cards.removeAll(cardsToHand);
+		return hand;
+	}
 }

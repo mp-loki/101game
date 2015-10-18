@@ -2,12 +2,16 @@ package com.valeriisosliuk;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.CardDeck;
 import com.valeriisosliuk.model.Discard;
+import com.valeriisosliuk.model.GameState;
 import com.valeriisosliuk.util.Shuffle;
 
 public class Table {
@@ -20,29 +24,33 @@ public class Table {
 	private int id;
 	private boolean started;
 
-	private LinkedList<String> players;
+	private Map<String, GameState> players;
 
 	public Table(int id) {
 		this.id = id;
 		List<Card> allCards = Arrays.asList(Card.values());
 		cardDeck = new CardDeck(Shuffle.shuffle(allCards));
 		discard = new Discard();
-		players = new LinkedList<>();
+		players = new HashMap<>();
 		started = false;
 	}
 
 	public boolean joinTable(String player) {
 		int numberOfPlayers = players.size();
-		if (numberOfPlayers < MAX_PLAYERS_AT_THE_TABLE && !players.contains(player)) {
-			players.add(player);
+		if (numberOfPlayers < MAX_PLAYERS_AT_THE_TABLE && !players.keySet().contains(player)) {
+			players.put(player, new GameState());
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean start() {
-		if (players.size() >= MIN_PLAYERS_AT_THE_TABLE) {
+	public boolean start(String userName) {
+		GameState state = players.get(userName);
+		state.setReady(true);
+		state.setHand(cardDeck.getInitialHand());
+		if (players.size() >= MIN_PLAYERS_AT_THE_TABLE && 
+				players.values().stream().allMatch(GameState::isReady)) {
 			started = true;
 		} else {
 			started = false;
@@ -50,12 +58,16 @@ public class Table {
 		return started;
 	}
 	
-	public boolean isPlayerAtTheTable(String player) {
-		return players.contains(player);
+	public Set<Card> getPlayersHandCards(String username) {
+		return players.get(username).getHand().getCards();
 	}
 	
-	public List<String> getPlayers() {
-		return Collections.unmodifiableList(players);
+	public boolean isPlayerAtTheTable(String player) {
+		return players.keySet().contains(player);
+	}
+	
+	public Set<String> getPlayers() {
+		return Collections.unmodifiableSet(players.keySet());
 	}
 
 	public void stop(String name) {

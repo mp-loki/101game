@@ -15,14 +15,14 @@ public class ApplicationController {
     
     @RequestMapping(value = "/")
     public String root(Model model) {
-        return "index";
+        return game(model);
     }
-    
+    /*
     @RequestMapping(value = "/index")
     public String index(Model model) {
         return "index";
     }
-    
+    */
     @RequestMapping(value = "/login")
     public String login(Model model) {
         return "login";

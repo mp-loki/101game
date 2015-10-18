@@ -13,8 +13,7 @@ public class Shuffle {
 	 * @return a new list, which contains all the items from <code>originalList</code>  in random order
 	 */
 	public static <T> List<T> shuffle(List<T> originalList) {
-		List<T> shuffled = new ArrayList<>(originalList.size());
-		Collections.copy(shuffled, originalList);
+		List<T> shuffled = new ArrayList<>(originalList);
 		Collections.shuffle(shuffled, new Random(System.nanoTime()));
 		return shuffled;
 	}

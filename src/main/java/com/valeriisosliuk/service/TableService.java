@@ -22,16 +22,20 @@ public class TableService {
 	public void init() {
 		tables = new ArrayList<>();
 	}
-
+	
+	public Table getCurrentTableForUser(String userName) {
+		return getTable((t, u) -> t.isPlayerAtTheTable(u), userName).get();
+	}
+	
 	public Table joinFirstAvailableTable(String username) {
 		return getTable((t, m) -> t.getPlayers().size() < m, Table.MAX_PLAYERS_AT_THE_TABLE)
 				.orElse(createNewTable(id));
 	}
 
-	public Table joinTable(String user, Integer id) {
-		Table table = getTable((t, u) -> t.isPlayerAtTheTable(u), user).orElse(
+	public Table joinTable(String userName, Integer id) {
+		Table table = getTable((t, u) -> t.isPlayerAtTheTable(u), userName).orElse(
 				getTable((t, i) -> t.getId() == i, id).orElse(createNewTable(id)));
-		table.joinTable(user);
+		table.joinTable(userName);
 		return table;
 	}
 

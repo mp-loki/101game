@@ -1,8 +1,11 @@
 package com.valeriisosliuk.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.valeriisosliuk.Table;
+import com.valeriisosliuk.model.GameTurnMessage;
 import com.valeriisosliuk.service.TableService;
 import com.valeriisosliuk.service.UserService;
 
@@ -36,17 +40,21 @@ public class TableController {
 		model.addAttribute("message", "Waiting for players");
 		return "table";
 	}
-
+	
 	@MessageMapping("/start")
 	public void startTable(Message<Object> message) {
-		String currentUserName = userService.getCurrentUserName();
-		Table table = tableService.joinFirstAvailableTable(currentUserName);
-		boolean started = table.start();
+		Principal principal = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER, Principal.class);
+        String currentUserName = principal.getName();
+		Table table = tableService.getCurrentTableForUser(currentUserName);
+		boolean started = table.start(currentUserName);
+        GameTurnMessage reply = new GameTurnMessage();
+
 		if (!started) {
-			//TODO: Send message "Waiting for other users"
+			reply.setMessage("Waiting for other users");
 		} else {
-			//TODO: send cards and start game 
+			reply.setMessage("Game started");
+			reply.setCards(table.getPlayersHandCards(currentUserName));
 		}
-		
+		template.convertAndSendToUser(currentUserName, "/queue/messages", reply);
 	}
 }

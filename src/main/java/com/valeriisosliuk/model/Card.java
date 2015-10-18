@@ -42,8 +42,8 @@ public enum Card {
 	QUEEN_OF_SPADES(Rank.QUEEN, Suit.SPADES),
 	KING_OF_SPADES(Rank.KING, Suit.SPADES);
 	
-	private  Rank rank;
-	private  Suit suit;
+	private Rank rank;
+	private Suit suit;
 
     Card(Rank rank, Suit suit) {
 		this.rank = rank;
@@ -53,6 +53,14 @@ public enum Card {
 	@Override
 	public String toString() {
 		return rank + " of " + suit;
+	}
+	
+	public Rank getRank() {
+		return rank;
+	}
+	
+	public Suit getSuit() {
+		return suit;
 	}
 
 }
