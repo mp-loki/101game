@@ -16,6 +16,12 @@
     
     GameService.receive().then(null, null, function(message) {
       $scope.messages.push(message);
+      if (typeof message.lastCard != undefined && message.lastCard) {
+    	  $scope.lastCard = message.lastCard;
+      }
+      if (typeof message.hand != undefined && message.hand) {
+    	  $scope.hand = message.hand;
+      }
     });
   });
 })(angular);

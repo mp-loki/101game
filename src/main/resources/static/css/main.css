@@ -1,19 +1,33 @@
 body {
 	height: 100%;
 }
-
-.vcenter {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-}
-
-.vertical-center {
-  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-  min-height: 100vh; /* These two lines are counted as one :-)       */
-  -webkit-align-items: center;
-  align-items: center;
-}
 .width_100 {
 	width: 100%;
+}
+.display-inline {
+	display: inline;
+}
+.float-left {
+	float: left;
+}
+.hand-card {
+	position: absolute;
+}
+.card_0 {
+	left: 15px;
+}
+.card_1 {
+	left: 30px;
+}
+.card_2 {
+	left: 45px;
+}
+.card_3 {
+	left: 60px;
+}
+.card_4 {
+	left: 75px;
+}
+.card_5 {
+	left: 90px;
 }

@@ -62,5 +62,4 @@ public enum Card {
 	public Suit getSuit() {
 		return suit;
 	}
-
 }

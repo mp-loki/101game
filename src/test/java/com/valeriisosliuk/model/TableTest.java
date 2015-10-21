@@ -30,13 +30,13 @@ public class TableTest {
 
     @Test
     public void testJoinTwice() {
-        Table table = new Table(0);
+        Table table = new Table();
         assertTrue(table.joinTable("Homer"));
         assertFalse(table.joinTable("Homer"));
     }
 
     private Table getTable() {
-        Table table = new Table(1);
+        Table table = new Table();
         table.joinTable("Homer");
         table.joinTable("Bart");
         table.joinTable("Marge");

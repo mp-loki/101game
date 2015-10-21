@@ -18,7 +18,6 @@ public class Table {
 
     private CardDeck cardDeck;
     private Discard discard;
-    private int id;
     private boolean started;
 
     private List<Player> players;
@@ -26,8 +25,7 @@ public class Table {
 
     private Player activePlayer;
 
-    public Table(int id) {
-        this.id = id;
+    public Table() {
         List<Card> allCards = Arrays.asList(Card.values());
         cardDeck = new CardDeck(Shuffle.shuffle(allCards));
         discard = new Discard(cardDeck.getNext().get());
@@ -76,10 +74,6 @@ public class Table {
     public void stop(String name) {
         players.remove(name);
         started = false;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public boolean cardDeckHasNext() {

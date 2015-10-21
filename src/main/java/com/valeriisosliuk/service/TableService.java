@@ -30,24 +30,23 @@ public class TableService {
 		tables = new ArrayList<>();
 	}
 	
-	public Table getCurrentTableForUser(String userName) {
-		return getTable((t, u) -> t.isPlayerAtTheTable(u), userName).get();
+	public Table getCurrentTableForplayer(String playerName) {
+		return getTable((t, u) -> t.isPlayerAtTheTable(u), playerName).get();
 	}
 	
-	public Table joinFirstAvailableTable(String username) {
+	public Table joinFirstAvailableTable(String playername) {
 		return getTable((t, m) -> t.getPlayers().size() < m, Table.MAX_PLAYERS_AT_THE_TABLE)
-				.orElse(createNewTable(id));
+				.orElse(createNewTable());
 	}
 
-	public Table joinTable(String userName, Integer id) {
-		Table table = getTable((t, u) -> t.isPlayerAtTheTable(u), userName).orElse(
-				getTable((t, i) -> t.getId() == i, id).orElse(createNewTable(id)));
-		table.joinTable(userName);
+	public Table joinTable(String playerName) {
+		Table table = getTable((t, u) -> t.isPlayerAtTheTable(u), playerName).orElse(joinFirstAvailableTable(playerName));
+		table.joinTable(playerName);
 		return table;
 	}
 
-	private Table createNewTable(Integer id) {
-		Table table = new Table(id);
+	private Table createNewTable() {
+		Table table = new Table();
 		tables.add(table);
 		return table;
 	}
@@ -57,7 +56,7 @@ public class TableService {
 	}
 
     public void tryStart(String currentPlayerName) {
-        Table table = getCurrentTableForUser(currentPlayerName);
+        Table table = getCurrentTableForplayer(currentPlayerName);
         boolean started = table.start(currentPlayerName);
         
         if (!started) {
@@ -87,7 +86,7 @@ public class TableService {
     
     private ReplyDto getWaitDto() {
         ReplyDto dto = new ReplyDto();
-        dto.setMessage("Waiting for other users");
+        dto.setMessage("Waiting for other players");
         return dto;
     }
 
