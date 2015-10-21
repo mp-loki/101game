@@ -22,6 +22,9 @@
       if (typeof message.hand != undefined && message.hand) {
     	  $scope.hand = message.hand;
       }
+      if (typeof message.players != undefined && message.players) {
+    	  
+      }
     });
   });
 })(angular);

@@ -106,4 +106,21 @@ public class Table {
         this.activePlayer = getPlayerIterator().next();
         return activePlayer;
     }
+    /**
+     * Returns a sequence of players which go after current player
+     * @param player current player
+     * @return ordered List of players
+     */
+	public List<String> getSequencedPlayers(String currentPlayer) {
+		List<String> result = new LinkedList<String>();
+		Iterator<String> playerIter = Iterators.cycle(getPlayers());
+		String player = null;
+		//roll playerIter until current user is met
+		while (!playerIter.next().equals(currentPlayer)) {}
+		//Then add all the rest users except current user
+		while (!(player = playerIter.next()).equals(currentPlayer)) {
+			result.add(player);
+		}
+		return result;
+	}
 }

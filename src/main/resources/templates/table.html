@@ -11,19 +11,22 @@
 <body ng-app="gameApp">
     <h2 th:text="${currentPlayer}"></h2>
     <p th:text="'Players:' + ${players} "></p>
-    
+
     <p id="message" th:text="${message}"></p>
     <p id="response"></p>
 
     <div ng-controller="GameCtrl" class="container">
         <div class="row">
             <div class="col-sm-2 col-sm-offset-2">
-            <p th:text="${leftPlayer}"></div>
+                <p th:text="${leftPlayer}"></p>
+            </div>
             <div class="col-sm-4 display-inline">
                 <div class="sprite {{lastCard}} float-left"></div>
                 <div class="sprite coverv float-left"></div>
             </div>
-            <div class="col-sm-2"><p th:text="${rightPlayer}"></p></div>
+            <div class="col-sm-2">
+                <p th:text="${rightPlayer}"></p>
+            </div>
             <div class="col-sm-2">
                 <a href="" ng-click="startGame()" ng-hide="startGameRequested">Start Game</a>
                 <hr />

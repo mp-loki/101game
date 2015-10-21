@@ -1,6 +1,8 @@
 package com.valeriisosliuk.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -10,9 +12,9 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.Iterators;
 import com.valeriisosliuk.dto.InfoDto;
 import com.valeriisosliuk.dto.ReplyDto;
-import com.valeriisosliuk.model.Player;
 import com.valeriisosliuk.model.Table;
 
 @Component
@@ -20,8 +22,6 @@ public class TableService {
 
 	public List<Table> tables;
 	
-	private int id = 0;
-
 	@Autowired 
 	private MessageService messageService;
 
@@ -81,10 +81,12 @@ public class TableService {
         ReplyDto dto = new ReplyDto();
         dto.setHand(table.getPlayersHandCards(player));
         dto.setMessage("Game Started");
+        dto.setPlayers(table.getSequencedPlayers(player));
         return dto;
     }
     
-    private ReplyDto getWaitDto() {
+
+	private ReplyDto getWaitDto() {
         ReplyDto dto = new ReplyDto();
         dto.setMessage("Waiting for other players");
         return dto;
