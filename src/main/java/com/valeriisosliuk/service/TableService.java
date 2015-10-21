@@ -74,12 +74,13 @@ public class TableService {
     private InfoDto getStartGameInfoDto(Table table) {
         InfoDto dto = new InfoDto();
         dto.setLastCard(table.getLastCardInDiscard());
-        dto.setMessage(table.getActivePlayer() + "'s turn"); 
+        dto.setMessage(table.getActivePlayer().getName() + "'s turn"); 
         return dto;
     }
 
     private ReplyDto getStartGameReplyDto(Table table, String player) {
         ReplyDto dto = new ReplyDto();
+        dto.setHand(table.getPlayersHandCards(player));
         dto.setMessage("Game Started");
         return dto;
     }

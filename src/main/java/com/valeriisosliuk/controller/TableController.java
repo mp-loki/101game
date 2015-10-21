@@ -12,8 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.valeriisosliuk.dto.ActionDto;
-import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.TableService;
 import com.valeriisosliuk.service.UserService;

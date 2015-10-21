@@ -46,9 +46,9 @@ public class Table {
     }
 
     public boolean start(String userName) {
-        Player state = getPlayer(userName);
-        state.setReady(true);
-        state.setHand(cardDeck.getInitialHand());
+        Player player = getPlayer(userName);
+        player.setReady(true);
+        player.setHand(cardDeck.getInitialHand());
         if (players.size() >= MIN_PLAYERS_AT_THE_TABLE && players.stream().allMatch(Player::isReady)) {
             started = true;
         } else {

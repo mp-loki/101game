@@ -18,39 +18,29 @@ import com.valeriisosliuk.service.UserService;
 @Controller
 public class GameController {
 
+    private static final String START = "start";
+
     private static final Logger log = Logger.getLogger(GameController.class);
 
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private TableService tableService;
-    
+
     @MessageMapping("/game")
-    public void game(Message<Object> message, @Payload ActionDto turnMessage) throws Exception {
-        log.info("Got a message: " + turnMessage);
+    public void game(Message<Object> message, @Payload ActionDto dto) throws Exception {
+        log.info("Got a message: " + dto);
         Principal principal = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER, Principal.class);
-        String authedSender = principal.getName();
-        String nextUser = getNextUserName(authedSender);  
-        
-        ActionDto reply = new ActionDto();
-        reply.setCurrentPlayer("System");
-        reply.setMessage("User '" + authedSender + "' Said:  '" + turnMessage.getMessage() + "'");
-        template.convertAndSendToUser(nextUser, "/queue/messages", reply);
-        template.convertAndSendToUser(authedSender, "/queue/messages", reply);
-    }
-    
-    private String getNextUserName(String currentUserName) {
-        for (String userName : userService.getLoggedInUserNames()) {
-            if (!currentUserName.equals(userName)) {
-                return userName;
-            }
+        String currentUser = principal.getName();
+        if (dto.getMessage().equals(START)) {
+            tableService.tryStart(currentUser);
+        } else {
+            //TODO: Add turn handle
         }
-        //Return same user if no one else is logged in
-        return currentUserName;
     }
 
 }

@@ -18,7 +18,7 @@ public class MessageService {
     }
     
     public void sendToAll(InfoDto dto) {
-        template.convertAndSend("/topic/msg", dto);
+        template.convertAndSend("/topic/message", dto);
     }
     
 }
