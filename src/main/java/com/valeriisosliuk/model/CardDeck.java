@@ -18,6 +18,10 @@ public class CardDeck {
 			return Optional.empty();
 		}
 	}
+	
+	public boolean hasNext() {
+	    return cards.size() > 0;
+	}
 
 	public Hand getInitialHand() {
 		List<Card> cardsToHand = cards.subList(0, 4);

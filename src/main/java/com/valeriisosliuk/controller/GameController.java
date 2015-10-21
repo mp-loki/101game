@@ -11,7 +11,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import com.valeriisosliuk.model.GameTurnMessage;
+import com.valeriisosliuk.dto.ActionDto;
 import com.valeriisosliuk.service.TableService;
 import com.valeriisosliuk.service.UserService;
 
@@ -30,14 +30,14 @@ public class GameController {
     private TableService tableService;
     
     @MessageMapping("/game")
-    public void game(Message<Object> message, @Payload GameTurnMessage turnMessage) throws Exception {
+    public void game(Message<Object> message, @Payload ActionDto turnMessage) throws Exception {
         log.info("Got a message: " + turnMessage);
         Principal principal = message.getHeaders().get(SimpMessageHeaderAccessor.USER_HEADER, Principal.class);
         String authedSender = principal.getName();
         String nextUser = getNextUserName(authedSender);  
         
-        GameTurnMessage reply = new GameTurnMessage();
-        reply.setPlayer("System");
+        ActionDto reply = new ActionDto();
+        reply.setCurrentPlayer("System");
         reply.setMessage("User '" + authedSender + "' Said:  '" + turnMessage.getMessage() + "'");
         template.convertAndSendToUser(nextUser, "/queue/messages", reply);
         template.convertAndSendToUser(authedSender, "/queue/messages", reply);

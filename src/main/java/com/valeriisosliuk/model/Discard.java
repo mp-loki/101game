@@ -1,17 +1,18 @@
 package com.valeriisosliuk.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import com.valeriisosliuk.util.Shuffle;
 
 public class Discard {
 	
-	private static final int MAX_DECK_SIZE = 32;
 	private List<Card> discard;
 	
-	public Discard() {
-		discard = new ArrayList<>(MAX_DECK_SIZE);
+	public Discard(Card card) {
+		discard = new LinkedList<>();
+		discard.add(card);
 	}
 	
 	public void add(Card card) {
@@ -19,8 +20,15 @@ public class Discard {
 	}
 	
 	public CardDeck turnOver() {
+	    Card lastCard = getLastCard().get();
 		Shuffle.shuffle(discard);
-		return new CardDeck(discard);
+		CardDeck cardDeck = new CardDeck(discard);
+		discard =  new LinkedList<>();
+		discard.add(lastCard);
+		return cardDeck;
 	}	
-
+	
+	public Optional<Card> getLastCard() {
+	    return discard.size() > 0 ? Optional.of(discard.get(0)) : Optional.empty();
+	}
 }
