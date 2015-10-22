@@ -12,32 +12,43 @@
     <h2 th:text="${currentPlayer}"></h2>
     <p th:text="'Players:' + ${players} "></p>
 
-    <p id="message" th:text="${message}"></p>
-    <p id="response"></p>
-
-    <div ng-controller="GameCtrl" class="container">
-        <div class="row">
-            <div class="col-sm-2 col-sm-offset-2">
-                <p th:text="${leftPlayer}"></p>
+    <div ng-controller="GameCtrl" class="container width_100 height_70">
+        <div class="row text-center height_120px">
+            <div class="col-sm-4 col-sm-offset-4" ng-show="frontPlayer">
+                <p>{{frontPlayer}}</p>
+                <div ng-repeat="n in range(0, 3)" class="sprite coverv position-absolute front-player-card-{{n}}"></div>
             </div>
-            <div class="col-sm-4 display-inline">
+        </div>
+        <div class="row height_120px">
+            <div class="col-sm-2 col-sm-offset-2">
+                <p class="float-left">{{leftPlayer}}</p>
+                <div class="width_96px height_100" ng-show="leftPlayer">
+                    <div ng-repeat="n in range(0, 3)" class="sprite coverh position-absolute left-player-card-{{n}}"></div>
+                </div>
+            </div>
+            <div class="col-sm-4 display-inline height_100">
                 <div class="sprite {{lastCard}} float-left"></div>
                 <div class="sprite coverv float-left"></div>
             </div>
-            <div class="col-sm-2">
-                <p th:text="${rightPlayer}"></p>
+            <div class="col-sm-2 height_100">
+                <div class="width_96px height_100 float-left" ng-show="rightPlayer">
+                    <div ng-repeat="n in range(0, 3)" class="sprite coverh position-absolute right-player-card-{{n}}"></div>
+                </div>
+                <p class="float-left">{{rightPlayer}}</p>
             </div>
             <div class="col-sm-2">
                 <a href="" ng-click="startGame()" ng-hide="startGameRequested">Start Game</a>
                 <hr />
                 <p ng-repeat="message in messages" class="message">
                     <span ng-class="{self: message.self}">{{message.message}}</span> <span
-                        ng-class="{self: message.self}">{{message.hand}}</span> <span ng-class="{self: message.self}">{{message.lastCard}}</span>
+                        ng-class="{self: message.self}">{{message.hand}}</span>
                 </p>
             </div>
         </div>
         <div class="row col-sm-4 col-sm-offset-4">
-            <div ng-repeat="card in hand" class="sprite {{card}} card_{{$index}} hand-card"></div>
+            <div class="width_100 height_96px">
+                <div ng-repeat="card in hand" class="sprite {{card}} card_{{$index}} position-absolute"></div>
+            </div>
             <p th:text="${currentPlayer}"></p>
         </div>
     </div>

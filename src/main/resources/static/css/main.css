@@ -4,13 +4,25 @@ body {
 .width_100 {
 	width: 100%;
 }
+.height_100 {
+	height: 100%;
+}
+.height_120px {
+	height: 120px;
+}
+.height_96px {
+	height: 96px;
+}
+.width_96px {
+	width: 96px;
+}
 .display-inline {
 	display: inline;
 }
 .float-left {
 	float: left;
 }
-.hand-card {
+.position-absolute {
 	position: absolute;
 }
 .card_0 {
@@ -30,4 +42,58 @@ body {
 }
 .card_5 {
 	left: 90px;
+}
+.front-player-card-0 {
+	right: 15px;
+}
+.front-player-card-1 {
+	right: 30px;
+}
+.front-player-card-2 {
+	right: 45px;
+}
+.front-player-card-3 {
+	right: 60px;
+}
+.front-player-card-4 {
+	right: 75px;
+}
+.front-player-card-5 {
+	right: 90px;
+}
+.left-player-card-0 {
+	top: 15px;
+}
+.left-player-card-1 {
+	top: 30px;
+}
+.left-player-card-2 {
+	top: 45px;
+}
+.left-player-card-3 {
+	top: 60px;
+}
+.left-player-card-4 {
+	top: 75px;
+}
+.left-player-card-5 {
+	top: 90px;
+}
+.right-player-card-0 {
+	bottom: 15px;
+}
+.right-player-card-1 {
+	bottom: 30px;
+}
+.right-player-card-2 {
+	bottom: 45px;
+}
+.right-player-card-3 {
+	bottom: 60px;
+}
+.right-player-card-4 {
+	bottom: 75px;
+}
+.right-player-card-5 {
+	bottom: 90px;
 }

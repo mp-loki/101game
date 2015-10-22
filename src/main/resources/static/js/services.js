@@ -38,6 +38,7 @@
       out.message = message.message;
       out.lastCard = message.lastCard
       out.hand = message.hand
+      out.players = message.players
       out.time = new Date(message.time);
       if (_.contains(messageIds, message.id)) {
         out.self = true;

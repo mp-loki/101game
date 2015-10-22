@@ -1,8 +1,6 @@
 package com.valeriisosliuk.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -12,7 +10,6 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.common.collect.Iterators;
 import com.valeriisosliuk.dto.InfoDto;
 import com.valeriisosliuk.dto.ReplyDto;
 import com.valeriisosliuk.model.Table;
