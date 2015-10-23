@@ -1,14 +1,20 @@
 package com.valeriisosliuk.model;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.util.CollectionUtils;
+
 import com.google.common.collect.Iterators;
+import com.valeriisosliuk.dto.PlayerDetail;
 import com.valeriisosliuk.util.Shuffle;
 
 public class Table {
@@ -48,6 +54,7 @@ public class Table {
         player.setReady(true);
         player.setHand(cardDeck.getInitialHand());
         if (players.size() >= MIN_PLAYERS_AT_THE_TABLE && players.stream().allMatch(Player::isReady)) {
+            activePlayer = getPlayerIterator().next();
             started = true;
         } else {
             started = false;
@@ -55,7 +62,46 @@ public class Table {
         return started;
     }
 
-    private Player getPlayer(String name) {
+    /**
+     * Returns a sequence of players which go after current player
+     * 
+     * @param player
+     *            current player
+     * @return ordered List of players
+     */
+    public Map<String, Integer> getSequencedPlayers(String currentPlayer) {
+        Map<String, Integer> result = new LinkedHashMap<>();
+        Iterator<Player> playerIter = Iterators.cycle(players);
+        Player player = null;
+        // roll playerIter until current user is met
+        while (!playerIter.next().getName().equals(currentPlayer)) {
+        }
+        // Then add all the rest of users except current user
+        while (!((player = playerIter.next()).getName().equals(currentPlayer))) {
+            result.put(player.getName(), player.getHand().getCards().size());
+        }
+        return result;
+    }
+
+    public List<PlayerDetail> getSequencedPlayersList(String currentPlayer) {
+        List<PlayerDetail> result = new LinkedList<>();
+        Iterator<Player> playerIter = Iterators.cycle(players);
+        Player player = null;
+        // roll playerIter until current user is met
+        while (!playerIter.next().getName().equals(currentPlayer)) {
+        }
+        // Then add all the rest of users except current user
+        while (!((player = playerIter.next()).getName().equals(currentPlayer))) {
+            result.add(new PlayerDetail(player.getName(), player.getHand().getCards().size()));
+        }
+        return result;
+    }
+
+    public Map<String, Integer> getCardNumsPerPlayer() {
+        return players.stream().collect(Collectors.toMap(Player::getName, p -> p.getHand().getCards().size()));
+    }
+
+    public Player getPlayer(String name) {
         return players.stream().filter(p -> p.getName().equals(name)).findFirst().get();
     }
 
@@ -96,9 +142,6 @@ public class Table {
     }
 
     public Player getActivePlayer() {
-        if (activePlayer == null) {
-            this.activePlayer = getPlayerIterator().next();
-        }
         return activePlayer;
     }
 
@@ -106,21 +149,22 @@ public class Table {
         this.activePlayer = getPlayerIterator().next();
         return activePlayer;
     }
-    /**
-     * Returns a sequence of players which go after current player
-     * @param player current player
-     * @return ordered List of players
-     */
-	public List<String> getSequencedPlayers(String currentPlayer) {
-		List<String> result = new LinkedList<String>();
-		Iterator<String> playerIter = Iterators.cycle(getPlayers());
-		String player = null;
-		//roll playerIter until current user is met
-		while (!playerIter.next().equals(currentPlayer)) {}
-		//Then add all the rest users except current user
-		while (!(player = playerIter.next()).equals(currentPlayer)) {
-			result.add(player);
-		}
-		return result;
-	}
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public boolean isActivePlayer(String player) {
+        if (activePlayer == null) {
+            return false;
+        }
+        return activePlayer.getName().equals(player);
+    }
+
+    public void turnOver() {
+        if (!cardDeckHasNext()) {
+            cardDeck = discard.turnOver();
+        }
+
+    }
 }

@@ -4,7 +4,7 @@
     var service = {}, listener = $q.defer(), socket = {
       client: null,
       stomp: null
-    }, messageIds = [];
+    }
     
     service.RECONNECT_TIMEOUT = 30000;
     service.SOCKET_URL = "/game";
@@ -21,10 +21,8 @@
       socket.stomp.send(service.GAME_BROKER, {
         priority: 9
       }, JSON.stringify({
-        message: message,
-        id: id
+        message: message
       }));
-      messageIds.push(id);
     };
     
     var reconnect = function() {
@@ -34,22 +32,21 @@
     };
     
     var getMessage = function(data) {
+      /*
       var message = JSON.parse(data), out = {};
       out.message = message.message;
       out.lastCard = message.lastCard
       out.hand = message.hand
       out.players = message.players
-      out.time = new Date(message.time);
-      if (_.contains(messageIds, message.id)) {
-        out.self = true;
-        messageIds = _.remove(messageIds, message.id);
-      }
+      out.
       return out;
+      */
+    	return JSON.parse(data);
     };
     
     var startListener = function() {
       socket.stomp.subscribe(service.GAME_TOPIC, function(data) {
-        listener.notify(getMessage(data.body));
+          listener.notify(getMessage(data.body));
       });
       socket.stomp.subscribe(service.GAME_QUEUE, function(data) {
           listener.notify(getMessage(data.body));
@@ -62,7 +59,6 @@
       socket.stomp.connect({}, startListener);
       socket.stomp.onclose = reconnect;
     };
-    
     initialize();
     return service;
   });

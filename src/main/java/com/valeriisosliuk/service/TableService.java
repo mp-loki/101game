@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.InfoDto;
-import com.valeriisosliuk.dto.ReplyDto;
+import com.valeriisosliuk.dto.StateDto;
+import com.valeriisosliuk.model.Card;
+import com.valeriisosliuk.model.Hand;
+import com.valeriisosliuk.model.Player;
 import com.valeriisosliuk.model.Table;
 
 @Component
@@ -57,36 +60,72 @@ public class TableService {
         boolean started = table.start(currentPlayerName);
         
         if (!started) {
-            ReplyDto replyDto = getWaitDto();
-            messageService.send(currentPlayerName, replyDto);
+            StateDto StateDto = getWaitDto(currentPlayerName);
+            messageService.send(currentPlayerName, StateDto);
         } else {
             for (String player : table.getPlayers()) {
-                messageService.send(player, getStartGameReplyDto(table, player));
+                messageService.send(player, getStateDto(player));
             }
             messageService.sendToAll(getStartGameInfoDto(table));
         }
+    }
+    
+    public void tryPickCard(String currentPlayerName) {
+        Table table = getCurrentTableForplayer(currentPlayerName);
+        if (table.isStarted() && table.getActivePlayer().getName().equals(currentPlayerName)) {
+            Card card = table.getCardFromDeck().orElse(this.turnoverAndGetCard(table));
+            Player currentPlayer = table.getActivePlayer();
+            Hand hand = currentPlayer.getHand();
+            currentPlayer.setPickAllowed(false);
+            hand.add(card);
+            StateDto playerStateUpdate = new StateDto();
+            playerStateUpdate.setHand(hand.getCards());
+            playerStateUpdate.setPickAllowed(false);
+            messageService.send(currentPlayerName, playerStateUpdate);
+        }
+    }
+
+    private Card turnoverAndGetCard(Table table) {
+        if (!table.cardDeckHasNext()) {
+            table.turnOver();
+            StateDto dto = new StateDto();
+            dto.setMessage("Deck is turned over. Points doubled");
+            dto.setLastCard(table.getLastCardInDiscard());
+            messageService.sendToAll(dto);
+        }
+        return table.getCardFromDeck().get();
     }
 
     private InfoDto getStartGameInfoDto(Table table) {
         InfoDto dto = new InfoDto();
         dto.setLastCard(table.getLastCardInDiscard());
-        dto.setMessage(table.getActivePlayer().getName() + "'s turn"); 
+        String activePlayer = table.getActivePlayer().getName();
+        dto.setActivePlayer(activePlayer);
+        dto.setMessage(activePlayer + "'s turn"); 
+        dto.setCardsNumPerPlayer(table.getCardNumsPerPlayer());
         return dto;
-    }
+    }   
 
-    private ReplyDto getStartGameReplyDto(Table table, String player) {
-        ReplyDto dto = new ReplyDto();
-        dto.setHand(table.getPlayersHandCards(player));
-        dto.setMessage("Game Started");
-        dto.setPlayers(table.getSequencedPlayers(player));
-        return dto;
-    }
-    
-
-	private ReplyDto getWaitDto() {
-        ReplyDto dto = new ReplyDto();
+	private StateDto getWaitDto(String currentPlayerName) {
+        StateDto dto = new StateDto();
+        dto.setCurrentPlayerName(currentPlayerName);
         dto.setMessage("Waiting for other players");
         return dto;
     }
 
+    public StateDto getStateDto(String playerName) {
+        StateDto dto = new StateDto();
+        dto.setCurrentPlayerName(playerName);
+        Table table = joinTable(playerName);
+        
+        if (table.isStarted()) {
+            dto.setLastCard(table.getLastCardInDiscard());
+            dto.setHand(table.getPlayer(playerName).getHand().getCards());
+            dto.setPlayers(table.getSequencedPlayersList(playerName));
+            dto.setPickAllowed(table.isActivePlayer(playerName));
+        } else {
+            dto.setMessage("Waiting for players");
+        }
+        return dto;
+    }
 }

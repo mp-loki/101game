@@ -19,29 +19,110 @@ body {
 .display-inline {
 	display: inline;
 }
+.margin_left_30px {
+	margin-left: 30px;
+}
+.margin_bottom_30px {
+	margin-bottom: 30px;
+}
 .float-left {
 	float: left;
 }
 .position-absolute {
 	position: absolute;
 }
-.card_0 {
+.card_1 {
 	left: 15px;
 }
-.card_1 {
+.card_2 {
 	left: 30px;
 }
-.card_2 {
+.card_3 {
 	left: 45px;
 }
-.card_3 {
+.card_4 {
 	left: 60px;
 }
-.card_4 {
+.card_5 {
 	left: 75px;
 }
-.card_5 {
+.card_6 {
 	left: 90px;
+}
+.card_7 {
+	left: 105px;
+}
+.card_8 {
+	left: 120px;
+}
+.card_9 {
+	left: 135px;
+}
+.card_10 {
+	left: 150px;
+}
+.card_11 {
+	left: 165px;
+}
+.card_12 {
+	left: 180px;
+}
+.card_13 {
+    left: 45px;
+}
+.card_14 {
+    left: 60px;
+}
+.card_15 {
+    left: 75px;
+}
+.card_16 {
+    left: 90px;
+}
+.card_17 {
+    left: 105px;
+}
+.card_18 {
+    left: 120px;
+}
+.card_19 {
+    left: 135px;
+}
+.card_20 {
+    left: 150px;
+}
+.card_21 {
+    left: 165px;
+}
+.card_22 {
+    left: 180px;
+}
+.card_23 {
+    left: 45px;
+}
+.card_24 {
+    left: 60px;
+}
+.card_25 {
+    left: 75px;
+}
+.card_26 {
+    left: 90px;
+}
+.card_27 {
+    left: 105px;
+}
+.card_28 {
+    left: 120px;
+}
+.card_29 {
+    left: 135px;
+}
+.card_30 {
+    left: 150px;
+}
+.card_31 {
+    left: 165px;
 }
 .front-player-card-0 {
 	right: 15px;
@@ -96,4 +177,10 @@ body {
 }
 .right-player-card-5 {
 	bottom: 90px;
+}
+.deck {
+	cursor: pointer;
+}
+.card {
+	cursor: pointer;
 }

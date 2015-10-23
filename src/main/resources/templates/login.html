@@ -9,8 +9,8 @@
 <title>101 Game | Login</title>
 </head>
 <body>
-    <div class="row" th:if="${param.error}">Invalid username and password.</div>
-    <div class="row" th:if="${param.logout}">You have been logged out.</div>
+    <div class="row" th:if="${param.error}"><span class="margin_left_30px">Invalid username and password.</span></div>
+    <div class="row" th:if="${param.logout}"><span class="margin_left_30px">You have been logged out.</span></div>
     <div class="container col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 container vertical-center">
         <div class="row">
         <h1>101 Game Login</h1>

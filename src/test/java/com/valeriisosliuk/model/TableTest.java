@@ -1,6 +1,8 @@
 package com.valeriisosliuk.model;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -13,12 +15,6 @@ public class TableTest {
 	private static final String BART = "Bart";
 	private static final String HOMER = "Homer";
 
-	@Test
-    public void testActiveUser() {
-        Table table = getTable();
-        Player activePlayer = table.getActivePlayer();
-        assertEquals(HOMER, activePlayer.getName());
-    }
 
     @Test
     public void testNextUser() {
@@ -41,24 +37,6 @@ public class TableTest {
         assertTrue(table.joinTable(HOMER));
         assertFalse(table.joinTable(HOMER));
     }
-    
-    @Test
-    public void getSequencedPlayers() {
-    	Table table = getTable();
-    	String homer = HOMER;
-        List<String> sequencedUsers1 = table.getSequencedPlayers(homer);
-        assertEquals(3, sequencedUsers1.size());
-        assertEquals(BART, sequencedUsers1.get(0));
-        assertEquals(MARGE, sequencedUsers1.get(1));
-        assertEquals(LILLY, sequencedUsers1.get(2));
-        
-        String marge = MARGE;
-        List<String> sequencedUsers2 = table.getSequencedPlayers(marge);
-        assertEquals(3, sequencedUsers2.size());
-        assertEquals(LILLY, sequencedUsers2.get(0));
-        assertEquals(HOMER, sequencedUsers2.get(1));
-        assertEquals(BART, sequencedUsers2.get(2));
-    }
 
     private Table getTable() {
         Table table = new Table();
@@ -68,4 +46,5 @@ public class TableTest {
         table.joinTable(LILLY);
         return table;
     }
+    
 }
