@@ -15,15 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.valeriisosliuk.dto.ActionDto;
-import com.valeriisosliuk.dto.StateDto;
+import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.TableService;
 import com.valeriisosliuk.service.UserService;
 
 @Controller
 public class GameController {
-    private static final String START = "start";
-    private static final String PICK = "pick";
 
     private static final Logger log = Logger.getLogger(GameController.class);
 
@@ -62,7 +60,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/game/getState")
-    public @ResponseBody StateDto getState(Model model) {
+    public @ResponseBody ResponseDto getState(Model model) {
         String currentPlayerName = userService.getCurrentUserName();
         return tableService.getStateDto(currentPlayerName);
     }
@@ -76,14 +74,8 @@ public class GameController {
     public void game(Message<Object> message, @Payload ActionDto dto) throws Exception {
         log.info("Got a message: " + dto);
         String currentUser = getCurrentUserName(message);
-        if (dto.getMessage().equals(START)) {
-            tableService.tryStart(currentUser);
-        } else if (dto.getMessage().equals(PICK)) {
-            tableService.tryPickCard(currentUser);
-        } else {
-            // TODO: Add turn handle
-            
-        }
+        dto.setCurrentPlayer(currentUser);
+        tableService.processAction(dto);
     }
 
     private String getCurrentUserName(Message<Object> message) {

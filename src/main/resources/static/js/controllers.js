@@ -1,6 +1,7 @@
 (function(angular) {
   angular.module("gameApp.controllers").controller("GameCtrl", function($scope, $http, GameService) {
 	$scope.info = [];
+	$scope.skip = "Pass";
 	$scope.pickAllowed = false;
     
     $scope.addMessage = function() {
@@ -8,7 +9,7 @@
     };
     
     $scope.startGame = function() {
-    	GameService.send("start");
+    	GameService.send("START", $scope.currentPlayer);
     	$scope.startGameRequested = true;
     }
     
@@ -38,9 +39,14 @@
     }
     
     $scope.pickCard = function() {
-    	if ($scope.activePlayer == $scope.currentPlayer) {
-    	//if ($scope.activePlayer == $scope.currentUser && $scope.pickAllowed) {
-    		GameService.send("pick");
+    	if ($scope.active && $scope.pickAllowed) {
+    		GameService.send("PICK", $scope.currentPlayer);
+    	}
+    }
+    
+    $scope.pass = function() {
+    	if ($scope.active) {
+    		GameService.send("PASS", $scope.currentPlayer);
     	}
     }
 
@@ -54,23 +60,22 @@
     	if (isDefined(data.lastCard)) {
     		$scope.lastCard = data.lastCard;
     	}
-    	if (isDefined(data.players)) {
-    		$scope.players = data.players;
-            setPlayers(data.players);
+    	if (isDefined(data.playerDetails)) {
+            setPlayers(data.playerDetails);
     	}
-        if (isDefined(data.message)) {
-        	$scope.info.push(data.message);
+        if (isDefined(data.messages)) {
+        	$scope.info.push.apply($scope.info, data.messages);
         }
     	if (isDefined(data.pickAllowed)) {
     		$scope.pickAllowed = data.pickAllowed;
     	}
-    	if (isDefined(data.activePlayer)) {
-    		$scope.activePlayer = data.activePlayer;
+    	if (isDefined(data.active)) {
+    		$scope.active = data.active;
     	}
     }
     
     function isDefined(variable) {
-    	return variable !== undefined && variable
+    	return variable !== undefined && variable != null
     }
     
 	function setPlayers(players) {

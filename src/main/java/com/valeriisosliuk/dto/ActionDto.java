@@ -1,56 +1,41 @@
 package com.valeriisosliuk.dto;
 
-import java.util.List;
-import java.util.Set;
-
+import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Card;
 
 public class ActionDto {
 
+    private ActionType type;
+    private Card card;
     private String currentPlayer;
-    private List<String> otherPlayers;
-    private String message;
-    private Set<Card> hand;
-    private Card lead;
+    
+	public ActionType getType() {
+		return type;
+	}
 
-    public String getCurrentPlayer() {
-        return currentPlayer;
-    }
+	public void setType(ActionType type) {
+		this.type = type;
+	}
 
-    public void setCurrentPlayer(String currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
+	public Card getCard() {
+		return card;
+	}
 
-    public List<String> getOtherPlayers() {
-        return otherPlayers;
-    }
+	public void setCard(Card card) {
+		this.card = card;
+	}
 
-    public void setOtherPlayers(List<String> otherPlayers) {
-        this.otherPlayers = otherPlayers;
-    }
+	public String getCurrentPlayer() {
+		return currentPlayer;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public void setCurrentPlayer(String currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Set<Card> getHand() {
-        return hand;
-    }
-
-    public void setHand(Set<Card> hand) {
-        this.hand = hand;
-    }
-
-    public Card getLead() {
-        return lead;
-    }
-
-    public void setLead(Card lead) {
-        this.lead = lead;
-    }
-
+	@Override
+	public String toString() {
+		return "ActionDto [type=" + type + ", card=" + card + ", currentPlayer=" + currentPlayer + "]";
+	}
+	
 }

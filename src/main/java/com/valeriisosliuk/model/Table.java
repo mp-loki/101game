@@ -1,7 +1,6 @@
 package com.valeriisosliuk.model;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -10,8 +9,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.springframework.util.CollectionUtils;
 
 import com.google.common.collect.Iterators;
 import com.valeriisosliuk.dto.PlayerDetail;
@@ -54,7 +51,7 @@ public class Table {
         player.setReady(true);
         player.setHand(cardDeck.getInitialHand());
         if (players.size() >= MIN_PLAYERS_AT_THE_TABLE && players.stream().allMatch(Player::isReady)) {
-            activePlayer = getPlayerIterator().next();
+            getNextActivePlayer();
             started = true;
         } else {
             started = false;
@@ -142,11 +139,15 @@ public class Table {
     }
 
     public Player getActivePlayer() {
+    	if (activePlayer == null) {
+    		getNextActivePlayer();
+    	}
         return activePlayer;
     }
 
     public Player getNextActivePlayer() {
         this.activePlayer = getPlayerIterator().next();
+        activePlayer.setPickAllowed(true);
         return activePlayer;
     }
 
@@ -161,10 +162,14 @@ public class Table {
         return activePlayer.getName().equals(player);
     }
 
+    public boolean isActivePlayer(Player player) {
+    	return player.equals(player);
+    }
     public void turnOver() {
         if (!cardDeckHasNext()) {
             cardDeck = discard.turnOver();
         }
 
     }
+
 }

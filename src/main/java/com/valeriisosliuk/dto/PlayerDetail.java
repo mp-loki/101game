@@ -3,7 +3,7 @@ package com.valeriisosliuk.dto;
 public class PlayerDetail {
 
     private String name;
-    private Integer cardCount;
+    private int cardCount;
 
     public PlayerDetail(String name, int cardCount) {
         this.name = name;
@@ -18,7 +18,7 @@ public class PlayerDetail {
         this.name = name;
     }
 
-    public Integer getCardCount() {
+    public int getCardCount() {
         return cardCount;
     }
 

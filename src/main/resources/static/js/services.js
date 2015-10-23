@@ -16,12 +16,14 @@
       return listener.promise;
     };
     
-    service.send = function(message) {
+    service.send = function(type, player, card) {
       var id = Math.floor(Math.random() * 1000000);
       socket.stomp.send(service.GAME_BROKER, {
         priority: 9
       }, JSON.stringify({
-        message: message
+        type: type,
+        currentPlayer: player,
+        card: card
       }));
     };
     
@@ -32,15 +34,6 @@
     };
     
     var getMessage = function(data) {
-      /*
-      var message = JSON.parse(data), out = {};
-      out.message = message.message;
-      out.lastCard = message.lastCard
-      out.hand = message.hand
-      out.players = message.players
-      out.
-      return out;
-      */
     	return JSON.parse(data);
     };
     

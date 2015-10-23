@@ -1,8 +1,14 @@
 package com.valeriisosliuk.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
+
+import com.valeriisosliuk.dto.ResponseDto;
+import com.valeriisosliuk.model.ActionResult;
 
 @Component
 public class MessageService {
@@ -18,4 +24,13 @@ public class MessageService {
         template.convertAndSend("/topic/message", t);
     }
     
+    public void processActionResult(ActionResult actionResult) {
+    	for (ResponseDto stateDto : actionResult.getGeneralUpdates()) {
+    		sendToAll(stateDto);
+    	}
+    	Map<String, ResponseDto> playerUpdates = actionResult.getPlayerUpdates();
+    	for (String player : playerUpdates.keySet()) {
+    		send(player, playerUpdates.get(player));
+    	}
+    }
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <title>101game</title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></link>
@@ -10,8 +9,8 @@
 <body data-ng-app="gameApp">
     <h2 th:text="${currentPlayer}"></h2>
     <form id="logout" th:action="@{/logout}" method="post">
-        <a href="javascript:{}" onclick="$('#logout').submit(); return false;">Logout</a>
-     </form>
+        <button type="submit" class="btn btn-link">Logout</button>
+    </form>
 
     <div data-ng-controller="GameCtrl" class="container width_100 height_70">
         <div class="row text-center height_120px margin_bottom_30px">
@@ -40,7 +39,7 @@
             <div class="col-sm-2">
                 <a href="" data-ng-click="startGame()" data-ng-hide="startGameRequested">Start Game</a>
                 <hr />
-                <p data-ng-repeat="msg in info" class="message">
+                <p data-ng-repeat="msg in info track by $index" class="message">
                     <span>{{msg}}</span>
                 </p>
             </div>
@@ -50,6 +49,7 @@
                 <div data-ng-repeat="card in hand" class="sprite card {{card}} card_{{$index + 1}} position-absolute"></div>
             </div>
             <p>{{currentPlayer}}</p>
+            <button type="button" class="btn btn-default" data-ng-click="pass()" data-ng-show="active">{{skip}}</button>
         </div>
     </div>
     <script src="js/sockjs-0.3.4.js"></script>
