@@ -29,8 +29,7 @@ public class PickHandlerTest {
 		assertEquals(5, currentPlayer.getHand().getCards().size());
 		assertEquals(1, result.getGeneralUpdates().size());
 		assertEquals("Homer Picked a card", result.getGeneralUpdates().get(0).getMessages().get(0));
-		assertEquals(1, result.getGeneralUpdates().get(0).getPlayerDetails().size());
-		PlayerDetail playerDetail = result.getGeneralUpdates().get(0).getPlayerDetails().get(0);
+		PlayerDetail playerDetail = result.getGeneralUpdates().get(0).getPlayerUpdate();
 		assertEquals("Homer", playerDetail.getName());
 		assertEquals(5, playerDetail.getCardCount());
 	}

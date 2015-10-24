@@ -72,6 +72,32 @@
     	if (isDefined(data.active)) {
     		$scope.active = data.active;
     	}
+    	if (isDefined(data.playerUpdate)) {
+    		updatePlayerCardCount(data.playerUpdate);
+    	}
+    }
+    
+    function updatePlayerCardCount(playerUpdate) {
+    	if ($scope.currentPlayer == playerUpdate.name) {
+    		return
+    	} 
+    	if (checkAndSetCardCount($scope.frontPlayer, playerUpdate)) {
+    		return;
+    	}
+    	if (checkAndSetCardCount($scope.leftPlayer, playerUpdate)) {
+    		return;
+    	}
+    	if (checkAndSetCardCount($scope.rightPlayer, playerUpdate)) {
+    		return;
+    	}
+    }
+    
+    function checkAndSetCardCount(player, playerUpdate) {
+    	if (isDefined(player) && player.name == playerUpdate.name) {
+    		player.cardCount = playerUpdate.cardCount
+    		return true
+    	}
+    	return false
     }
     
     function isDefined(variable) {

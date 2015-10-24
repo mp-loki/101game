@@ -3,6 +3,8 @@ package com.valeriisosliuk.service.handler;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.BroadcastDto;
+import com.valeriisosliuk.dto.PlayerDetail;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.Card;
@@ -45,11 +47,11 @@ public class PickHandler implements ActionHandler {
 		return dto;
 	}
 
-	private ResponseDto getCardPickedDto(Player currentPlayer) {
-		ResponseDto dto = new ResponseDto();
+	private BroadcastDto getCardPickedDto(Player currentPlayer) {
+		BroadcastDto dto = new BroadcastDto();
 		dto.getMessages().add(currentPlayer.getName() + " Picked a card");
-		//PlayerDetail playerDetail = new PlayerDetail(currentPlayer.getName(), currentPlayer.getHand().getCards().size());
-		//dto.getPlayerDetails().add(playerDetail);
+		PlayerDetail playerDetail = new PlayerDetail(currentPlayer.getName(), currentPlayer.getHand().getCards().size());
+		dto.setPlayerUpdate(playerDetail);
 		return dto;
 	}
 

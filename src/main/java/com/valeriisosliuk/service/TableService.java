@@ -8,7 +8,6 @@ import java.util.function.BiFunction;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.ActionDto;
@@ -16,6 +15,7 @@ import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.handler.ActionHandler;
+import com.valeriisosliuk.service.handler.ActionHandlerSupplier;
 
 @Component
 public class TableService {
@@ -23,16 +23,7 @@ public class TableService {
 	private List<Table> tables;
 
 	@Autowired
-	@Qualifier("passHandler")
-	private ActionHandler passHandler;
-	
-	@Autowired 
-	@Qualifier("pickHandler")
-	private ActionHandler pickHandler;
-	
-	@Autowired
-	@Qualifier("startHandler")
-	private ActionHandler startHandler;
+	private ActionHandlerSupplier handlerSupplier;
 	
 	@Autowired
 	private MessageService messageService;
@@ -58,23 +49,17 @@ public class TableService {
 	}
 
 	public void processAction(ActionDto action) {
-		ActionResult result = null;
 		Table table = getCurrentTableForplayer(action.getCurrentPlayer());
-		switch (action.getType()) {
-		case PASS:  result = passHandler.handle(action, table);
-					break;
-		case PICK:  result = pickHandler.handle(action, table);
-					break;
-		case START: result = startHandler.handle(action, table);
-					break;
-		case ACTION: // handle ACTION
-					break;
+		ActionResult result = null;
+		ActionHandler actionHandler = handlerSupplier.getActionHandler(action.getType());
+		if (actionHandler != null) {
+			result = actionHandler.handle(action, table);
 		}
 		if (result != null) {
 			messageService.processActionResult(result);
 		}
 	}
-
+	
 	private Table createNewTable() {
 		Table table = new Table();
 		tables.add(table);

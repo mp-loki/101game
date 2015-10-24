@@ -11,6 +11,7 @@ public class ResponseDto {
 	private String currentPlayerName;
 	private Card lastCard;
 	private Set<Card> hand;
+	private Set<Card> validTurnOptions; 
 	private List<PlayerDetail> playerDetails;
 	private List<String> messages;
 	private boolean pickAllowed;
@@ -77,4 +78,20 @@ public class ResponseDto {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	public Set<Card> getValidTurnOptions() {
+		return validTurnOptions;
+	}
+
+	public void setValidTurnOptions(Set<Card> validTurnOptions) {
+		this.validTurnOptions = validTurnOptions;
+	}
+
+	@Override
+	public String toString() {
+		return "ResponseDto [currentPlayerName=" + currentPlayerName + ", lastCard=" + lastCard + ", hand=" + hand
+				+ ", validTurnOptions=" + validTurnOptions + ", playerDetails=" + playerDetails + ", messages="
+				+ messages + ", pickAllowed=" + pickAllowed + ", active=" + active + "]";
+	}
+
 }

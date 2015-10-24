@@ -5,12 +5,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.valeriisosliuk.dto.BroadcastDto;
 import com.valeriisosliuk.dto.ResponseDto;
 
 public class ActionResult {
 	
 	private Map<String, ResponseDto> playerUpdates;
-	private List<ResponseDto> generalUpdates;
+	private List<BroadcastDto> generalUpdates;
 	
 	public Map<String, ResponseDto> getPlayerUpdates() {
 		if (playerUpdates == null) {
@@ -21,13 +22,13 @@ public class ActionResult {
 	public void setPlayerUpdates(Map<String, ResponseDto> playerUpdates) {
 		this.playerUpdates = playerUpdates;
 	}
-	public List<ResponseDto> getGeneralUpdates() {
+	public List<BroadcastDto> getGeneralUpdates() {
 		if (generalUpdates == null) {
-			generalUpdates = new LinkedList<ResponseDto>();
+			generalUpdates = new LinkedList<BroadcastDto>();
 		}
 		return generalUpdates;
 	}
-	public void setGeneralUpdates(List<ResponseDto> generalUpdates) {
+	public void setGeneralUpdates(List<BroadcastDto> generalUpdates) {
 		this.generalUpdates = generalUpdates;
 	}
 }

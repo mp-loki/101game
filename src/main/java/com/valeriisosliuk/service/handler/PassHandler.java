@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.BroadcastDto;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.Player;
@@ -27,8 +28,8 @@ public class PassHandler implements ActionHandler {
 		return result;
 	}
 
-	private ResponseDto getGeneralUpdate(Player currentPlayer, Player nextActivePlayer) {
-		ResponseDto dto = new ResponseDto();
+	private BroadcastDto getGeneralUpdate(Player currentPlayer, Player nextActivePlayer) {
+		BroadcastDto dto = new BroadcastDto();
 		dto.getMessages().add(currentPlayer.getName() + " Passes");
 		dto.getMessages().add(nextActivePlayer.getName() + "'s turn");
 		return dto;

@@ -7,6 +7,7 @@ public class Player {
 	private int totalPoints;
 	private boolean ready;
 	private boolean pickAllowed;
+	private boolean firstMove;
 
 	public Player(String name) {
 	    this.name = name;
@@ -52,4 +53,12 @@ public class Player {
     public String getName() {
         return name;
     }
+
+	public boolean isFirstMove() {
+		return firstMove;
+	}
+
+	public void setFirstMove(boolean firstMove) {
+		this.firstMove = firstMove;
+	}
 }
