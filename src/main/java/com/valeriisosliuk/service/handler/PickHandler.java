@@ -49,7 +49,7 @@ public class PickHandler implements ActionHandler {
 	private BroadcastDto getCardPickedDto(Player currentPlayer) {
 		BroadcastDto dto = new BroadcastDto();
 		dto.getMessages().add(currentPlayer.getName() + " Picked a card");
-		PlayerDetail playerDetail = new PlayerDetail(currentPlayer.getName(), currentPlayer.getHand().getCards().size());
+		PlayerDetail playerDetail = new PlayerDetail(currentPlayer.getName(), currentPlayer.getHand().size());
 		dto.setPlayerUpdate(playerDetail);
 		return dto;
 	}

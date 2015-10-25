@@ -1,25 +1,30 @@
 package com.valeriisosliuk.model;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 public class Player {
 
 	private String name;
-    private Hand hand;
+	private Set<Card> hand;
+	private Set<Card> validNextMoveOptions;
 	private int totalPoints;
 	private boolean ready;
 	private boolean pickAllowed;
 	private boolean firstMove;
 	private boolean endTurnAllowed;
+	private Set<Card> currentTurnCards;
 
 	public Player(String name) {
-	    this.name = name;
+		this.name = name;
 		totalPoints = 0;
 	}
 
-	public Hand getHand() {
+	public Set<Card> getHand() {
 		return hand;
 	}
 
-	public void setHand(Hand hand) {
+	public void setHand(Set<Card> hand) {
 		this.hand = hand;
 	}
 
@@ -43,17 +48,17 @@ public class Player {
 		this.ready = ready;
 	}
 
-    public boolean isPickAllowed() {
-        return pickAllowed;
-    }
+	public boolean isPickAllowed() {
+		return pickAllowed;
+	}
 
-    public void setPickAllowed(boolean pickAllowed) {
-        this.pickAllowed = pickAllowed;
-    }
+	public void setPickAllowed(boolean pickAllowed) {
+		this.pickAllowed = pickAllowed;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
 	public boolean isFirstMove() {
 		return firstMove;
@@ -72,7 +77,24 @@ public class Player {
 	}
 
 	public int getHandSize() {
-		return hand.getCards().size();
+		return hand.size();
 	}
-	
+
+	public Set<Card> getValidNextTurnOptions() {
+		return validNextMoveOptions;
+	}
+
+	public void setValidNextMoveOptions(Set<Card> validNextTurnOptions) {
+		this.validNextMoveOptions = validNextTurnOptions;
+	}
+
+	public Set<Card> getCurrentTurnCards() {
+		if (currentTurnCards == null) {
+			currentTurnCards = EnumSet.noneOf(Card.class);
+		}
+		return currentTurnCards;
+	}
+	public void setCurrentTurnCards(Set<Card> currentTurnCards) {
+		this.currentTurnCards = currentTurnCards;
+	}
 }

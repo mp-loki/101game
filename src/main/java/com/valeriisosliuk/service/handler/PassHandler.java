@@ -30,7 +30,7 @@ public class PassHandler implements ActionHandler {
 		result.getGeneralUpdates().add(getGeneralUpdate(currentPlayer, nextActivePlayer));
 		return result;
 	}
-
+	
 	private BroadcastDto getGeneralUpdate(Player currentPlayer, Player nextActivePlayer) {
 		BroadcastDto dto = new BroadcastDto();
 		dto.getMessages().add(currentPlayer.getName() + " Passes");

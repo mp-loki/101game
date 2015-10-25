@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.handler.ActionHandler;
 import com.valeriisosliuk.service.handler.ActionHandlerSupplier;
+import com.valeriisosliuk.service.handler.NextTurnProcessor;
 
 @Component
 public class TableService {
@@ -27,6 +29,9 @@ public class TableService {
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private NextTurnProcessor nextTurnProcessor;
 
 	@PostConstruct
 	public void init() {
@@ -75,16 +80,13 @@ public class TableService {
 	 * @return StateDto for specified player
 	 */
 	public ResponseDto getStateDto(String playerName) {
-		ResponseDto dto = new ResponseDto();
-		dto.setCurrentPlayerName(playerName);
 		Table table = joinTable(playerName);
-
+		ResponseDto dto;
 		if (table.isStarted()) {
-			dto.setLastCard(table.getLastCardInDiscard());
-			dto.setHand(table.getPlayer(playerName).getHand().getCards());
-			dto.setPlayerDetails(table.getSequencedPlayersList(playerName));
-			dto.setPickAllowed(table.isActivePlayer(playerName));
+			dto = DtoFactory.getResponseDto(table.getPlayer(playerName), table);
 		} else {
+			dto = new ResponseDto();
+			dto.setCurrentPlayerName(playerName);
 			dto.getMessages().add("Waiting for players");
 		}
 		return dto;

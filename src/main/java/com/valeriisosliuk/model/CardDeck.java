@@ -1,7 +1,9 @@
 package com.valeriisosliuk.model;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class CardDeck {
 	
@@ -23,9 +25,10 @@ public class CardDeck {
 	    return cards.size() > 0;
 	}
 
-	public Hand getInitialHand() {
+	public Set<Card> getInitialHand() {
 		List<Card> cardsToHand = cards.subList(0, 4);
-		Hand hand = new Hand(cardsToHand);
+		Set<Card> hand = EnumSet.noneOf(Card.class);
+		hand.addAll(cardsToHand);
 		cards.removeAll(cardsToHand);
 		return hand;
 	}

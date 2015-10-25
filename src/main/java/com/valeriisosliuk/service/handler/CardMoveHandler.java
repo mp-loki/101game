@@ -14,69 +14,82 @@ import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Player;
+import com.valeriisosliuk.model.Rank;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.handler.validator.ValidatorSupplier;
 
 @Component("cardMoveHandler")
 public class CardMoveHandler implements ActionHandler {
-	
+
 	@Autowired
 	private ValidatorSupplier validatorSupplier;
-	
+
 	@Autowired
 	private TurnAdvisor turnAdvisor;
+
+	@Autowired
+	private NextTurnProcessor nextTurnProcessor;
 
 	@Override
 	public ActionResult handle(ActionDto action, Table table) {
 		ActionResult result = new ActionResult();
-		Player activePlayer = table.getActivePlayer();
-		boolean firstMove = activePlayer.isFirstMove();
-		Card lastCard = table.getLastCardInDiscard();
-		Card actionCard = action.getCard();
-		
-		if (!isValid(actionCard, lastCard, firstMove)) {
-			result.getPlayerUpdates().put(action.getCurrentPlayer(), getErrorResponeDto(activePlayer, table));
-		} else {
-			activePlayer.getHand().remove(actionCard);
-			activePlayer.setFirstMove(false);
-			table.putCardInDiscard(actionCard);
-			result.getGeneralUpdates().add(getCardMoveDto(activePlayer, actionCard));
-			result.getPlayerUpdates().put(activePlayer.getName(), getHandUpdatedDto(activePlayer, table));
+		if (table.isActivePlayer(action.getCurrentPlayer())) {
+			Player activePlayer = table.getActivePlayer();
+			Card lastCard = table.getLastCardInDiscard();
+			Card actionCard = action.getCard();
+			boolean firstMove = activePlayer.isFirstMove();
+
+			if (!isValid(actionCard, lastCard, firstMove)) {
+				result.getPlayerUpdates().put(action.getCurrentPlayer(), getErrorResponeDto(activePlayer, table));
+			} else {
+				processCardMove(activePlayer, table, actionCard, result);
+				nextTurnProcessor.processNextMove(table, result);
+			}
 		}
-		//TODO check if user has more cards to go or end turn
-		
 		return result;
 	}
 
-	private ResponseDto getHandUpdatedDto(Player activePlayer, Table table) {
-		ResponseDto dto = DtoFactory.getResponseDto(activePlayer, table);
-		dto.setValidTurnOptions(turnAdvisor.getValidCardsForTurn(activePlayer.getHand().getCards(), 
-				table.getLastCardInDiscard(), activePlayer.isFirstMove()));
-		return dto;
+	private void processCardMove(Player player, Table table, Card actionCard, ActionResult result) {
+		player.getHand().remove(actionCard);
+		player.getCurrentTurnCards().add(actionCard);
+		player.setFirstMove(false);
+		table.putCardInDiscard(actionCard);
+		if (actionCard.getRank() == Rank._6) {
+			player.setPickAllowed(false);
+		} else {
+			player.setPickAllowed(false);
+		}
+		player.setValidNextMoveOptions(turnAdvisor.getValidCardsForTurn(player.getHand(), table.getLastCardInDiscard(),
+				player.isFirstMove()));
+		result.getGeneralUpdates().add(getCardMoveDto(player, table));
+		result.getPlayerUpdates().put(player.getName(), getHandUpdatedDto(player, table));
 	}
 
-	private BroadcastDto getCardMoveDto(Player activePlayer, Card actionCard) {
-		BroadcastDto dto = new BroadcastDto();
-		dto.setLastCard(actionCard);
-		dto.setPlayerUpdate(new PlayerDetail(activePlayer.getName(), activePlayer.getHandSize()));
-		dto.getMessages().add(activePlayer.getName() + " goes with " + actionCard);
+	private ResponseDto getHandUpdatedDto(Player activePlayer, Table table) {
+		return DtoFactory.getResponseDto(activePlayer, table);
+	}
+
+	private BroadcastDto getCardMoveDto(Player activePlayer, Table table) {
+		BroadcastDto dto = DtoFactory.getBroadcastDto(activePlayer, table, activePlayer.getName() + " goes with "
+				+ table.getLastCardInDiscard());
 		return dto;
 	}
 
 	private ResponseDto getErrorResponeDto(Player player, Table table) {
 		ResponseDto dto = DtoFactory.getResponseDto(player, table, "This move is not valid");
-		Set<Card> cards = turnAdvisor.getValidCardsForTurn(player.getHand().getCards(), table.getLastCardInDiscard(), player.isFirstMove());
+		Set<Card> cards = turnAdvisor.getValidCardsForTurn(player.getHand(), table.getLastCardInDiscard(),
+				player.isFirstMove());
 		if (!CollectionUtils.isEmpty(cards)) {
 			dto.setValidTurnOptions(cards);
 			dto.getMessages().add("Possible moves are: " + cards);
-		} else if (player.isPickAllowed()){
+		} else if (player.isPickAllowed()) {
 			dto.getMessages().add("Pick a card");
-		} 
+		}
 		return dto;
 	}
 
 	private boolean isValid(Card card, Card lastCard, boolean firstMove) {
-		
+
 		return validatorSupplier.getValidator(lastCard, firstMove).validate(card, lastCard);
 	}
 

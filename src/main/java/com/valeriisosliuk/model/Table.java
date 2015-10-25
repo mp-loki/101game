@@ -103,8 +103,8 @@ public class Table {
         return players.stream().filter(p -> p.getName().equals(name)).findFirst().get();
     }
 
-    public Set<Card> getPlayersHandCards(String username) {
-        return getPlayer(username).getHand().getCards();
+    public Set<Card> getPlayersHand(String username) {
+        return getPlayer(username).getHand();
     }
 
     public boolean isPlayerAtTheTable(String player) {
@@ -186,7 +186,7 @@ public class Table {
     }
 
     public boolean isActivePlayer(Player player) {
-    	return player.equals(player);
+    	return player.equals(activePlayer);
     }
     public void turnOver() {
         if (!cardDeckHasNext()) {
@@ -194,5 +194,11 @@ public class Table {
         }
 
     }
-
+    /**
+     * Advances player iterator without setting a new activePlayer
+     * @return skipped player
+     */
+	public Player skipPlayer() {
+		return getPlayerIterator().next();
+	}
 }

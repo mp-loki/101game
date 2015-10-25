@@ -28,6 +28,9 @@ public class StartHandler implements ActionHandler {
 			result.getPlayerUpdates().put(playerName, stateDto);
 		} else {
 			for (Player player : table.getPlayers()) {
+				if (table.isActivePlayer(player)) {
+					player.setValidNextMoveOptions(turnAdvisor.getValidCardsForTurn(player.getHand(), table.getLastCardInDiscard(), true));
+				}
 				result.getPlayerUpdates().put(player.getName(), getPlayerStateDto(player, table));
 			}
 			result.getGeneralUpdates().add(getGeneralMessageDto(table));
@@ -52,11 +55,6 @@ public class StartHandler implements ActionHandler {
 	public ResponseDto getPlayerStateDto(Player player, Table table) {
 		ResponseDto dto = DtoFactory.getResponseDto(player, table);
 		dto.setPlayerDetails(table.getSequencedPlayersList(player.getName()));
-		boolean active = table.isActivePlayer(player);
-		if (active) {
-			dto.setValidTurnOptions(turnAdvisor.getValidCardsForTurn(player.getHand().getCards(),
-					table.getLastCardInDiscard(), true));
-		}
 		return dto;
 	}
 
