@@ -38,7 +38,7 @@ public class TableService {
 	}
 
 	public Table joinFirstAvailableTable(String playername) {
-		return getTable((t, m) -> t.getPlayers().size() < m, Table.MAX_PLAYERS_AT_THE_TABLE).orElse(createNewTable());
+		return getTable((t, m) -> t.getPlayerNames().size() < m, Table.MAX_PLAYERS_AT_THE_TABLE).orElse(createNewTable());
 	}
 
 	public Table joinTable(String playerName) {

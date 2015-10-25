@@ -2,7 +2,7 @@ package com.valeriisosliuk.model;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.Set;
 
 public class Hand {
@@ -10,16 +10,12 @@ public class Hand {
 	private Set<Card> cards;
 
 	public Hand() {
-		cards = new HashSet<Card>();
+		cards = EnumSet.noneOf(Card.class);
 	}
 
 	public Hand(Collection<Card> cards) {
 		this();
 		this.cards.addAll(cards);
-	}
-
-	public Hand(Set<Card> cards) {
-		this.cards = cards == null ? new HashSet<Card>() : cards;
 	}
 
 	public void add(Card card) {

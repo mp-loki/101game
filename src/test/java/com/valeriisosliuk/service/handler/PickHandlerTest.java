@@ -20,13 +20,13 @@ public class PickHandlerTest {
 		Table table = getStartedTableFourPlayers();
 		Player currentPlayer = table.getActivePlayer();
 		assertTrue(currentPlayer.isPickAllowed());
-		assertEquals(4, currentPlayer.getHand().getCards().size());
+		assertEquals(4, currentPlayer.getHandSize());
 		ActionDto action = new ActionDto();
 		action.setType(ActionType.PICK);
 		
 		PickHandler handler = new PickHandler();
 		ActionResult result = handler.handle(action, table);
-		assertEquals(5, currentPlayer.getHand().getCards().size());
+		assertEquals(5, currentPlayer.getHandSize());
 		assertEquals(1, result.getGeneralUpdates().size());
 		assertEquals("Homer Picked a card", result.getGeneralUpdates().get(0).getMessages().get(0));
 		PlayerDetail playerDetail = result.getGeneralUpdates().get(0).getPlayerUpdate();

@@ -5,16 +5,18 @@ import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.ActionDto;
 import com.valeriisosliuk.dto.BroadcastDto;
+import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
+import com.valeriisosliuk.model.Player;
 import com.valeriisosliuk.model.Table;
 
 @Component("startHandler")
 public class StartHandler implements ActionHandler {
 
 	@Autowired
-	private TurnAdvisor  turnAdvisor;
-	
+	private TurnAdvisor turnAdvisor;
+
 	@Override
 	public ActionResult handle(ActionDto action, Table table) {
 		ActionResult result = new ActionResult();
@@ -25,11 +27,10 @@ public class StartHandler implements ActionHandler {
 			ResponseDto stateDto = getWaitDto(playerName);
 			result.getPlayerUpdates().put(playerName, stateDto);
 		} else {
-			for (String player : table.getPlayers()) {
-				result.getPlayerUpdates().put(player, getPlayerStateDto(player, table));
+			for (Player player : table.getPlayers()) {
+				result.getPlayerUpdates().put(player.getName(), getPlayerStateDto(player, table));
 			}
 			result.getGeneralUpdates().add(getGeneralMessageDto(table));
-			table.getActivePlayer().setFirstMove(true);
 		}
 		return result;
 	}
@@ -48,19 +49,14 @@ public class StartHandler implements ActionHandler {
 		return dto;
 	}
 
-	public ResponseDto getPlayerStateDto(String playerName, Table table) {
-		ResponseDto dto = new ResponseDto();
-		dto.setCurrentPlayerName(playerName);
-		dto.setLastCard(table.getLastCardInDiscard());
-		dto.setHand(table.getPlayer(playerName).getHand().getCards());
-		dto.setPlayerDetails(table.getSequencedPlayersList(playerName));
-		boolean active = table.isActivePlayer(playerName);
+	public ResponseDto getPlayerStateDto(Player player, Table table) {
+		ResponseDto dto = DtoFactory.getResponseDto(player, table);
+		dto.setPlayerDetails(table.getSequencedPlayersList(player.getName()));
+		boolean active = table.isActivePlayer(player);
 		if (active) {
-			dto.setValidTurnOptions(turnAdvisor.getValidCardsForTurn(table.getPlayersHandCards(playerName), 
+			dto.setValidTurnOptions(turnAdvisor.getValidCardsForTurn(player.getHand().getCards(),
 					table.getLastCardInDiscard(), true));
 		}
-		dto.setPickAllowed(active);
-		dto.setActive(active);
 		return dto;
 	}
 

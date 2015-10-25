@@ -1,7 +1,7 @@
 package com.valeriisosliuk.model;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.Set;
 
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class HandTest {
 
 	@Test
 	public void testHandNoPoints() {
-		Set<Card> cards = new HashSet<Card>();
+		Set<Card> cards = EnumSet.noneOf(Card.class);
 		cards.add(Card._6_OF_SPADES);
 		cards.add(Card._7_OF_HEARTS);
 		cards.add(Card._8_OF_CLUBS);
@@ -29,7 +29,7 @@ public class HandTest {
 
 	@Test
 	public void testShapeOfMyHeart() {
-		Set<Card> cards = new HashSet<Card>();
+		Set<Card> cards = EnumSet.noneOf(Card.class);
 		// He may play the Jack of diamonds
 		cards.add(Card.JACK_OF_DIAMONDS);
 		// He may lay the Queen of spades

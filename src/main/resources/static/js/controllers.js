@@ -1,6 +1,7 @@
 (function(angular) {
   angular.module("gameApp.controllers").controller("GameCtrl", function($scope, $http, GameService) {
-	$scope.info = [];
+	//$scope.info = [];
+	var messages = [];
 	$scope.skip = "Pass";
 	$scope.pickAllowed = false;
     
@@ -38,6 +39,11 @@
          });
     }
     
+    $scope.action = function(card) {
+    	console.log(card);
+    	GameService.send("ACTION", $scope.currentPlayer, card);
+    }
+    
     $scope.pickCard = function() {
     	if ($scope.active && $scope.pickAllowed) {
     		GameService.send("PICK", $scope.currentPlayer);
@@ -48,6 +54,10 @@
     	if ($scope.active) {
     		GameService.send("PASS", $scope.currentPlayer);
     	}
+    }
+    
+    $scope.getMessages = function() {
+    	return messages
     }
 
     var setState = function(data) {
@@ -64,10 +74,15 @@
             setPlayers(data.playerDetails);
     	}
         if (isDefined(data.messages)) {
-        	$scope.info.push.apply($scope.info, data.messages);
+        	//$scope.info.push.apply($scope.info, data.messages);
+        	data.messages.reverse();
+        	messages = data.messages.concat(messages);
         }
     	if (isDefined(data.pickAllowed)) {
     		$scope.pickAllowed = data.pickAllowed;
+    	}
+    	if (isDefined(data.endTurnAllowed)) {
+    		$scope.endTurnAllowed = data.endTurnAllowed;
     	}
     	if (isDefined(data.active)) {
     		$scope.active = data.active;

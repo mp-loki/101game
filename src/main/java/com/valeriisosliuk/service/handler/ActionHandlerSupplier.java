@@ -20,6 +20,10 @@ public class ActionHandlerSupplier {
 	@Qualifier("startHandler")
 	private ActionHandler startHandler;
 	
+	@Autowired
+	@Qualifier("cardMoveHandler")
+	private ActionHandler cardMoveHandler;
+	
 	
 	public ActionHandler getActionHandler(ActionType actionType) {
 		ActionHandler handler = null;
@@ -30,7 +34,7 @@ public class ActionHandlerSupplier {
 					break;
 		case START: handler = startHandler;
 					break;
-		case ACTION: // handle ACTION
+		case ACTION: handler = cardMoveHandler;
 					break;
 		}
 		return handler;

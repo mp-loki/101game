@@ -8,6 +8,7 @@ public class Player {
 	private boolean ready;
 	private boolean pickAllowed;
 	private boolean firstMove;
+	private boolean endTurnAllowed;
 
 	public Player(String name) {
 	    this.name = name;
@@ -61,4 +62,17 @@ public class Player {
 	public void setFirstMove(boolean firstMove) {
 		this.firstMove = firstMove;
 	}
+
+	public boolean isEndTurnAllowed() {
+		return endTurnAllowed;
+	}
+
+	public void setEndTurnAllowed(boolean isPassAllowed) {
+		this.endTurnAllowed = isPassAllowed;
+	}
+
+	public int getHandSize() {
+		return hand.getCards().size();
+	}
+	
 }

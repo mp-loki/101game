@@ -10,6 +10,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.valeriisosliuk.dto.ActionDto;
 import com.valeriisosliuk.dto.ResponseDto;
@@ -18,9 +23,12 @@ import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Table;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes=com.valeriisosliuk.Application.class, loader=AnnotationConfigContextLoader.class)
 public class StartHandlerTest {
 	
-	private ActionHandler startHandler = new StartHandler();
+	@Autowired
+	private ActionHandler startHandler;
 	
 	@Test
 	public void testStartHandler() {

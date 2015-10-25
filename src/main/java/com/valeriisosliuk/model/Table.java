@@ -1,6 +1,7 @@
 package com.valeriisosliuk.model;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -75,7 +76,7 @@ public class Table {
         }
         // Then add all the rest of users except current user
         while (!((player = playerIter.next()).getName().equals(currentPlayer))) {
-            result.put(player.getName(), player.getHand().getCards().size());
+            result.put(player.getName(), player.getHandSize());
         }
         return result;
     }
@@ -89,13 +90,13 @@ public class Table {
         }
         // Then add all the rest of users except current user
         while (!((player = playerIter.next()).getName().equals(currentPlayer))) {
-            result.add(new PlayerDetail(player.getName(), player.getHand().getCards().size()));
+            result.add(new PlayerDetail(player.getName(), player.getHandSize()));
         }
         return result;
     }
 
     public Map<String, Integer> getCardNumsPerPlayer() {
-        return players.stream().collect(Collectors.toMap(Player::getName, p -> p.getHand().getCards().size()));
+        return players.stream().collect(Collectors.toMap(Player::getName, Player::getHandSize));
     }
 
     public Player getPlayer(String name) {
@@ -110,8 +111,11 @@ public class Table {
         return players.stream().anyMatch(p -> p.getName().equals(player));
     }
 
-    public List<String> getPlayers() {
+    public List<String> getPlayerNames() {
         return players.stream().map(Player::getName).collect(Collectors.toList());
+    }
+    public List<Player> getPlayers() {
+    	return Collections.unmodifiableList(players);
     }
 
     public void stop(String name) {
@@ -130,6 +134,10 @@ public class Table {
     public Card getLastCardInDiscard() {
         return discard.getLastCard().orElseThrow(() -> new IllegalStateException("Discard must have at least one card in it"));
     }
+    
+    public void putCardInDiscard(Card card) {
+    	discard.add(card);
+    }
 
     private Iterator<Player> getPlayerIterator() {
         if (playerIterator == null) {
@@ -146,12 +154,27 @@ public class Table {
     }
 
     public Player getNextActivePlayer() {
-        this.activePlayer = getPlayerIterator().next();
-        activePlayer.setPickAllowed(true);
-        return activePlayer;
+    	if (activePlayer != null) {
+    		deactivateCurrentPlayer();
+    	}
+    	activateNextPlayer();
+    	return activePlayer;
     }
 
-    public boolean isStarted() {
+    private void activateNextPlayer() {
+    	activePlayer = getPlayerIterator().next();
+    	activePlayer.setPickAllowed(true);
+        activePlayer.setEndTurnAllowed(true);
+        activePlayer.setFirstMove(true);
+	}
+
+	private void deactivateCurrentPlayer() {
+		activePlayer.setPickAllowed(false);
+        activePlayer.setEndTurnAllowed(false);
+        activePlayer.setFirstMove(false);
+	}
+
+	public boolean isStarted() {
         return started;
     }
 

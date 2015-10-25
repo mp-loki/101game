@@ -16,6 +16,7 @@ public class ResponseDto {
 	private List<String> messages;
 	private boolean pickAllowed;
 	private boolean active;
+	private boolean endTurnAllowed;
 
 	public String getCurrentPlayerName() {
 		return currentPlayerName;
@@ -85,6 +86,14 @@ public class ResponseDto {
 
 	public void setValidTurnOptions(Set<Card> validTurnOptions) {
 		this.validTurnOptions = validTurnOptions;
+	}
+
+	public boolean isEndTurnAllowed() {
+		return endTurnAllowed;
+	}
+
+	public void setEndTurnAllowed(boolean passAllowed) {
+		this.endTurnAllowed = passAllowed;
 	}
 
 	@Override

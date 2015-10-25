@@ -6,6 +6,7 @@ import com.valeriisosliuk.dto.ActionDto;
 import com.valeriisosliuk.dto.BroadcastDto;
 import com.valeriisosliuk.dto.PlayerDetail;
 import com.valeriisosliuk.dto.ResponseDto;
+import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Player;
@@ -24,8 +25,9 @@ public class PickHandler implements ActionHandler {
 		
 		if (lastCard.getRank().equals(Rank._6) || table.getActivePlayer().isPickAllowed()) {
 			currentPlayer.getHand().add(getCardFromDeck(table));
+			currentPlayer.setPickAllowed(false);
 			result.getGeneralUpdates().add(getCardPickedDto(currentPlayer));
-			result.getPlayerUpdates().put(currentPlayer.getName(), getHandUpdatedDto(currentPlayer, lastCard, table));
+			result.getPlayerUpdates().put(currentPlayer.getName(), getHandUpdatedDto(currentPlayer, table));
 			
 		} else {
 			ResponseDto dto = new ResponseDto();
@@ -35,14 +37,11 @@ public class PickHandler implements ActionHandler {
 		return result;
 	}
 	
-	private ResponseDto getHandUpdatedDto(Player currentPlayer, Card lastCard, Table table) {
-		ResponseDto dto = new ResponseDto();
-		dto.setCurrentPlayerName(currentPlayer.getName());
-		dto.setHand(currentPlayer.getHand().getCards());
-		dto.setActive(table.isActivePlayer(currentPlayer));
-		if (lastCard.getRank() != Rank._6) {
-			currentPlayer.setPickAllowed(false);
-			dto.setPickAllowed(false);
+	private ResponseDto getHandUpdatedDto(Player currentPlayer, Table table) {
+		ResponseDto dto = DtoFactory.getResponseDto(currentPlayer, table);
+		if (table.getLastCardInDiscard().getRank() == Rank._6) {
+			currentPlayer.setPickAllowed(true);
+			dto.setPickAllowed(true);
 		}
 		return dto;
 	}

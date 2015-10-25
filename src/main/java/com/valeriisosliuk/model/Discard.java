@@ -16,7 +16,7 @@ public class Discard {
 	}
 	
 	public void add(Card card) {
-		discard.add(card);
+		discard.add(0, card);
 	}
 	
 	public CardDeck turnOver() {

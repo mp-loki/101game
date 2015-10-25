@@ -40,16 +40,16 @@
             </div>
             <div class="row col-sm-4 col-sm-offset-4">
                 <div class="width_100 height_96px">
-                    <div data-ng-repeat="card in hand" class="sprite card {{card}} card_{{$index + 1}} position-absolute"></div>
+                    <div data-ng-repeat="card in hand" id="{{card}}" data-ng-click="action(card)" class="sprite card {{card}} card_{{$index + 1}} position-absolute"></div>
                 </div>
                 <p>{{currentPlayer}}</p>
-                <button type="button" class="btn btn-default" data-ng-click="pass()" data-ng-show="active">{{skip}}</button>
+                <button type="button" class="btn btn-default" data-ng-click="pass()" data-ng-show="endTurnAllowed">{{skip}}</button>
             </div>
         </div>
         <div class="col-sm-2">
             <a href="" data-ng-click="startGame()" data-ng-hide="startGameRequested">Start Game</a>
             <hr />
-            <p data-ng-repeat="msg in info track by $index" class="message">
+            <p data-ng-repeat="msg in getMessages() track by $index" class="message">
                 <span>{{msg}}</span>
             </p>
         </div>
