@@ -13,7 +13,7 @@ public class ResponseDto {
 	private Card lastCard;
 	private Set<Card> hand;
 	private Set<Card> validTurnOptions; 
-	private List<PlayerCardsCountDto> playerDetails;
+	private List<PlayerCardsCountDto> playerInfo;
 	private List<String> messages;
 	private boolean pickAllowed;
 	private boolean active;
@@ -23,15 +23,15 @@ public class ResponseDto {
 		return currentPlayerName;
 	}
 
-	public List<PlayerCardsCountDto> getPlayerDetails() {
-		if (playerDetails == null) {
-			playerDetails = new LinkedList<>();
+	public List<PlayerCardsCountDto> getPlayerInfo() {
+		if (playerInfo == null) {
+			playerInfo = new LinkedList<>();
 		}
-		return playerDetails;
+		return playerInfo;
 	}
 
-	public void setPlayerDetails(List<PlayerCardsCountDto> playerDetails) {
-		this.playerDetails = playerDetails;
+	public void setPlayerInfo(List<PlayerCardsCountDto> playerInfo) {
+		this.playerInfo = playerInfo;
 	}
 
 	public void setCurrentPlayerName(String currentPlayerName) {
@@ -104,7 +104,7 @@ public class ResponseDto {
 	@Override
 	public String toString() {
 		return "ResponseDto [currentPlayerName=" + currentPlayerName + ", lastCard=" + lastCard + ", hand=" + hand
-				+ ", validTurnOptions=" + validTurnOptions + ", playerDetails=" + playerDetails + ", messages="
+				+ ", validTurnOptions=" + validTurnOptions + ", playerDetails=" + playerInfo + ", messages="
 				+ messages + ", pickAllowed=" + pickAllowed + ", active=" + active + "]";
 	}
 

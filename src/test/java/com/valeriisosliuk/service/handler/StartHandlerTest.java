@@ -89,40 +89,40 @@ public class StartHandlerTest {
 		assertFalse(responseDto4.isPickAllowed());
 		assertFalse(responseDto4.isActive());
 		
-		assertEquals(3, responseDto1.getPlayerDetails().size());
-		assertEquals(3, responseDto2.getPlayerDetails().size());
-		assertEquals(3, responseDto3.getPlayerDetails().size());
-		assertEquals(3, responseDto4.getPlayerDetails().size());
+		assertEquals(3, responseDto1.getPlayerInfo().size());
+		assertEquals(3, responseDto2.getPlayerInfo().size());
+		assertEquals(3, responseDto3.getPlayerInfo().size());
+		assertEquals(3, responseDto4.getPlayerInfo().size());
 		
-		assertEquals(BART, responseDto1.getPlayerDetails().get(0).getName());
-		assertEquals(4, responseDto1.getPlayerDetails().get(0).getCardCount());
-		assertEquals(MARGE, responseDto1.getPlayerDetails().get(1).getName());
-		assertEquals(4, responseDto1.getPlayerDetails().get(1).getCardCount());
-		assertEquals(LISA, responseDto1.getPlayerDetails().get(2).getName());
-		assertEquals(4, responseDto1.getPlayerDetails().get(2).getCardCount());
+		assertEquals(BART, responseDto1.getPlayerInfo().get(0).getName());
+		assertEquals(4, responseDto1.getPlayerInfo().get(0).getCardCount());
+		assertEquals(MARGE, responseDto1.getPlayerInfo().get(1).getName());
+		assertEquals(4, responseDto1.getPlayerInfo().get(1).getCardCount());
+		assertEquals(LISA, responseDto1.getPlayerInfo().get(2).getName());
+		assertEquals(4, responseDto1.getPlayerInfo().get(2).getCardCount());
 		
-		assertEquals(MARGE, responseDto2.getPlayerDetails().get(0).getName());
-		assertEquals(4, responseDto2.getPlayerDetails().get(0).getCardCount());
-		assertEquals(LISA, responseDto2.getPlayerDetails().get(1).getName());
-		assertEquals(4, responseDto2.getPlayerDetails().get(1).getCardCount());
-		assertEquals(HOMER, responseDto2.getPlayerDetails().get(2).getName());
-		assertEquals(4, responseDto2.getPlayerDetails().get(2).getCardCount());
+		assertEquals(MARGE, responseDto2.getPlayerInfo().get(0).getName());
+		assertEquals(4, responseDto2.getPlayerInfo().get(0).getCardCount());
+		assertEquals(LISA, responseDto2.getPlayerInfo().get(1).getName());
+		assertEquals(4, responseDto2.getPlayerInfo().get(1).getCardCount());
+		assertEquals(HOMER, responseDto2.getPlayerInfo().get(2).getName());
+		assertEquals(4, responseDto2.getPlayerInfo().get(2).getCardCount());
 		
 		
-		assertEquals(LISA, responseDto3.getPlayerDetails().get(0).getName());
-		assertEquals(4, responseDto3.getPlayerDetails().get(0).getCardCount());
-		assertEquals(HOMER, responseDto3.getPlayerDetails().get(1).getName());
-		assertEquals(4, responseDto3.getPlayerDetails().get(1).getCardCount());
-		assertEquals(BART, responseDto3.getPlayerDetails().get(2).getName());
-		assertEquals(4, responseDto3.getPlayerDetails().get(2).getCardCount());
+		assertEquals(LISA, responseDto3.getPlayerInfo().get(0).getName());
+		assertEquals(4, responseDto3.getPlayerInfo().get(0).getCardCount());
+		assertEquals(HOMER, responseDto3.getPlayerInfo().get(1).getName());
+		assertEquals(4, responseDto3.getPlayerInfo().get(1).getCardCount());
+		assertEquals(BART, responseDto3.getPlayerInfo().get(2).getName());
+		assertEquals(4, responseDto3.getPlayerInfo().get(2).getCardCount());
 		
-		assertEquals(4, responseDto4.getPlayerDetails().get(2).getCardCount());
-		assertEquals(HOMER, responseDto4.getPlayerDetails().get(0).getName());
-		assertEquals(4, responseDto4.getPlayerDetails().get(0).getCardCount());
-		assertEquals(BART, responseDto4.getPlayerDetails().get(1).getName());
-		assertEquals(4, responseDto4.getPlayerDetails().get(1).getCardCount());
-		assertEquals(MARGE, responseDto4.getPlayerDetails().get(2).getName());
-		assertEquals(4, responseDto4.getPlayerDetails().get(2).getCardCount());
+		assertEquals(4, responseDto4.getPlayerInfo().get(2).getCardCount());
+		assertEquals(HOMER, responseDto4.getPlayerInfo().get(0).getName());
+		assertEquals(4, responseDto4.getPlayerInfo().get(0).getCardCount());
+		assertEquals(BART, responseDto4.getPlayerInfo().get(1).getName());
+		assertEquals(4, responseDto4.getPlayerInfo().get(1).getCardCount());
+		assertEquals(MARGE, responseDto4.getPlayerInfo().get(2).getName());
+		assertEquals(4, responseDto4.getPlayerInfo().get(2).getCardCount());
 	}
 	
 	private ActionDto getActionDto(String playerName) {

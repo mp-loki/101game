@@ -70,8 +70,11 @@
     	if (isDefined(data.lastCard)) {
     		$scope.lastCard = data.lastCard;
     	}
+    	if (isDefined(data.playerInfo)) {
+            setPlayers(data.playerInfo);
+    	}
     	if (isDefined(data.playerDetails)) {
-            setPlayers(data.playerDetails);
+    		messages = data.playerDetails.concat(messages);
     	}
         if (isDefined(data.messages)) {
         	//$scope.info.push.apply($scope.info, data.messages);
@@ -89,6 +92,9 @@
     	}
     	if (isDefined(data.playerUpdate)) {
     		updatePlayerCardCount(data.playerUpdate);
+    	}
+    	if (isDefined(data.type) && data.type == "GAME_OVER") {
+    		messages = ["Game Over"].concat(messages);
     	}
     }
     

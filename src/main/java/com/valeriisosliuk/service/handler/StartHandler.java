@@ -16,23 +16,30 @@ public class StartHandler implements ActionHandler {
 
 	@Autowired
 	private TurnAdvisor turnAdvisor;
+	
+	@Autowired
+	private DealProcessor dealProcessor;
 
 	@Override
 	public ActionResult handle(ActionDto action, Table table) {
-		ActionResult result = new ActionResult();
+		ActionResult result = null;
 		String playerName = action.getCurrentPlayer();
 		boolean started = table.start(playerName);
 
 		if (!started) {
 			ResponseDto stateDto = getWaitDto(playerName);
+			result = new ActionResult();
 			result.getPlayerUpdates().put(playerName, stateDto);
 		} else {
+		    /*
 			for (Player player : table.getPlayers()) {
 				if (table.isActivePlayer(player)) {
 					player.setValidNextMoveOptions(turnAdvisor.getValidCardsForTurn(player.getHand(), table.getLastCardInDiscard(), true));
 				}
 				result.getPlayerUpdates().put(player.getName(), getPlayerStateDto(player, table));
 			}
+			*/
+		    result = dealProcessor.startDeal(table);
 			result.getGeneralUpdates().add(getGeneralMessageDto(table));
 		}
 		return result;
@@ -54,7 +61,7 @@ public class StartHandler implements ActionHandler {
 
 	public ResponseDto getPlayerStateDto(Player player, Table table) {
 		ResponseDto dto = DtoFactory.getResponseDto(player, table);
-		dto.setPlayerDetails(table.getSequencedPlayersList(player.getName()));
+		dto.setPlayerInfo(table.getSequencedPlayersList(player.getName()));
 		return dto;
 	}
 

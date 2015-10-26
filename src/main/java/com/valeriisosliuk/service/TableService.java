@@ -77,13 +77,13 @@ public class TableService {
 
 	private void doActionPostProcessing(Table table) {
 		if (dealProcessor.isDealEnded(table)) {
-			TerminalDto dealEndedDto = dealProcessor.processDealEnd(table);
+			TerminalDto dealEndedDto = dealProcessor.endDeal(table);
 			messageService.sendToAll(dealEndedDto);
 			if (dealProcessor.isGameEnded(table)) {
-				TerminalDto gameEndedDto = dealProcessor.processGameEnd(table);
+				TerminalDto gameEndedDto = dealProcessor.endGame(table);
 				messageService.sendToAll(gameEndedDto);
 			} else {
-				ActionResult actionResult = dealProcessor.processDealStart(table);
+				ActionResult actionResult = dealProcessor.startDeal(table);
 				messageService.processActionResult(actionResult);
 			}
 		}
