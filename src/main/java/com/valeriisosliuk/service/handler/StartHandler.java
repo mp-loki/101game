@@ -5,10 +5,8 @@ import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.ActionDto;
 import com.valeriisosliuk.dto.BroadcastDto;
-import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
-import com.valeriisosliuk.model.Player;
 import com.valeriisosliuk.model.Table;
 
 @Component("startHandler")
@@ -31,14 +29,6 @@ public class StartHandler implements ActionHandler {
 			result = new ActionResult();
 			result.getPlayerUpdates().put(playerName, stateDto);
 		} else {
-		    /*
-			for (Player player : table.getPlayers()) {
-				if (table.isActivePlayer(player)) {
-					player.setValidNextMoveOptions(turnAdvisor.getValidCardsForTurn(player.getHand(), table.getLastCardInDiscard(), true));
-				}
-				result.getPlayerUpdates().put(player.getName(), getPlayerStateDto(player, table));
-			}
-			*/
 		    result = dealProcessor.startDeal(table);
 			result.getGeneralUpdates().add(getGeneralMessageDto(table));
 		}
@@ -58,11 +48,4 @@ public class StartHandler implements ActionHandler {
 		dto.getMessages().add("Waiting for other players");
 		return dto;
 	}
-
-	public ResponseDto getPlayerStateDto(Player player, Table table) {
-		ResponseDto dto = DtoFactory.getResponseDto(player, table);
-		dto.setPlayerInfo(table.getSequencedPlayersList(player.getName()));
-		return dto;
-	}
-
 }

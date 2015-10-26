@@ -7,61 +7,64 @@
 <link rel="stylesheet" href="/css/sprite-cards.css"></link>
 </head>
 <body data-ng-app="gameApp">
-    <h2 th:text="${currentPlayer}"></h2>
-    <form id="logout" th:action="@{/logout}" method="post">
-        <button type="submit" class="btn btn-link">Logout</button>
-    </form>
+	<h2 th:text="${currentPlayer}"></h2>
+	<form id="logout" th:action="@{/logout}" method="post">
+		<button type="submit" class="btn btn-link">Logout</button>
+	</form>
 
-    <div data-ng-controller="GameCtrl" class="container width_100 height_70">
-        <div class="col-sm-8 col-sm-offset-2">
-            <div class="row text-center height_120px margin_bottom_30px">
-                <div class="col-sm-4 col-sm-offset-4" data-ng-show="frontPlayer">
-                    <p>{{frontPlayer.name}}</p>
-                    <div data-ng-show="frontPlayer" data-ng-repeat="n in frontPlayerRange()" class="sprite coverv position-absolute front-player-card-{{n}}"></div>
-                </div>
-            </div>
-            <div class="row height_120px margin_bottom_30px">
-                <div class="col-sm-2 col-sm-offset-2">
-                    <p class="float-left">{{leftPlayer.name}}</p>
-                    <div class="width_96px height_100" data-ng-show="leftPlayer">
-                        <div data-ng-repeat="n in leftPlayerRange()" class="sprite coverh position-absolute left-player-card-{{n}}"></div>
-                    </div>
-                </div>
-                <div class="col-sm-4 display-inline height_100">
-                    <div class="sprite {{lastCard}} float-left"></div>
-                    <div class="sprite coverv float-left deck" data-ng-click="pickCard()"></div>
-                </div>
-                <div class="col-sm-2 height_100">
-                    <div class="width_96px height_100 float-left" data-ng-show="rightPlayer">
-                        <div data-ng-repeat="n in rightPlayerRange()" class="sprite coverh position-absolute right-player-card-{{n}}"></div>
-                    </div>
-                    <p class="float-left">{{rightPlayer.name}}</p>
-                </div>
-            </div>
-            <div class="row col-sm-4 col-sm-offset-4">
-                <div class="width_100 height_96px">
-                    <div data-ng-repeat="card in hand" id="{{card}}" data-ng-click="action(card)" class="sprite card {{card}} card_{{$index + 1}} position-absolute"></div>
-                </div>
-                <p>{{currentPlayer}}</p>
-                <button type="button" class="btn btn-default" data-ng-click="pass()" data-ng-show="endTurnAllowed">{{skip}}</button>
-            </div>
-        </div>
-        <div class="col-sm-2">
-            <a href="" data-ng-click="startGame()" data-ng-hide="startGameRequested">Start Game</a>
-            <hr />
-            <p data-ng-repeat="msg in getMessages() track by $index" class="message">
-                <span>{{msg}}</span>
-            </p>
-        </div>
-    </div>
-    <script src="js/sockjs-0.3.4.js"></script>
-    <script src="js/stomp.js"></script>
-    <script src="js/angular.js"></script>
-    <script src="js/lodash.min.js"></script>
-    <script src="js/app.js" type="text/javascript"></script>
-    <script src="js/controllers.js" type="text/javascript"></script>
-    <script src="js/services.js" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<div data-ng-controller="GameCtrl" class="container width_100 height_70">
+		<div class="col-sm-8 col-sm-offset-2">
+			<div class="row text-center height_120px margin_bottom_30px">
+				<div class="col-sm-4 col-sm-offset-4" data-ng-show="frontPlayer">
+					<p>{{frontPlayer.name}}</p>
+					<div data-ng-show="frontPlayer" data-ng-repeat="n in frontPlayerRange()" class="sprite coverv position-absolute front-player-card-{{n}}"></div>
+				</div>
+			</div>
+			<div class="row height_120px margin_bottom_30px">
+				<div class="col-sm-2 col-sm-offset-2">
+					<p class="float-left">{{leftPlayer.name}}</p>
+					<div class="width_96px height_100" data-ng-show="leftPlayer">
+						<div data-ng-repeat="n in leftPlayerRange()" class="sprite coverh position-absolute left-player-card-{{n}}"></div>
+					</div>
+				</div>
+				<div class="col-sm-4 display-inline height_100">
+					<div class="sprite {{lastCard}} float-left"></div>
+					<div class="sprite coverv float-left deck" data-ng-click="pickCard()"></div>
+				</div>
+				<div class="col-sm-2 height_100">
+					<div class="width_96px height_100 float-left" data-ng-show="rightPlayer">
+						<div data-ng-repeat="n in rightPlayerRange()" class="sprite coverh position-absolute right-player-card-{{n}}"></div>
+					</div>
+					<p class="float-left">{{rightPlayer.name}}</p>
+				</div>
+			</div>
+			<div class="row col-sm-4 col-sm-offset-4">
+				<div class="width_100 height_96px">
+					<div data-ng-repeat="card in hand" id="{{card}}" data-ng-click="action(card)" class="sprite card {{card}} card_{{$index + 1}} position-absolute"></div>
+				</div>
+				<p>{{currentPlayer}}</p>
+				<button type="button" class="btn btn-default" data-ng-click="pass()" data-ng-show="endTurnAllowed">{{skip}}</button>
+			</div>
+		</div>
+		<div class="col-sm-2  height_100">
+			<a href="" data-ng-click="startGame()" data-ng-hide="startGameRequested">Start Game</a>
+			<hr />
+			<div class="pre-scrollable height_100">
+				<p data-ng-repeat="msg in getMessages() track by $index" class="message">
+					<span>{{msg}}</span>
+				</p>
+			</div>
+		</div>
+
+	</div>
+	<script src="js/sockjs-0.3.4.js"></script>
+	<script src="js/stomp.js"></script>
+	<script src="js/angular.js"></script>
+	<script src="js/lodash.min.js"></script>
+	<script src="js/app.js" type="text/javascript"></script>
+	<script src="js/controllers.js" type="text/javascript"></script>
+	<script src="js/services.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>

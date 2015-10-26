@@ -66,7 +66,7 @@ public class NextTurnProcessor {
 			skippedPlayer.getHand().add(card);
 		}
 		String message1 =  skippedPlayer.getName() + " Skips turn because of 8!";
-		String message2 =  skippedPlayer.getName() + " gets " + eightsInCurrentTurn * 2 + "cards";
+		String message2 =  skippedPlayer.getName() + " gets " + eightsInCurrentTurn * 2 + " cards";
 		BroadcastDto broadcastDto = DtoFactory.getBroadcastDto(skippedPlayer, table, skippedPlayer.getName() + message1, message2);
 		ResponseDto playerDto = DtoFactory.getResponseDto(skippedPlayer, table);
 		result.getGeneralUpdates().add(broadcastDto);
