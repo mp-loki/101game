@@ -21,6 +21,7 @@ public class Discard {
 	
 	public CardDeck turnOver() {
 	    Card lastCard = getLastCard().get();
+	    discard.remove(lastCard);
 		Shuffle.shuffle(discard);
 		CardDeck cardDeck = new CardDeck(discard);
 		discard =  new LinkedList<>();

@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 import static com.valeriisosliuk.util.TestUtil.*;
 
 import com.valeriisosliuk.dto.ActionDto;
-import com.valeriisosliuk.dto.PlayerDetail;
+import com.valeriisosliuk.dto.PlayerCardsCountDto;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Player;
@@ -29,7 +29,7 @@ public class PickHandlerTest {
 		assertEquals(5, currentPlayer.getHandSize());
 		assertEquals(1, result.getGeneralUpdates().size());
 		assertEquals("Homer Picked a card", result.getGeneralUpdates().get(0).getMessages().get(0));
-		PlayerDetail playerDetail = result.getGeneralUpdates().get(0).getPlayerUpdate();
+		PlayerCardsCountDto playerDetail = result.getGeneralUpdates().get(0).getPlayerUpdate();
 		assertEquals("Homer", playerDetail.getName());
 		assertEquals(5, playerDetail.getCardCount());
 	}

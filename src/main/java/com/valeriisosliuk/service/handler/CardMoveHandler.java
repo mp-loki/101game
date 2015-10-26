@@ -8,7 +8,6 @@ import org.springframework.util.CollectionUtils;
 
 import com.valeriisosliuk.dto.ActionDto;
 import com.valeriisosliuk.dto.BroadcastDto;
-import com.valeriisosliuk.dto.PlayerDetail;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.model.ActionResult;
@@ -29,7 +28,7 @@ public class CardMoveHandler implements ActionHandler {
 
 	@Autowired
 	private NextTurnProcessor nextTurnProcessor;
-
+	
 	@Override
 	public ActionResult handle(ActionDto action, Table table) {
 		ActionResult result = new ActionResult();
@@ -55,10 +54,11 @@ public class CardMoveHandler implements ActionHandler {
 		player.setFirstMove(false);
 		table.putCardInDiscard(actionCard);
 		if (actionCard.getRank() == Rank._6) {
-			player.setPickAllowed(false);
+			player.setPickAllowed(true);
 		} else {
 			player.setPickAllowed(false);
 		}
+
 		player.setValidNextMoveOptions(turnAdvisor.getValidCardsForTurn(player.getHand(), table.getLastCardInDiscard(),
 				player.isFirstMove()));
 		result.getGeneralUpdates().add(getCardMoveDto(player, table));
@@ -89,8 +89,6 @@ public class CardMoveHandler implements ActionHandler {
 	}
 
 	private boolean isValid(Card card, Card lastCard, boolean firstMove) {
-
 		return validatorSupplier.getValidator(lastCard, firstMove).validate(card, lastCard);
 	}
-
 }

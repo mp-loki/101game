@@ -8,11 +8,12 @@ import com.valeriisosliuk.model.Card;
 
 public class ResponseDto {
 
+	private ResponseDtoType type = ResponseDtoType.RESPONSE;
 	private String currentPlayerName;
 	private Card lastCard;
 	private Set<Card> hand;
 	private Set<Card> validTurnOptions; 
-	private List<PlayerDetail> playerDetails;
+	private List<PlayerCardsCountDto> playerDetails;
 	private List<String> messages;
 	private boolean pickAllowed;
 	private boolean active;
@@ -22,14 +23,14 @@ public class ResponseDto {
 		return currentPlayerName;
 	}
 
-	public List<PlayerDetail> getPlayerDetails() {
+	public List<PlayerCardsCountDto> getPlayerDetails() {
 		if (playerDetails == null) {
 			playerDetails = new LinkedList<>();
 		}
 		return playerDetails;
 	}
 
-	public void setPlayerDetails(List<PlayerDetail> playerDetails) {
+	public void setPlayerDetails(List<PlayerCardsCountDto> playerDetails) {
 		this.playerDetails = playerDetails;
 	}
 
@@ -94,6 +95,10 @@ public class ResponseDto {
 
 	public void setEndTurnAllowed(boolean passAllowed) {
 		this.endTurnAllowed = passAllowed;
+	}
+	
+	public ResponseDtoType getType() {
+		return type;
 	}
 
 	@Override

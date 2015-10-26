@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.valeriisosliuk.dto.BroadcastDto;
+import com.valeriisosliuk.dto.TerminalDto;
 import com.valeriisosliuk.dto.ResponseDto;
 
 public class ActionResult {
 	
 	private Map<String, ResponseDto> playerUpdates;
 	private List<BroadcastDto> generalUpdates;
+	private TerminalDto dealEndedDto;
 	
 	public Map<String, ResponseDto> getPlayerUpdates() {
 		if (playerUpdates == null) {
@@ -30,5 +32,11 @@ public class ActionResult {
 	}
 	public void setGeneralUpdates(List<BroadcastDto> generalUpdates) {
 		this.generalUpdates = generalUpdates;
+	}
+	public TerminalDto getDealEndedDto() {
+		return dealEndedDto;
+	}
+	public void setDealEndedDto(TerminalDto dealEndedDto) {
+		this.dealEndedDto = dealEndedDto;
 	}
 }

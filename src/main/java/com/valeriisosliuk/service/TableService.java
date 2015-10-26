@@ -13,10 +13,13 @@ import org.springframework.stereotype.Component;
 import com.valeriisosliuk.dto.ActionDto;
 import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.dto.ResponseDto;
+import com.valeriisosliuk.dto.TerminalDto;
 import com.valeriisosliuk.model.ActionResult;
+import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.handler.ActionHandler;
 import com.valeriisosliuk.service.handler.ActionHandlerSupplier;
+import com.valeriisosliuk.service.handler.DealProcessor;
 import com.valeriisosliuk.service.handler.NextTurnProcessor;
 
 @Component
@@ -26,12 +29,15 @@ public class TableService {
 
 	@Autowired
 	private ActionHandlerSupplier handlerSupplier;
-	
+
 	@Autowired
 	private MessageService messageService;
-	
+
 	@Autowired
 	private NextTurnProcessor nextTurnProcessor;
+
+	@Autowired
+	private DealProcessor dealProcessor;
 
 	@PostConstruct
 	public void init() {
@@ -43,7 +49,8 @@ public class TableService {
 	}
 
 	public Table joinFirstAvailableTable(String playername) {
-		return getTable((t, m) -> t.getPlayerNames().size() < m, Table.MAX_PLAYERS_AT_THE_TABLE).orElse(createNewTable());
+		return getTable((t, m) -> t.getPlayerNames().size() < m, Table.MAX_PLAYERS_AT_THE_TABLE).orElse(
+				createNewTable());
 	}
 
 	public Table joinTable(String playerName) {
@@ -63,8 +70,25 @@ public class TableService {
 		if (result != null) {
 			messageService.processActionResult(result);
 		}
+		if (action.getType() == ActionType.ACTION) {
+			doActionPostProcessing(table);
+		}
 	}
-	
+
+	private void doActionPostProcessing(Table table) {
+		if (dealProcessor.isDealEnded(table)) {
+			TerminalDto dealEndedDto = dealProcessor.processDealEnd(table);
+			messageService.sendToAll(dealEndedDto);
+			if (dealProcessor.isGameEnded(table)) {
+				TerminalDto gameEndedDto = dealProcessor.processGameEnd(table);
+				messageService.sendToAll(gameEndedDto);
+			} else {
+				ActionResult actionResult = dealProcessor.processDealStart(table);
+				messageService.processActionResult(actionResult);
+			}
+		}
+	}
+
 	private Table createNewTable() {
 		Table table = new Table();
 		tables.add(table);
@@ -74,9 +98,12 @@ public class TableService {
 	public <T> Optional<Table> getTable(BiFunction<Table, T, Boolean> function, T t) {
 		return tables.stream().filter(table -> function.apply(table, t)).findFirst();
 	}
+
 	/**
 	 * This method is to be called upon page refresh to provide state to user
-	 * @param playerName player to get state for
+	 * 
+	 * @param playerName
+	 *            player to get state for
 	 * @return StateDto for specified player
 	 */
 	public ResponseDto getStateDto(String playerName) {

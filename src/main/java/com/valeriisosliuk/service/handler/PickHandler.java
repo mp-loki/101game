@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.ActionDto;
 import com.valeriisosliuk.dto.BroadcastDto;
-import com.valeriisosliuk.dto.PlayerDetail;
+import com.valeriisosliuk.dto.PlayerCardsCountDto;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.model.ActionResult;
@@ -24,7 +24,7 @@ public class PickHandler implements ActionHandler {
 		ActionResult result = new ActionResult();
 		
 		if (lastCard.getRank().equals(Rank._6) || table.getActivePlayer().isPickAllowed()) {
-			currentPlayer.getHand().add(getCardFromDeck(table));
+			currentPlayer.getHand().add(table.getCardFromDeck());
 			currentPlayer.setPickAllowed(false);
 			result.getGeneralUpdates().add(getCardPickedDto(currentPlayer));
 			result.getPlayerUpdates().put(currentPlayer.getName(), getHandUpdatedDto(currentPlayer, table));
@@ -49,16 +49,11 @@ public class PickHandler implements ActionHandler {
 	private BroadcastDto getCardPickedDto(Player currentPlayer) {
 		BroadcastDto dto = new BroadcastDto();
 		dto.getMessages().add(currentPlayer.getName() + " Picked a card");
-		PlayerDetail playerDetail = new PlayerDetail(currentPlayer.getName(), currentPlayer.getHand().size());
+		PlayerCardsCountDto playerDetail = new PlayerCardsCountDto(currentPlayer.getName(), currentPlayer.getHand().size());
 		dto.setPlayerUpdate(playerDetail);
 		return dto;
 	}
 
-	private Card getCardFromDeck(Table table) {
-		if (!table.cardDeckHasNext()) {
-			table.turnOver();
-		}
-		return table.getCardFromDeck().get();
-	}
+	
 
 }

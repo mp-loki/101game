@@ -7,8 +7,9 @@ import com.valeriisosliuk.model.Card;
 
 public class BroadcastDto {
 	
+	private ResponseDtoType type = ResponseDtoType.BROADCAST;
 	private Card lastCard;
-	private PlayerDetail playerUpdate;
+	private PlayerCardsCountDto playerUpdate;
 	private List<String> messages;
 	public Card getLastCard() {
 		return lastCard;
@@ -16,10 +17,10 @@ public class BroadcastDto {
 	public void setLastCard(Card lastCard) {
 		this.lastCard = lastCard;
 	}
-	public PlayerDetail getPlayerUpdate() {
+	public PlayerCardsCountDto getPlayerUpdate() {
 		return playerUpdate;
 	}
-	public void setPlayerUpdate(PlayerDetail playerUpdate) {
+	public void setPlayerUpdate(PlayerCardsCountDto playerUpdate) {
 		this.playerUpdate = playerUpdate;
 	}
 	public List<String> getMessages() {
@@ -34,5 +35,9 @@ public class BroadcastDto {
 	@Override
 	public String toString() {
 		return "BroadcastDto [lastCard=" + lastCard + ", playerUpdate=" + playerUpdate + ", messages=" + messages + "]";
+	}
+	
+	public ResponseDtoType getType() {
+		return type;
 	}
 }

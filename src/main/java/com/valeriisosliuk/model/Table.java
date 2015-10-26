@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Iterators;
-import com.valeriisosliuk.dto.PlayerDetail;
+import com.valeriisosliuk.dto.PlayerCardsCountDto;
 import com.valeriisosliuk.util.Shuffle;
 
 public class Table {
@@ -45,6 +45,26 @@ public class Table {
         } else {
             return false;
         }
+    }
+    
+    public void endCurrentDeal() {
+    	for (Player player : players) {
+    		int handPoints = player.getHand().stream().mapToInt(c -> c.getRank().getPoints()).sum();
+    		player.addPoints(handPoints);
+    	} 
+    }
+    
+    public void startNewDeal() {
+    	List<Card> allCards = Arrays.asList(Card.values());
+        cardDeck = new CardDeck(Shuffle.shuffle(allCards));
+        discard = new Discard(cardDeck.getNext().get());
+        for (Player player : players) {
+        	player.setHand(cardDeck.getInitialHand());
+        	player.setEndTurnAllowed(false);
+        	player.setFirstMove(false);
+        	player.setPickAllowed(false);
+        }
+        getNextActivePlayer();
     }
 
     public boolean start(String userName) {
@@ -81,8 +101,8 @@ public class Table {
         return result;
     }
 
-    public List<PlayerDetail> getSequencedPlayersList(String currentPlayer) {
-        List<PlayerDetail> result = new LinkedList<>();
+    public List<PlayerCardsCountDto> getSequencedPlayersList(String currentPlayer) {
+        List<PlayerCardsCountDto> result = new LinkedList<>();
         Iterator<Player> playerIter = Iterators.cycle(players);
         Player player = null;
         // roll playerIter until current user is met
@@ -90,7 +110,7 @@ public class Table {
         }
         // Then add all the rest of users except current user
         while (!((player = playerIter.next()).getName().equals(currentPlayer))) {
-            result.add(new PlayerDetail(player.getName(), player.getHandSize()));
+            result.add(new PlayerCardsCountDto(player.getName(), player.getHandSize()));
         }
         return result;
     }
@@ -127,9 +147,12 @@ public class Table {
         return cardDeck.hasNext();
     }
 
-    public Optional<Card> getCardFromDeck() {
-        return cardDeck.getNext();
-    }
+    public Card getCardFromDeck() {
+		if (!cardDeck.hasNext()) {
+			turnOver();
+		}
+		return cardDeck.getNext().get();
+	}
 
     public Card getLastCardInDiscard() {
         return discard.getLastCard().orElseThrow(() -> new IllegalStateException("Discard must have at least one card in it"));
