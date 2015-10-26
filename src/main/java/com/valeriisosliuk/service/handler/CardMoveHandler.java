@@ -55,8 +55,10 @@ public class CardMoveHandler implements ActionHandler {
 		table.putCardInDiscard(actionCard);
 		if (actionCard.getRank() == Rank._6) {
 			player.setPickAllowed(true);
+			player.setEndTurnAllowed(false);
 		} else {
 			player.setPickAllowed(false);
+			player.setEndTurnAllowed(true);
 		}
 
 		player.setValidNextMoveOptions(turnAdvisor.getValidCardsForTurn(player.getHand(), table.getLastCardInDiscard(),

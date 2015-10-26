@@ -1,5 +1,6 @@
 package com.valeriisosliuk.service.handler;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.ActionDto;
@@ -15,6 +16,12 @@ import com.valeriisosliuk.model.Table;
 
 @Component("pickHandler")
 public class PickHandler implements ActionHandler {
+	
+	@Autowired
+	private NextTurnProcessor nextTurnProcessor;
+	
+	@Autowired
+	private TurnAdvisor turnAdvisor;
 
 	@Override
 	public ActionResult handle(ActionDto action, Table table) {
@@ -26,17 +33,28 @@ public class PickHandler implements ActionHandler {
 		if (lastCard.getRank().equals(Rank._6) || table.getActivePlayer().isPickAllowed()) {
 			currentPlayer.getHand().add(table.getCardFromDeck());
 			currentPlayer.setPickAllowed(false);
+			if (!lastCard.getRank().equals(Rank._6)) {
+				currentPlayer.setEndTurnAllowed(true);
+			}
 			result.getGeneralUpdates().add(getCardPickedDto(currentPlayer));
 			result.getPlayerUpdates().put(currentPlayer.getName(), getHandUpdatedDto(currentPlayer, table));
-			
+			checkTurnEnd(table);
 		} else {
 			ResponseDto dto = new ResponseDto();
 			dto.getMessages().add("Cannot pick more cards");
 			result.getPlayerUpdates().put(currentPlayer.getName(), dto);
 		}
+		currentPlayer.setValidNextMoveOptions(turnAdvisor.getValidCardsForTurn(currentPlayer.getHand(), table.getLastCardInDiscard(), 
+				currentPlayer.isFirstMove()));
+		nextTurnProcessor.processNextMove(table, result);
 		return result;
 	}
 	
+	private void checkTurnEnd(Table table) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private ResponseDto getHandUpdatedDto(Player currentPlayer, Table table) {
 		ResponseDto dto = DtoFactory.getResponseDto(currentPlayer, table);
 		if (table.getLastCardInDiscard().getRank() == Rank._6) {

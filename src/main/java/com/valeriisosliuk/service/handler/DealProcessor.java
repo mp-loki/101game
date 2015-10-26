@@ -1,12 +1,14 @@
 package com.valeriisosliuk.service.handler;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import com.valeriisosliuk.dto.TerminalDto;
 import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
+import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Player;
 import com.valeriisosliuk.model.Rank;
 import com.valeriisosliuk.model.Table;
@@ -21,16 +23,21 @@ public class DealProcessor {
     }
 
     public TerminalDto endGame(Table table) {
+    	Player winner = table.getActivePlayer();
+    	for (Player player : table.getPlayers()) {
+    		if (player.getTotalPoints() < winner.getTotalPoints()) {
+    			winner = player;
+    		}
+    	}
         // TODO add game end processing
-        return DtoFactory.getGameEndedDto(table, "Game Ended");
+        return DtoFactory.getGameEndedDto(table, "Game Ended", winner.getName() + "wins");
     }
 
-    public ActionResult startDeal(Table table) {
+    public ActionResult startDeal(Table table, List<Card> cards) {
         ActionResult result = new ActionResult();
-        table.startNewDeal();
+        table.startNewDeal(cards);
         Player activePlayer = table.getActivePlayer();
         for (Player player : table.getPlayers()) {
-            //ResponseDto responseDto = DtoFactory.getResponseDto(player, table, "New Deal started", activePlayer.getName() + "'s turn");
             ResponseDto responseDto = getPlayerStartDealDto(player, table, "New Deal started", activePlayer.getName() + "'s turn");
             result.getPlayerUpdates().put(player.getName(), responseDto);
         }
@@ -38,7 +45,7 @@ public class DealProcessor {
     }
 
     public boolean isDealEnded(Table table) {
-        if (CollectionUtils.isEmpty(table.getActivePlayer().getHand()) && table.getLastCardInDiscard().getRank() != Rank._6) {
+        if (table.getPlayers().stream().anyMatch(p -> p.getHand().isEmpty()) && table.getLastCardInDiscard().getRank() != Rank._6) {
             return true;
         }
         return false;
@@ -50,7 +57,7 @@ public class DealProcessor {
 
     public ResponseDto getPlayerStartDealDto(Player player, Table table, String... messages) {
         ResponseDto dto = DtoFactory.getResponseDto(player, table, messages);
-        dto.setPlayerInfo(table.getSequencedPlayersList(player.getName()));
+        dto.setPlayerInfo(table.getSequencedPlayers(player.getName()));
         return dto;
     }
 

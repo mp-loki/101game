@@ -35,6 +35,9 @@ body {
 .position-absolute {
 	position: absolute;
 }
+.card_0 {
+	left: 15px;
+}
 .card_1 {
 	left: 15px;
 }
@@ -129,59 +132,294 @@ body {
     left: 465px;
 }
 .front-player-card-0 {
-	right: 15px;
+	right: 0px;
 }
 .front-player-card-1 {
-	right: 30px;
+	right: 15px;
 }
 .front-player-card-2 {
-	right: 45px;
+	right: 30px;
 }
 .front-player-card-3 {
-	right: 60px;
+	right: 45px;
 }
 .front-player-card-4 {
-	right: 75px;
+	right: 60px;
 }
 .front-player-card-5 {
+	right: 75px;
+}
+.front-player-card-6 {
 	right: 90px;
 }
-.left-player-card-0 {
-	top: 15px;
+.front-player-card-7 {
+	right: 105px;
 }
-.left-player-card-1 {
-	top: 30px;
+.front-player-card-8 {
+	right: 120px;
 }
-.left-player-card-2 {
-	top: 45px;
+.front-player-card-9 {
+	right: 135px;
 }
-.left-player-card-3 {
-	top: 60px;
+.front-player-card-10 {
+	right: 150px;
 }
-.left-player-card-4 {
-	top: 75px;
+.front-player-card-11 {
+	right: 165px;
 }
-.left-player-card-5 {
-	top: 90px;
+.front-player-card-12 {
+	right: 180px;
+}
+.front-player-card-13 {
+    right: 195px;
+}
+.front-player-card-14 {
+    right: 210px;
+}
+.front-player-card-15 {
+    right: 225px;
+}
+.front-player-card-16 {
+    right: 240px;
+}
+.front-player-card-17 {
+    right: 255px;
+}
+.front-player-card-18 {
+    right: 270px;
+}
+.front-player-card-19 {
+    right: 285px;
+}
+.front-player-card-20 {
+    right: 300px;
+}
+.front-player-card-21 {
+    right: 315px;
+}
+.front-player-card-22 {
+    right: 330px;
+}
+.front-player-card-23 {
+    right: 345px;
+}
+.front-player-card-24 {
+    right: 360px;
+}
+.front-player-card-25 {
+    right: 375px;
+}
+.front-player-card-26 {
+    right: 390px;
+}
+.front-player-card-27 {
+    right: 405px;
+}
+.front-player-card-28 {
+    right: 420px;
+}
+.front-player-card-29 {
+    right: 435px;
+}
+.front-player-card-30 {
+    right: 450px;
+}
+.front-player-card-31 {
+    right: 465px;
 }
 .right-player-card-0 {
-	bottom: 15px;
+	bottom : 15px;
 }
 .right-player-card-1 {
-	bottom: 30px;
+	bottom : 15px;
 }
 .right-player-card-2 {
-	bottom: 45px;
+	bottom : 30px;
 }
 .right-player-card-3 {
-	bottom: 60px;
+	bottom : 45px;
 }
 .right-player-card-4 {
-	bottom: 75px;
+	bottom : 60px;
 }
 .right-player-card-5 {
-	bottom: 90px;
+	bottom : 75px;
 }
+.right-player-card-6 {
+	bottom : 90px;
+}
+.right-player-card-7 {
+	bottom : 105px;
+}
+.right-player-card-8 {
+	bottom : 120px;
+}
+.right-player-card-9 {
+	bottom : 135px;
+}
+.right-player-card-10 {
+	bottom : 150px;
+}
+.right-player-card-11 {
+	bottom : 165px;
+}
+.right-player-card-12 {
+	bottom : 180px;
+}
+.right-player-card-13 {
+    bottom : 195px;
+}
+.right-player-card-14 {
+    bottom : 210px;
+}
+.right-player-card-15 {
+    bottom : 225px;
+}
+.right-player-card-16 {
+    bottom : 240px;
+}
+.right-player-card-17 {
+    bottom : 255px;
+}
+.right-player-card-18 {
+    bottom : 270px;
+}
+.right-player-card-19 {
+    bottom : 285px;
+}
+.right-player-card-20 {
+    bottom : 300px;
+}
+.right-player-card-21 {
+    bottom : 315px;
+}
+.right-player-card-22 {
+    bottom : 330px;
+}
+.right-player-card-23 {
+    bottom : 345px;
+}
+.right-player-card-24 {
+    bottom : 360px;
+}
+.right-player-card-25 {
+    bottom : 375px;
+}
+.right-player-card-26 {
+    bottom : 390px;
+}
+.right-player-card-27 {
+    bottom : 405px;
+}
+.right-player-card-28 {
+    bottom : 420px;
+}
+.right-player-card-29 {
+    bottom : 435px;
+}
+.right-player-card-30 {
+    bottom : 450px;
+}
+.right-player-card-31 {
+    bottom : 465px;
+}
+.left-player-card-0 {
+	top : 15px;
+}
+.left-player-card-1 {
+	top : 15px;
+}
+.left-player-card-2 {
+	top : 30px;
+}
+.left-player-card-3 {
+	top : 45px;
+}
+.left-player-card-4 {
+	top : 60px;
+}
+.left-player-card-5 {
+	top : 75px;
+}
+.left-player-card-6 {
+	top : 90px;
+}
+.left-player-card-7 {
+	top : 105px;
+}
+.left-player-card-8 {
+	top : 120px;
+}
+.left-player-card-9 {
+	top : 135px;
+}
+.left-player-card-10 {
+	top : 150px;
+}
+.left-player-card-11 {
+	top : 165px;
+}
+.left-player-card-12 {
+	top : 180px;
+}
+.left-player-card-13 {
+    top : 195px;
+}
+.left-player-card-14 {
+    top : 210px;
+}
+.left-player-card-15 {
+    top : 225px;
+}
+.left-player-card-16 {
+    top : 240px;
+}
+.left-player-card-17 {
+    top : 255px;
+}
+.left-player-card-18 {
+    top : 270px;
+}
+.left-player-card-19 {
+    top : 285px;
+}
+.left-player-card-20 {
+    top : 300px;
+}
+.left-player-card-21 {
+    top : 315px;
+}
+.left-player-card-22 {
+    top : 330px;
+}
+.left-player-card-23 {
+    top : 345px;
+}
+.left-player-card-24 {
+    top : 360px;
+}
+.left-player-card-25 {
+    top : 375px;
+}
+.left-player-card-26 {
+    top : 390px;
+}
+.left-player-card-27 {
+    top : 405px;
+}
+.left-player-card-28 {
+    top : 420px;
+}
+.left-player-card-29 {
+    top : 435px;
+}
+.left-player-card-30 {
+    top : 450px;
+}
+.left-player-card-31 {
+    top : 465px;
+}
+
 .deck {
 	cursor: pointer;
 }

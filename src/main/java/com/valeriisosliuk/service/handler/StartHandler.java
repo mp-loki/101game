@@ -1,5 +1,7 @@
 package com.valeriisosliuk.service.handler;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -7,7 +9,9 @@ import com.valeriisosliuk.dto.ActionDto;
 import com.valeriisosliuk.dto.BroadcastDto;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
+import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Table;
+import com.valeriisosliuk.util.Shuffle;
 
 @Component("startHandler")
 public class StartHandler implements ActionHandler {
@@ -29,7 +33,7 @@ public class StartHandler implements ActionHandler {
 			result = new ActionResult();
 			result.getPlayerUpdates().put(playerName, stateDto);
 		} else {
-		    result = dealProcessor.startDeal(table);
+		    result = dealProcessor.startDeal(table, Shuffle.shuffle(Arrays.asList(Card.values())));
 			result.getGeneralUpdates().add(getGeneralMessageDto(table));
 		}
 		return result;

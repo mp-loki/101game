@@ -1,6 +1,7 @@
 package com.valeriisosliuk.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -16,11 +17,13 @@ import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.dto.TerminalDto;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.ActionType;
+import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.handler.ActionHandler;
 import com.valeriisosliuk.service.handler.ActionHandlerSupplier;
 import com.valeriisosliuk.service.handler.DealProcessor;
 import com.valeriisosliuk.service.handler.NextTurnProcessor;
+import com.valeriisosliuk.util.Shuffle;
 
 @Component
 public class TableService {
@@ -45,7 +48,8 @@ public class TableService {
 	}
 
 	public Table getCurrentTableForplayer(String playerName) {
-		return getTable((t, u) -> t.isPlayerAtTheTable(u), playerName).get();
+		return getTable((t, u) -> t.isPlayerAtTheTable(u), playerName)
+				.orElse(joinFirstAvailableTable(playerName));
 	}
 
 	public Table joinFirstAvailableTable(String playername) {
@@ -82,8 +86,9 @@ public class TableService {
 			if (dealProcessor.isGameEnded(table)) {
 				TerminalDto gameEndedDto = dealProcessor.endGame(table);
 				messageService.sendToAll(gameEndedDto);
+				tables.remove(table);
 			} else {
-				ActionResult actionResult = dealProcessor.startDeal(table);
+				ActionResult actionResult = dealProcessor.startDeal(table, Shuffle.shuffle(Arrays.asList(Card.values())));
 				messageService.processActionResult(actionResult);
 			}
 		}

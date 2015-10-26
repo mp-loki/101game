@@ -97,4 +97,10 @@ public class Player {
 	public void setCurrentTurnCards(Set<Card> currentTurnCards) {
 		this.currentTurnCards = currentTurnCards;
 	}
+
+	@Override
+	public String toString() {
+		return "Player [name=" + name + ", hand=" + hand + ", totalPoints=" + totalPoints + "]";
+	}
+	
 }

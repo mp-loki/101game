@@ -3,7 +3,6 @@ package com.valeriisosliuk.model;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -53,9 +52,8 @@ public class Table {
     	} 
     }
     
-    public void startNewDeal() {
-    	List<Card> allCards = Arrays.asList(Card.values());
-        cardDeck = new CardDeck(Shuffle.shuffle(allCards));
+    public void startNewDeal(List<Card> cards) {
+    	cardDeck = new CardDeck(cards);
         discard = new Discard(cardDeck.getNext().get());
         for (Player player : players) {
         	player.setHand(cardDeck.getInitialHand());
@@ -79,28 +77,7 @@ public class Table {
         return started;
     }
 
-    /**
-     * Returns a sequence of players which go after current player
-     * 
-     * @param player
-     *            current player
-     * @return ordered List of players
-     */
-    public Map<String, Integer> getSequencedPlayers(String currentPlayer) {
-        Map<String, Integer> result = new LinkedHashMap<>();
-        Iterator<Player> playerIter = Iterators.cycle(players);
-        Player player = null;
-        // roll playerIter until current user is met
-        while (!playerIter.next().getName().equals(currentPlayer)) {
-        }
-        // Then add all the rest of users except current user
-        while (!((player = playerIter.next()).getName().equals(currentPlayer))) {
-            result.put(player.getName(), player.getHandSize());
-        }
-        return result;
-    }
-
-    public List<PlayerCardsCountDto> getSequencedPlayersList(String currentPlayer) {
+    public List<PlayerCardsCountDto> getSequencedPlayers(String currentPlayer) {
         List<PlayerCardsCountDto> result = new LinkedList<>();
         Iterator<Player> playerIter = Iterators.cycle(players);
         Player player = null;
@@ -186,7 +163,7 @@ public class Table {
     private void activateNextPlayer() {
     	activePlayer = getPlayerIterator().next();
     	activePlayer.setPickAllowed(true);
-        activePlayer.setEndTurnAllowed(true);
+        activePlayer.setEndTurnAllowed(false);
         activePlayer.setFirstMove(true);
 	}
 
