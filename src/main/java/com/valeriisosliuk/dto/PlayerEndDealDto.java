@@ -18,7 +18,7 @@ public class PlayerEndDealDto {
 		this.name = name;
 	}
 
-	public int getTotlaPoints() {
+	public int getTotalPoints() {
 		return totalPoints;
 	}
 

@@ -16,10 +16,12 @@ import com.valeriisosliuk.model.Table;
 @Component
 public class DealProcessor {
 
-    public TerminalDto endDeal(Table table) {
+    private static final int _101 = 101;
+
+	public TerminalDto endDeal(Table table) {
         String dealWinner = table.getPlayers().stream().filter(p -> p.getHand().isEmpty()).findFirst().get().getName();
         table.endCurrentDeal();
-        return DtoFactory.getDealEndedDto(table, "Deal ended", dealWinner + " Ends this deal");
+        return DtoFactory.getDealTerminalDto(table, "Deal ended", dealWinner + " Ends this deal");
     }
 
     public TerminalDto endGame(Table table) {
@@ -30,7 +32,7 @@ public class DealProcessor {
     		}
     	}
         // TODO add game end processing
-        return DtoFactory.getGameEndedDto(table, "Game Ended", winner.getName() + "wins");
+        return DtoFactory.getGameEndedDto(table, "Game Ended", winner.getName() + " wins!");
     }
 
     public ActionResult startDeal(Table table, List<Card> cards) {
@@ -52,7 +54,7 @@ public class DealProcessor {
     }
 
     public boolean isGameEnded(Table table) {
-        return (table.getPlayers().stream().anyMatch(p -> p.getTotalPoints() > 101));
+        return (table.getPlayers().stream().anyMatch(p -> p.getTotalPoints() > _101));
     }
 
     public ResponseDto getPlayerStartDealDto(Player player, Table table, String... messages) {
@@ -60,5 +62,4 @@ public class DealProcessor {
         dto.setPlayerInfo(table.getSequencedPlayers(player.getName()));
         return dto;
     }
-
 }

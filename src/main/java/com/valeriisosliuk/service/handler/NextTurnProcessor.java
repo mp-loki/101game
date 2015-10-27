@@ -43,7 +43,7 @@ public class NextTurnProcessor {
 		return false;
 	}
 
-	private void processCurrentTurnCards(Table table, Set<Card> cards, ActionResult result) {
+	public void processCurrentTurnCards(Table table, Set<Card> cards, ActionResult result) {
 		if (cards.stream().anyMatch(c -> c.getRank() == Rank.JACK)) {
 			processDemandSuiteAction(table, result);
 		} else if (cards.stream().anyMatch(c -> c.getRank() == Rank.ACE)) {
@@ -53,9 +53,16 @@ public class NextTurnProcessor {
 		} else if (cards.stream().anyMatch(c -> c.getRank() == Rank._8)) {
 			procesEightCardSkipTurns(table, cards, result);
 		} else {
-			activateNextPlayer(table, result);
+			moveToNextPlayer(table, result);
 		}
 
+	}
+	
+	private void moveToNextPlayer(Table table, ActionResult result) {
+		activateNextPlayer(table, result);
+		String message =  table.getActivePlayer().getName() + "'s turn";
+		BroadcastDto broadcastDto = DtoFactory.getBroadcastDto(table.getActivePlayer(), table, message);
+		result.getGeneralUpdates().add(broadcastDto);
 	}
 
 	private void procesEightCardSkipTurns(Table table, Set<Card> cards, ActionResult result) {
@@ -65,14 +72,15 @@ public class NextTurnProcessor {
 			Card card = table.getCardFromDeck();
 			skippedPlayer.getHand().add(card);
 		}
+
+		activateNextPlayer(table, result);
 		String message1 =  skippedPlayer.getName() + " Skips turn because of 8!";
 		String message2 =  skippedPlayer.getName() + " gets " + eightsInCurrentTurn * 2 + " cards";
-		BroadcastDto broadcastDto = DtoFactory.getBroadcastDto(skippedPlayer, table, message1, message2);
+		String message3 =  table.getActivePlayer().getName() + "'s turn";
+		BroadcastDto broadcastDto = DtoFactory.getBroadcastDto(skippedPlayer, table, message1, message2, message3);
 		ResponseDto playerDto = DtoFactory.getResponseDto(skippedPlayer, table);
 		result.getGeneralUpdates().add(broadcastDto);
 		result.getPlayerUpdates().put(skippedPlayer.getName(), playerDto);
-
-		activateNextPlayer(table, result);
 	}
 
 	private void processSevenCardPickCards(Table table, Set<Card> cards, ActionResult result) {
@@ -90,14 +98,14 @@ public class NextTurnProcessor {
 			Card card = table.getCardFromDeck();
 			nextPlayer.getHand().add(card);
 		}
-		String message;
+		String message1;
 		if (sevensInCurrentTurn == 1) {
-			message = "gets a card";
+			message1 = nextPlayer.getName() + " gets a card";
 		} else {
-			message = "gets " + sevensInCurrentTurn + " cards";
+			message1 = nextPlayer.getName() + " gets " + sevensInCurrentTurn + " cards";
 		}
-		BroadcastDto broadcastDto = DtoFactory.getBroadcastDto(nextPlayer, table, nextPlayer.getName()
-				+ " " + message);
+		String message2  =  table.getActivePlayer().getName() + "'s turn";
+		BroadcastDto broadcastDto = DtoFactory.getBroadcastDto(nextPlayer, table, message1, message2);
 		ResponseDto playerDto = DtoFactory.getResponseDto(nextPlayer, table);
 		result.getGeneralUpdates().add(broadcastDto);
 		result.getPlayerUpdates().put(nextPlayer.getName(), playerDto);
@@ -105,10 +113,11 @@ public class NextTurnProcessor {
 
 	private void processAceSkipTurn(Table table, Set<Card> cards, ActionResult result) {
 		Player skippedPlayer = table.skipPlayer();
-		BroadcastDto dto = DtoFactory.getBroadcastDto(skippedPlayer, table, skippedPlayer.getName()
-				+ " skips turn because of Ace!");
-		result.getGeneralUpdates().add(dto);
 		activateNextPlayer(table, result);
+		String message1 = skippedPlayer.getName() + " skips turn because of Ace!";
+		String message2  =  table.getActivePlayer().getName() + "'s turn";
+		BroadcastDto dto = DtoFactory.getBroadcastDto(skippedPlayer, table, message1, message2);
+		result.getGeneralUpdates().add(dto);
 	}
 
 	private long getCardByRankCount(Set<Card> cards, Rank rank) {
@@ -118,7 +127,7 @@ public class NextTurnProcessor {
 	private void processDemandSuiteAction(Table table, ActionResult result) {
 		// TODO implement demand suite on ui and server side
 		// just moving to next user for now
-		activateNextPlayer(table, result);
+		moveToNextPlayer(table, result);
 	}
 
 	private void activateNextPlayer(Table table, ActionResult actionResult) {
@@ -126,9 +135,6 @@ public class NextTurnProcessor {
 		Player nextActivePlayer = table.getNextActivePlayer();
 		ResponseDto currentPlayerDto = DtoFactory.getResponseDto(currentPlayer, table);
 		ResponseDto nextPlayerDto = DtoFactory.getResponseDto(nextActivePlayer, table);
-		String message =  nextActivePlayer.getName() + "'s turn";
-		BroadcastDto broadcastDto = DtoFactory.getBroadcastDto(nextActivePlayer, table, message);
-		actionResult.getGeneralUpdates().add(broadcastDto);
 		actionResult.getPlayerUpdates().put(currentPlayer.getName(), currentPlayerDto);
 		actionResult.getPlayerUpdates().put(nextActivePlayer.getName(), nextPlayerDto);
 	}

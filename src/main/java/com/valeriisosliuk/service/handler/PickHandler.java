@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.ActionDto;
 import com.valeriisosliuk.dto.BroadcastDto;
-import com.valeriisosliuk.dto.PlayerCardsCountDto;
+import com.valeriisosliuk.dto.PlayerInfoDto;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.model.ActionResult;
@@ -67,7 +67,7 @@ public class PickHandler implements ActionHandler {
 	private BroadcastDto getCardPickedDto(Player currentPlayer) {
 		BroadcastDto dto = new BroadcastDto();
 		dto.getMessages().add(currentPlayer.getName() + " Picked a card");
-		PlayerCardsCountDto playerDetail = new PlayerCardsCountDto(currentPlayer.getName(), currentPlayer.getHand().size());
+		PlayerInfoDto playerDetail = new PlayerInfoDto(currentPlayer.getName(), currentPlayer.getHand().size(), currentPlayer.getTotalPoints());
 		dto.setPlayerUpdate(playerDetail);
 		return dto;
 	}

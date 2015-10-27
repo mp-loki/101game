@@ -9,7 +9,7 @@ public class BroadcastDto {
 	
 	private ResponseDtoType type = ResponseDtoType.BROADCAST;
 	private Card lastCard;
-	private PlayerCardsCountDto playerUpdate;
+	private PlayerInfoDto playerUpdate;
 	private List<String> messages;
 	public Card getLastCard() {
 		return lastCard;
@@ -17,10 +17,10 @@ public class BroadcastDto {
 	public void setLastCard(Card lastCard) {
 		this.lastCard = lastCard;
 	}
-	public PlayerCardsCountDto getPlayerUpdate() {
+	public PlayerInfoDto getPlayerUpdate() {
 		return playerUpdate;
 	}
-	public void setPlayerUpdate(PlayerCardsCountDto playerUpdate) {
+	public void setPlayerUpdate(PlayerInfoDto playerUpdate) {
 		this.playerUpdate = playerUpdate;
 	}
 	public List<String> getMessages() {

@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Iterators;
-import com.valeriisosliuk.dto.PlayerCardsCountDto;
+import com.valeriisosliuk.dto.PlayerInfoDto;
 import com.valeriisosliuk.util.Shuffle;
 
 public class Table {
@@ -69,7 +69,6 @@ public class Table {
         player.setReady(true);
         player.setHand(cardDeck.getInitialHand());
         if (players.size() >= MIN_PLAYERS_AT_THE_TABLE && players.stream().allMatch(Player::isReady)) {
-            getNextActivePlayer();
             started = true;
         } else {
             started = false;
@@ -77,8 +76,8 @@ public class Table {
         return started;
     }
 
-    public List<PlayerCardsCountDto> getSequencedPlayers(String currentPlayer) {
-        List<PlayerCardsCountDto> result = new LinkedList<>();
+    public List<PlayerInfoDto> getSequencedPlayers(String currentPlayer) {
+        List<PlayerInfoDto> result = new LinkedList<>();
         Iterator<Player> playerIter = Iterators.cycle(players);
         Player player = null;
         // roll playerIter until current user is met
@@ -86,7 +85,7 @@ public class Table {
         }
         // Then add all the rest of users except current user
         while (!((player = playerIter.next()).getName().equals(currentPlayer))) {
-            result.add(new PlayerCardsCountDto(player.getName(), player.getHandSize()));
+            result.add(new PlayerInfoDto(player.getName(), player.getHandSize(), player.getTotalPoints()));
         }
         return result;
     }

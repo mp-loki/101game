@@ -13,7 +13,7 @@ public class ResponseDto {
 	private Card lastCard;
 	private Set<Card> hand;
 	private Set<Card> validTurnOptions; 
-	private List<PlayerCardsCountDto> playerInfo;
+	private List<PlayerInfoDto> playerInfo;
 	private List<String> messages;
 	private boolean pickAllowed;
 	private boolean active;
@@ -23,14 +23,14 @@ public class ResponseDto {
 		return currentPlayerName;
 	}
 
-	public List<PlayerCardsCountDto> getPlayerInfo() {
+	public List<PlayerInfoDto> getPlayerInfo() {
 		if (playerInfo == null) {
 			playerInfo = new LinkedList<>();
 		}
 		return playerInfo;
 	}
 
-	public void setPlayerInfo(List<PlayerCardsCountDto> playerInfo) {
+	public void setPlayerInfo(List<PlayerInfoDto> playerInfo) {
 		this.playerInfo = playerInfo;
 	}
 

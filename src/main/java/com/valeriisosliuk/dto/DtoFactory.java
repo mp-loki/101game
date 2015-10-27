@@ -27,12 +27,12 @@ public class DtoFactory {
 	public static BroadcastDto getBroadcastDto(Player player, Table table, String... messages) {
 		BroadcastDto dto = new BroadcastDto();
 		dto.setLastCard(table.getLastCardInDiscard());
-		dto.setPlayerUpdate(new PlayerCardsCountDto(player.getName(), player.getHandSize()));
+		dto.setPlayerUpdate(new PlayerInfoDto(player.getName(), player.getHandSize(), player.getTotalPoints()));
 		dto.getMessages().addAll(Arrays.asList(messages));
 		return dto;
 	}
 	
-	public static TerminalDto getDealEndedDto(Table table, String... messages) {
+	public static TerminalDto getDealTerminalDto(Table table, String... messages) {
 		TerminalDto dto = new TerminalDto(ResponseDtoType.DEAL_OVER);
 		dto.setMessages(Arrays.asList(messages));
 		table.getPlayers().stream().map(p -> getPlayerEndDealDto(p)).forEach(pDto -> dto.getPlayerDetails().add(pDto));
@@ -50,6 +50,7 @@ public class DtoFactory {
 	
 	public static TerminalDto getGameEndedDto(Table table, String... messages) {
 		TerminalDto dto = new TerminalDto(ResponseDtoType.GAME_OVER);
+		dto.setMessages(Arrays.asList(messages));
 		return dto;
 	}
 
