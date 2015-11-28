@@ -190,7 +190,6 @@ public class Table {
         if (!cardDeckHasNext()) {
             cardDeck = discard.turnOver();
         }
-
     }
     /**
      * Advances player iterator without setting a new activePlayer

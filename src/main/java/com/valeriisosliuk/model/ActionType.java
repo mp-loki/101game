@@ -2,7 +2,9 @@ package com.valeriisosliuk.model;
 
 public enum ActionType {
 	START,
-	PASS,
+	END,
 	PICK,
-	ACTION
+	MOVE,
+	DEMAND,
+	RESPOND
 }

@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.TableService;
@@ -71,7 +71,7 @@ public class GameController {
     }
 
     @MessageMapping("/game")
-    public void game(Message<Object> message, @Payload ActionDto dto) throws Exception {
+    public void game(Message<Object> message, @Payload Action dto) throws Exception {
         log.info("Got a message: " + dto);
         String currentUser = getCurrentUserName(message);
         dto.setCurrentPlayer(currentUser);

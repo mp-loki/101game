@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.BroadcastDto;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.dto.DtoFactory;
@@ -17,8 +17,8 @@ import com.valeriisosliuk.model.Rank;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.handler.validator.ValidatorSupplier;
 
-@Component("cardMoveHandler")
-public class CardMoveHandler implements ActionHandler {
+@Component("cardMoveHandlerOld")
+public class CardMoveHandlerOld implements ActionHandler {
 
 	@Autowired
 	private ValidatorSupplier validatorSupplier;
@@ -30,16 +30,16 @@ public class CardMoveHandler implements ActionHandler {
 	private NextTurnProcessor nextTurnProcessor;
 	
 	@Override
-	public ActionResult handle(ActionDto action, Table table) {
+	public ActionResult handle(Action action, Table table) {
 		ActionResult result = new ActionResult();
-		if (table.isActivePlayer(action.getCurrentPlayer())) {
+		if (table.isActivePlayer(action.getPlayer())) {
 			Player activePlayer = table.getActivePlayer();
 			Card lastCard = table.getLastCardInDiscard();
 			Card actionCard = action.getCard();
 			boolean firstMove = activePlayer.isFirstMove();
 
 			if (!isValid(actionCard, lastCard, firstMove)) {
-				result.getPlayerUpdates().put(action.getCurrentPlayer(), getErrorResponeDto(activePlayer, table));
+				result.getPlayerUpdates().put(action.getPlayer(), getErrorResponeDto(activePlayer, table));
 			} else {
 				processCardMove(activePlayer, table, actionCard, result);
 				nextTurnProcessor.processNextMove(table, result);

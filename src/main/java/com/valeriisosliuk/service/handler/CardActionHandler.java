@@ -2,7 +2,7 @@ package com.valeriisosliuk.service.handler;
 
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.Card;
@@ -12,12 +12,12 @@ import com.valeriisosliuk.model.Table;
 public class CardActionHandler implements ActionHandler{
 
 	@Override
-	public ActionResult handle(ActionDto action, Table table) {
+	public ActionResult handle(Action action, Table table) {
 		ActionResult result = new ActionResult();
 		Card actionCard = action.getCard();
 		Card lastCard = table.getLastCardInDiscard();
 		if (!isValid(actionCard, lastCard)) {
-			result.getPlayerUpdates().put(action.getCurrentPlayer(), getInvalidCardActionDto());
+			result.getPlayerUpdates().put(action.getPlayer(), getInvalidCardActionDto());
 		}
 		// TODO Auto-generated method stub
 		return result;

@@ -21,20 +21,20 @@ public class ActionHandlerSupplier {
 	private ActionHandler startHandler;
 	
 	@Autowired
-	@Qualifier("cardMoveHandler")
+	@Qualifier("cardMoveHandlerOld")
 	private ActionHandler cardMoveHandler;
 	
 	
 	public ActionHandler getActionHandler(ActionType actionType) {
 		ActionHandler handler = null;
 		switch (actionType) {
-		case PASS:  handler = passHandler;
+		case END:  handler = passHandler;
 					break;
 		case PICK:  handler = pickHandler;
 					break;
 		case START: handler = startHandler;
 					break;
-		case ACTION: handler = cardMoveHandler;
+		case MOVE: handler = cardMoveHandler;
 					break;
 		}
 		return handler;

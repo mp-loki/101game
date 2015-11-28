@@ -3,12 +3,22 @@ package com.valeriisosliuk.dto;
 import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Card;
 
-public class ActionDto {
+public class Action {
 
     private ActionType type;
     private Card card;
     private String currentPlayer;
     
+    public Action() {
+	}
+    
+	public Action(ActionType type, Card card, String currentPlayer) {
+		super();
+		this.type = type;
+		this.card = card;
+		this.currentPlayer = currentPlayer;
+	}
+
 	public ActionType getType() {
 		return type;
 	}
@@ -25,7 +35,7 @@ public class ActionDto {
 		this.card = card;
 	}
 
-	public String getCurrentPlayer() {
+	public String getPlayer() {
 		return currentPlayer;
 	}
 

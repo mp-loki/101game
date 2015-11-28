@@ -10,7 +10,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import static org.junit.Assert.assertEquals;
 import static com.valeriisosliuk.util.TestUtil.*;
 
-import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Table;
@@ -25,8 +25,8 @@ public class PassHandlerTest {
 	public void testPass() {
 		Table table = getStartedTableFourPlayers();
 		assertEquals(HOMER, table.getActivePlayer().getName());
-		ActionDto action = new ActionDto();
-		action.setType(ActionType.PASS);
+		Action action = new Action();
+		action.setType(ActionType.END);
 		ActionResult result = handler.handle(action, table);
 		
 		assertEquals(BART, table.getActivePlayer().getName());

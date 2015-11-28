@@ -3,7 +3,7 @@ package com.valeriisosliuk.service.handler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.BroadcastDto;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.Player;
@@ -16,7 +16,7 @@ public class PassHandler implements ActionHandler {
 	private NextTurnProcessor nextTurnProcessor;
 
 	@Override
-	public ActionResult handle(ActionDto action, Table table) {
+	public ActionResult handle(Action action, Table table) {
 		ActionResult result = new ActionResult();
 		Player currentPlayer = table.getActivePlayer();
 		currentPlayer.setPickAllowed(false);

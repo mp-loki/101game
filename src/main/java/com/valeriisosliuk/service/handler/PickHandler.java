@@ -3,7 +3,7 @@ package com.valeriisosliuk.service.handler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.BroadcastDto;
 import com.valeriisosliuk.dto.PlayerInfoDto;
 import com.valeriisosliuk.dto.ResponseDto;
@@ -24,7 +24,7 @@ public class PickHandler implements ActionHandler {
 	private TurnAdvisor turnAdvisor;
 
 	@Override
-	public ActionResult handle(ActionDto action, Table table) {
+	public ActionResult handle(Action action, Table table) {
 		Card lastCard = table.getLastCardInDiscard();
 		Player currentPlayer = table.getActivePlayer();
 		

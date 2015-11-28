@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.DtoFactory;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.dto.TerminalDto;
@@ -64,8 +64,8 @@ public class TableService {
 		return table;
 	}
 
-	public void processAction(ActionDto action) {
-		Table table = getCurrentTableForplayer(action.getCurrentPlayer());
+	public void processAction(Action action) {
+		Table table = getCurrentTableForplayer(action.getPlayer());
 		ActionResult result = null;
 		ActionHandler actionHandler = handlerSupplier.getActionHandler(action.getType());
 		if (actionHandler != null) {
@@ -74,7 +74,7 @@ public class TableService {
 		if (result != null) {
 			messageService.processActionResult(result);
 		}
-		if (action.getType() == ActionType.ACTION) {
+		if (action.getType() == ActionType.MOVE) {
 			doActionPostProcessing(table);
 		}
 	}

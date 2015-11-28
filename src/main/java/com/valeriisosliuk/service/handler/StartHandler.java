@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.BroadcastDto;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
@@ -23,9 +23,9 @@ public class StartHandler implements ActionHandler {
 	private DealProcessor dealProcessor;
 
 	@Override
-	public ActionResult handle(ActionDto action, Table table) {
+	public ActionResult handle(Action action, Table table) {
 		ActionResult result = null;
-		String playerName = action.getCurrentPlayer();
+		String playerName = action.getPlayer();
 		boolean started = table.start(playerName);
 
 		if (!started) {

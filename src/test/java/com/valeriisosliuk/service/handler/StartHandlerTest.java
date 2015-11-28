@@ -16,7 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.valeriisosliuk.dto.ActionDto;
+import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.ResponseDto;
 import com.valeriisosliuk.model.ActionResult;
 import com.valeriisosliuk.model.ActionType;
@@ -33,10 +33,10 @@ public class StartHandlerTest {
 	@Test
 	public void testStartHandler() {
 		Table table = getTableFourPlayers();
-		ActionDto dto1 = getActionDto(HOMER);
-		ActionDto dto2 = getActionDto(BART);
-		ActionDto dto3 = getActionDto(MARGE);
-		ActionDto dto4 = getActionDto(LISA);
+		Action dto1 = getActionDto(HOMER);
+		Action dto2 = getActionDto(BART);
+		Action dto3 = getActionDto(MARGE);
+		Action dto4 = getActionDto(LISA);
 		
 		ActionResult result1 = startHandler.handle(dto1, table);
 		assertFalse("Table was started when it did not suppose to", table.isStarted());
@@ -125,8 +125,8 @@ public class StartHandlerTest {
 		assertEquals(4, responseDto4.getPlayerInfo().get(2).getCardCount());
 	}
 	
-	private ActionDto getActionDto(String playerName) {
-		ActionDto dto = new ActionDto();
+	private Action getActionDto(String playerName) {
+		Action dto = new Action();
 		dto.setCurrentPlayer(playerName);
 		dto.setType(ActionType.START);
 		return dto;
