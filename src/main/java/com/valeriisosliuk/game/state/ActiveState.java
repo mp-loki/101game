@@ -1,5 +1,7 @@
 package com.valeriisosliuk.game.state;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Set;
 
@@ -53,9 +55,16 @@ public class ActiveState extends Observable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public void addCurrentTurnCard(Card card) {
+		if (currentTurnCards == null) {
+			currentTurnCards = new HashSet<Card>();
+		}
+		currentTurnCards.add(card);
+	}
 
 	public Set<Card> getCurrentTurnCards() {
-		return currentTurnCards;
+		return currentTurnCards == null ? Collections.emptySet() : Collections.unmodifiableSet(currentTurnCards);
 	}
 
 	public void setCurrentTurnCards(Set<Card> currentTurnCards) {

@@ -21,6 +21,7 @@ public class Player extends AbstractObservable {
 		hand = new HashSet<Card>();
 		PlayerObserver observer = new PlayerObserver();
 		addObserver(observer);
+		
 	}
 
 	public String getName() {
@@ -35,9 +36,8 @@ public class Player extends AbstractObservable {
 		return Collections.unmodifiableSet(hand);
 	}
 	
-	public boolean moveCard(Card card) {
+	public boolean removeCard(Card card) {
 		return hand.remove(card);
-		//hand.stream()
 	}
 	
 	public void pickCard(Card card) {
@@ -57,6 +57,7 @@ public class Player extends AbstractObservable {
 		setChangedAndNotify(PlayerStateChange.ACTIVATE);
 	}
 	void deactivate() {
+		activeState.deleteObservers();
 		activeState = null;
 		setChangedAndNotify(PlayerStateChange.DEACTIVATE);
 	}
