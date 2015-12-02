@@ -84,5 +84,4 @@ public class CardMoveHandler implements ActionHandler {
 			return false;
 		}
 	}
-
 }

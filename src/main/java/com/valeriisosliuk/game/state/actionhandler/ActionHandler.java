@@ -8,6 +8,4 @@ public interface ActionHandler {
 	
 	State handleAction(Game game, Action action);
 	
-	//State handleAction(PlayerHolder playerHolder, CardDeck cardDeck)
-
 }

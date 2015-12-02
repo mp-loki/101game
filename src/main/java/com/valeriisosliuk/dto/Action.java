@@ -19,6 +19,12 @@ public class Action {
 		this.currentPlayer = currentPlayer;
 	}
 
+	public Action(ActionType type, String currentPlayer) {
+		super();
+		this.type = type;
+		this.currentPlayer = currentPlayer;
+	}
+
 	public ActionType getType() {
 		return type;
 	}
