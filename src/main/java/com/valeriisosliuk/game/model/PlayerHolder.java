@@ -49,11 +49,17 @@ public class PlayerHolder {
 
 	/**
 	 * Advances player iterator without setting a new activePlayer
+	 * @return 
 	 * 
 	 * @return skipped player
 	 */
 	public Player skipPlayer() {
-		return getPlayerIterator().next();
+		if (activePlayer != null) {
+			activePlayer.deactivate();
+		}
+		Player skippedPlayer = getPlayerIterator().next();
+		skippedPlayer.skip();
+		return skippedPlayer;
 	}
 
 	public Player getNextActivePlayer() {

@@ -21,7 +21,7 @@ import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.CardHolder;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.game.state.processor.DealStartProcessor;
+import com.valeriisosliuk.game.state.initializer.DealStartInitializer;
 import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Card;
 

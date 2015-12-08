@@ -9,7 +9,7 @@ import com.valeriisosliuk.game.state.State;
 import static com.valeriisosliuk.game.state.State.*;
 
 @Component
-public class StartActionHandler implements ActionHandler {
+public class GameStartActionHandler implements ActionHandler {
 
 	@Override
 	public State handleAction(Game game, Action action) {
@@ -19,5 +19,4 @@ public class StartActionHandler implements ActionHandler {
 		}
 		return INITIAL;
 	}
-
 }

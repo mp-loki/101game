@@ -1,6 +1,7 @@
 package com.valeriisosliuk.game.state.actionhandler;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,9 @@ import org.springframework.util.CollectionUtils;
 import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.CardHolder;
+
 import static com.valeriisosliuk.game.state.State.*;
+
 import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Card;
 
@@ -26,7 +29,6 @@ import static com.valeriisosliuk.model.Card.*;
 import static org.junit.Assert.*;
 
 import com.valeriisosliuk.model.CardDeck;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=com.valeriisosliuk.Application.class, loader=AnnotationConfigContextLoader.class)
@@ -58,15 +60,15 @@ public class CardMoveHandlerTest {
 		game.getActivePlayer().setHand(hand);
 		Action firstAction = new Action(ActionType.MOVE, _9_OF_HEARTS, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, firstAction));
-		assertEquals(new HashSet<>(Arrays.asList(_9_OF_SPADES, _7_OF_CLUBS, KING_OF_SPADES)), game.getActivePlayer().getHand());
-		assertEquals(new HashSet<>(Arrays.asList(_9_OF_HEARTS)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
-		assertEquals(new HashSet<>(Arrays.asList(_9_OF_SPADES)), game.getActivePlayer().getActiveState().getTurnOptions());
+		assertEquals(EnumSet.of(_9_OF_SPADES, _7_OF_CLUBS, KING_OF_SPADES), game.getActivePlayer().getHand());
+		assertEquals(EnumSet.of(_9_OF_HEARTS), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(_9_OF_SPADES), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is not allowed when it should be", game.getActivePlayer().getActiveState().isPickAllowed());
 		assertTrue("Pass is not allowed when it should be", game.getActivePlayer().getActiveState().isPassAllowed());
 		
 		Action secondAction = new Action(ActionType.MOVE, _9_OF_SPADES, "Kyle");
 		assertEquals(TURN_END, cardMoveHandler.handleAction(game, secondAction));
-		assertEquals(new HashSet<>(Arrays.asList(_9_OF_HEARTS, _9_OF_SPADES)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(_9_OF_HEARTS, _9_OF_SPADES), game.getActivePlayer().getActiveState().getCurrentTurnCards());
 		assertTrue("Turn options should be empty", CollectionUtils.isEmpty(game.getActivePlayer().getActiveState().getTurnOptions()));
 	}
 	
@@ -76,9 +78,9 @@ public class CardMoveHandlerTest {
 		game.getActivePlayer().setHand(hand);
 		Action firstAction = new Action(ActionType.MOVE, JACK_OF_CLUBS, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, firstAction));
-		assertEquals(new HashSet<>(Arrays.asList(JACK_OF_SPADES, _7_OF_CLUBS, KING_OF_SPADES)), game.getActivePlayer().getHand());
-		assertEquals(new HashSet<>(Arrays.asList(JACK_OF_CLUBS)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
-		assertEquals(new HashSet<>(Arrays.asList(JACK_OF_SPADES)), game.getActivePlayer().getActiveState().getTurnOptions());
+		assertEquals(EnumSet.of(JACK_OF_SPADES, _7_OF_CLUBS, KING_OF_SPADES), game.getActivePlayer().getHand());
+		assertEquals(EnumSet.of(JACK_OF_CLUBS), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(JACK_OF_SPADES), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is not allowed when it should be", game.getActivePlayer().getActiveState().isPickAllowed());
 		assertTrue("Pass is not allowed when it should be", game.getActivePlayer().getActiveState().isPassAllowed());
 	}
@@ -89,9 +91,9 @@ public class CardMoveHandlerTest {
 		game.getActivePlayer().setHand(hand);
 		Action firstAction = new Action(ActionType.MOVE, _7_OF_HEARTS, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, firstAction));
-		assertEquals(new HashSet<>(Arrays.asList(_7_OF_DIAMONDS, JACK_OF_CLUBS, JACK_OF_SPADES)), game.getActivePlayer().getHand());
-		assertEquals(new HashSet<>(Arrays.asList(_7_OF_HEARTS)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
-		assertEquals(new HashSet<>(Arrays.asList(_7_OF_DIAMONDS)), game.getActivePlayer().getActiveState().getTurnOptions());
+		assertEquals(EnumSet.of(_7_OF_DIAMONDS, JACK_OF_CLUBS, JACK_OF_SPADES), game.getActivePlayer().getHand());
+		assertEquals(EnumSet.of(_7_OF_HEARTS), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(_7_OF_DIAMONDS), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is not allowed when it should be", game.getActivePlayer().getActiveState().isPickAllowed());
 		assertTrue("Pass is not allowed when it should be", game.getActivePlayer().getActiveState().isPassAllowed());
 	}
@@ -102,25 +104,25 @@ public class CardMoveHandlerTest {
 		game.getActivePlayer().setHand(hand);
 		Action firstAction = new Action(ActionType.MOVE, _6_OF_HEARTS, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, firstAction));
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_SPADES, _10_OF_HEARTS, _7_OF_DIAMONDS, JACK_OF_CLUBS)), game.getActivePlayer().getHand());
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_HEARTS)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_SPADES, _10_OF_HEARTS, JACK_OF_CLUBS)), game.getActivePlayer().getActiveState().getTurnOptions());
+		assertEquals(EnumSet.of(_6_OF_SPADES, _10_OF_HEARTS, _7_OF_DIAMONDS, JACK_OF_CLUBS), game.getActivePlayer().getHand());
+		assertEquals(EnumSet.of(_6_OF_HEARTS), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(_6_OF_SPADES, _10_OF_HEARTS, JACK_OF_CLUBS), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is not allowed when it should be", game.getActivePlayer().getActiveState().isPickAllowed());
 		assertFalse("Pass is allowed when it should not be", game.getActivePlayer().getActiveState().isPassAllowed());
 		
 		Action secondAction = new Action(ActionType.MOVE, _6_OF_SPADES, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, secondAction));
-		assertEquals(new HashSet<>(Arrays.asList(_10_OF_HEARTS, _7_OF_DIAMONDS, JACK_OF_CLUBS)), game.getActivePlayer().getHand());
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_HEARTS, _6_OF_SPADES)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
-		assertEquals(new HashSet<>(Arrays.asList(JACK_OF_CLUBS)), game.getActivePlayer().getActiveState().getTurnOptions());
+		assertEquals(EnumSet.of(_10_OF_HEARTS, _7_OF_DIAMONDS, JACK_OF_CLUBS), game.getActivePlayer().getHand());
+		assertEquals(EnumSet.of(_6_OF_HEARTS, _6_OF_SPADES), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(JACK_OF_CLUBS), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is not allowed when it should be", game.getActivePlayer().getActiveState().isPickAllowed());
 		assertFalse("Pass is allowed when it should not be", game.getActivePlayer().getActiveState().isPassAllowed());
 		
 		Action thirdAction = new Action(ActionType.MOVE, JACK_OF_CLUBS, "Kyle");
 		
 		assertEquals(TURN_END, cardMoveHandler.handleAction(game, thirdAction));
-		assertEquals(new HashSet<>(Arrays.asList(_10_OF_HEARTS, _7_OF_DIAMONDS)), game.getActivePlayer().getHand());
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_HEARTS, _6_OF_SPADES, JACK_OF_CLUBS)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(_10_OF_HEARTS, _7_OF_DIAMONDS), game.getActivePlayer().getHand());
+		assertEquals(EnumSet.of(_6_OF_HEARTS, _6_OF_SPADES, JACK_OF_CLUBS), game.getActivePlayer().getActiveState().getCurrentTurnCards());
 		assertEquals(new HashSet<>(), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is allowed when it should not be", game.getActivePlayer().getActiveState().isPickAllowed());
 		assertFalse("Pass is allowed when it should not be", game.getActivePlayer().getActiveState().isPassAllowed());
@@ -132,32 +134,32 @@ public class CardMoveHandlerTest {
 		game.getActivePlayer().setHand(hand);
 		Action firstAction = new Action(ActionType.MOVE, _6_OF_HEARTS, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, firstAction));
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_SPADES, _9_OF_SPADES, _9_OF_DIAMONDS)), game.getActivePlayer().getHand());
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_HEARTS)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_SPADES)), game.getActivePlayer().getActiveState().getTurnOptions());
+		assertEquals(EnumSet.of(_6_OF_SPADES, _9_OF_SPADES, _9_OF_DIAMONDS), game.getActivePlayer().getHand());
+		assertEquals(EnumSet.of(_6_OF_HEARTS), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(_6_OF_SPADES), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is not allowed when it should be", game.getActivePlayer().getActiveState().isPickAllowed());
 		assertFalse("Pass is allowed when it should not be", game.getActivePlayer().getActiveState().isPassAllowed());
 		
 		Action secondAction = new Action(ActionType.MOVE, _6_OF_SPADES, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, secondAction));
-		assertEquals(new HashSet<>(Arrays.asList(_9_OF_SPADES, _9_OF_DIAMONDS)), game.getActivePlayer().getHand());
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_HEARTS, _6_OF_SPADES)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
-		assertEquals(new HashSet<>(Arrays.asList(_9_OF_SPADES)), game.getActivePlayer().getActiveState().getTurnOptions());
+		assertEquals(EnumSet.of(_9_OF_SPADES, _9_OF_DIAMONDS), game.getActivePlayer().getHand());
+		assertEquals(EnumSet.of(_6_OF_HEARTS, _6_OF_SPADES), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(_9_OF_SPADES), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is not allowed when it should be", game.getActivePlayer().getActiveState().isPickAllowed());
 		assertFalse("Pass is allowed when it should not be", game.getActivePlayer().getActiveState().isPassAllowed());
 		
 		Action thirdAction = new Action(ActionType.MOVE, _9_OF_SPADES, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, thirdAction));
-		assertEquals(new HashSet<>(Arrays.asList(_9_OF_DIAMONDS)), game.getActivePlayer().getHand());
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_HEARTS, _6_OF_SPADES, _9_OF_SPADES)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
-		assertEquals(new HashSet<>(Arrays.asList(_9_OF_DIAMONDS)), game.getActivePlayer().getActiveState().getTurnOptions());
+		assertEquals(EnumSet.of(_9_OF_DIAMONDS), game.getActivePlayer().getHand());
+		assertEquals(EnumSet.of(_6_OF_HEARTS, _6_OF_SPADES, _9_OF_SPADES), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(_9_OF_DIAMONDS), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is not allowed when it should be", game.getActivePlayer().getActiveState().isPickAllowed());
 		assertTrue("Pass is allowed when it should not be", game.getActivePlayer().getActiveState().isPassAllowed());
 		
 		Action fourthAction = new Action(ActionType.MOVE, _9_OF_DIAMONDS, "Kyle");
 		assertEquals(TURN_END, cardMoveHandler.handleAction(game, fourthAction));
 		assertEquals(new HashSet<>(), game.getActivePlayer().getHand());
-		assertEquals(new HashSet<>(Arrays.asList(_6_OF_HEARTS, _6_OF_SPADES, _9_OF_SPADES, _9_OF_DIAMONDS)), game.getActivePlayer().getActiveState().getCurrentTurnCards());
+		assertEquals(EnumSet.of(_6_OF_HEARTS, _6_OF_SPADES, _9_OF_SPADES, _9_OF_DIAMONDS), game.getActivePlayer().getActiveState().getCurrentTurnCards());
 		assertEquals(new HashSet<>(), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is not allowed when it should be", game.getActivePlayer().getActiveState().isPickAllowed());
 		assertTrue("Pass is allowed when it should not be", game.getActivePlayer().getActiveState().isPassAllowed());

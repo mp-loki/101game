@@ -1,4 +1,4 @@
-package com.valeriisosliuk.game.state.processor;
+package com.valeriisosliuk.game.state.initializer;
 
 import static org.junit.Assert.*;
 
@@ -6,8 +6,10 @@ import org.junit.Test;
 
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
+import com.valeriisosliuk.game.state.initializer.DealStartInitializer;
+import com.valeriisosliuk.game.state.initializer.StateInitinalizer;
 
-public class DealStartProcessorTest {
+public class DealStartInitializerTest {
 	
 	@Test
 	public void testStartDeal() {
@@ -16,7 +18,7 @@ public class DealStartProcessorTest {
 		game.joinGame("Stan");
 		game.joinGame("Cartman");
 		
-		StateProcessor dealStartProcessor = new DealStartProcessor();
+		StateInitinalizer dealStartProcessor = new DealStartInitializer();
 		dealStartProcessor.initializeState(game);
 		assertEquals("Kyle", game.getActivePlayer().getName());
 		

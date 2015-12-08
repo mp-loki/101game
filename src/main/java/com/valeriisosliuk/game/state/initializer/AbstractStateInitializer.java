@@ -1,26 +1,24 @@
-package com.valeriisosliuk.game.state.processor;
+package com.valeriisosliuk.game.state.initializer;
 
 import org.apache.log4j.Logger;
 
 import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 
-public abstract class AbstractStateProcessor implements StateProcessor {
+public abstract class AbstractStateInitializer implements StateInitinalizer {
 	
-	private static final Logger log = Logger.getLogger(AbstractStateProcessor.class);
+	private static final Logger log = Logger.getLogger(AbstractStateInitializer.class);
 	
 		
 	protected boolean validatePlayer(Game game, Action action) {
 		return action.getPlayer().equals(game.getActivePlayer().getName());
 	}
 	
-	@Override
-	public abstract void applyAction(Game game, Action action);
-	
-	protected abstract boolean validateAction(Action action);
-	
+	//protected abstract boolean validateAction(Action action);
+	/*
 	protected boolean validate(Game game, Action action) {
 		return validateAction(action) && validatePlayer(game, action);
 	}
+	*/
 
 }

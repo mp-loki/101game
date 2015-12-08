@@ -15,13 +15,13 @@ public class Player extends AbstractObservable {
 	private Set<Card> hand;
 	private int totalPoints;
 	private ActiveState activeState;
-	
+
 	public Player(String name) {
 		this.name = name;
 		hand = new HashSet<Card>();
 		PlayerObserver observer = new PlayerObserver();
 		addObserver(observer);
-		
+
 	}
 
 	public String getName() {
@@ -35,11 +35,11 @@ public class Player extends AbstractObservable {
 	public Set<Card> getHand() {
 		return Collections.unmodifiableSet(hand);
 	}
-	
+
 	public boolean removeCard(Card card) {
 		return hand.remove(card);
 	}
-	
+
 	public void pickCard(Card card) {
 		hand.add(card);
 		setChangedAndNotify(PlayerStateChange.HAND_UPDATE);
@@ -49,19 +49,28 @@ public class Player extends AbstractObservable {
 		this.hand = hand;
 		setChangedAndNotify(PlayerStateChange.HAND_UPDATE);
 	}
+
 	public ActiveState getActiveState() {
 		return activeState;
 	}
+
 	void activate() {
 		activeState = new ActiveState(name);
 		setChangedAndNotify(PlayerStateChange.ACTIVATE);
 	}
+
 	void deactivate() {
-		activeState.deleteObservers();
-		activeState = null;
+		if (activeState != null) {
+			activeState.deleteObservers();
+			activeState = null;
+		}
 		setChangedAndNotify(PlayerStateChange.DEACTIVATE);
 	}
-	
+
+	void skip() {
+		setChangedAndNotify(PlayerStateChange.SKIP);
+	}
+
 	public int getTotalPoints() {
 		return totalPoints;
 	}
@@ -69,6 +78,7 @@ public class Player extends AbstractObservable {
 	public void setTotalPoints(int totalPoints) {
 		this.totalPoints = totalPoints;
 	}
+
 	public void addPoints(int points) {
 		this.totalPoints += points;
 	}

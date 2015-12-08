@@ -1,4 +1,4 @@
-package com.valeriisosliuk.game.state.processor;
+package com.valeriisosliuk.game.state.initializer;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +8,17 @@ import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.PlayerHolder;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.game.state.actionhandler.StartActionHandler;
+import com.valeriisosliuk.game.state.actionhandler.GameStartActionHandler;
 import com.valeriisosliuk.model.ActionType;
 
 @Component
-public class InitialStateProcessor extends AbstractStateProcessor {
+public class InitialStateInitializer extends AbstractStateInitializer {
 	
-	private static final Logger log = Logger.getLogger(InitialStateProcessor.class);
+	private static final Logger log = Logger.getLogger(InitialStateInitializer.class);
 	
 	@Autowired
-	StartActionHandler startActionHandler;
-	
+	GameStartActionHandler startActionHandler;
+	/*
 	@Override
 	public void applyAction(Game game, Action action) {
 		if (validate(game, action)) {
@@ -27,6 +27,7 @@ public class InitialStateProcessor extends AbstractStateProcessor {
 		}
 		
 	}
+	*/
 	protected boolean validatePlayer(Game game, Action action) {
 		if  (game.getPlayers().size() < PlayerHolder.MAX_PLAYERS) {
 			return true;
@@ -36,15 +37,6 @@ public class InitialStateProcessor extends AbstractStateProcessor {
 		}
 	}
 
-	@Override
-	protected boolean validateAction(Action action) {
-		if  (action.getType() == ActionType.START) {
-			return true;
-		} else {
-			log.error("Action " + action.getType() + "is not applicable for InitialStateProcessor");
-			return false;
-		}
-	}
 	
 	@Override
 	public void initializeState(Game game) {

@@ -1,4 +1,4 @@
-package com.valeriisosliuk.game.state.processor;
+package com.valeriisosliuk.game.state.initializer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,9 +17,9 @@ import com.valeriisosliuk.model.Discard;
 import com.valeriisosliuk.util.Shuffle;
 
 @Component
-public class DealStartProcessor extends AbstractStateProcessor {
+public class DealStartInitializer extends AbstractStateInitializer {
 	
-	private static final Logger log = Logger.getLogger(DealStartProcessor.class);
+	private static final Logger log = Logger.getLogger(DealStartInitializer.class);
 	@Override
 	public void initializeState(Game game) {
 		log.info("Starting new Deal");
@@ -35,15 +35,4 @@ public class DealStartProcessor extends AbstractStateProcessor {
         game.getActivePlayer();
         game.setState(State.TURN_START);
 	}
-
-	@Override
-	public void applyAction(Game game, Action action) {
-
-	}
-
-	@Override
-	protected boolean validateAction(Action action) {
-		return false;
-	}
-
 }

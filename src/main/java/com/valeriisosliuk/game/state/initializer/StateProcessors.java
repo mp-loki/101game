@@ -1,4 +1,4 @@
-package com.valeriisosliuk.game.state.processor;
+package com.valeriisosliuk.game.state.initializer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,15 +9,15 @@ import com.valeriisosliuk.game.state.State;
 public class StateProcessors {
 	
 	@Autowired
-	private InitialStateProcessor initialStateProcessor;
+	private InitialStateInitializer initialStateProcessor;
 	@Autowired
-	private DealStartProcessor dealStartProcessor;
+	private DealStartInitializer dealStartProcessor;
 	@Autowired
-	private TurnStartProcessor turnStartProcessor;
+	private TurnStartInitializer turnStartProcessor;
 	@Autowired 
-	private StubStateProcessor stubStateProcessor;
+	private StubStateInitializer stubStateProcessor;
 	
-	public StateProcessor getStateProcessor(State state) {
+	public StateInitinalizer getStateProcessor(State state) {
 		switch(state) {
 			case INITIAL    : return initialStateProcessor;
 			case DEAL_START : return dealStartProcessor;

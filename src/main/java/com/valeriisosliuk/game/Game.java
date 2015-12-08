@@ -1,29 +1,24 @@
 package com.valeriisosliuk.game;
 
+import static com.valeriisosliuk.game.state.State.*;
+
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.valeriisosliuk.dto.Action;
-import com.valeriisosliuk.game.state.GameState;
-import com.valeriisosliuk.game.state.State;
-
-import static com.valeriisosliuk.game.state.State.*;
-
-import com.valeriisosliuk.game.state.processor.InitialStateProcessor;
-import com.valeriisosliuk.game.state.processor.StateProcessor;
 import com.valeriisosliuk.game.model.CardHolder;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.model.PlayerHolder;
-import com.valeriisosliuk.model.Card;
-import com.valeriisosliuk.model.CardDeck;
-import com.valeriisosliuk.model.Discard;
+import com.valeriisosliuk.game.state.GameState;
+import com.valeriisosliuk.game.state.State;
+import com.valeriisosliuk.game.state.initializer.InitialStateInitializer;
+import com.valeriisosliuk.game.state.initializer.StateInitinalizer;
+import com.valeriisosliuk.game.state.initializer.TurnStartInitializer;
 
 public class Game implements Observer {
 
@@ -33,34 +28,39 @@ public class Game implements Observer {
 	private CardHolder cardHolder;
 	
 	private PlayerHolder playerHolder;
-	private Map<State, StateProcessor> stateProcessors;
+	private Map<State, StateInitinalizer> stateInitializers;
+	
+	@Autowired
+	private InitialStateInitializer initialStateInitializer;
+	
+	@Autowired
+	private TurnStartInitializer turnStartInitializer;
 
 	public Game() {
 		gameState = new GameState(State.INITIAL);
 		gameState.addObserver(this);
-		playerHolder = new PlayerHolder();
+		setPlayerHolder(new PlayerHolder());
 		initStateProcessors();
 	}
 
-	private void initStateProcessors() {
-		stateProcessors = new HashMap<State, StateProcessor>();
-		stateProcessors.put(INITIAL, new InitialStateProcessor());
-
+	private void setPlayerHolder(PlayerHolder playerHolder) {
+		this.playerHolder = playerHolder;
 	}
 
-	public void handleAction(Action action) {
-		StateProcessor processor = stateProcessors.get(gameState);
-		processor.applyAction(this, action);
+	private void initStateProcessors() {
+		stateInitializers = new HashMap<State, StateInitinalizer>();
+		stateInitializers.put(INITIAL, initialStateInitializer);
+		stateInitializers.put(TURN_START, turnStartInitializer);
 	}
 
 	public boolean joinGame(String playerName) {
-		return playerHolder.joinGame(playerName);
+		return getPlayerHolder().joinGame(playerName);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		log.info("State changed to: " + gameState.getState());
-		StateProcessor processor = stateProcessors.get(gameState.getState());
+		StateInitinalizer processor = stateInitializers.get(gameState.getState());
 		if (processor == null) {
 			log.error("No StateProcessor found for state: " + gameState.getState());
 			return;
@@ -77,11 +77,11 @@ public class Game implements Observer {
 	}
 
 	public Player getActivePlayer() {
-		return playerHolder.getActivePlayer();
+		return getPlayerHolder().getActivePlayer();
 	}
 
 	public List<Player> getPlayers() {
-		return playerHolder.getPlayers();
+		return getPlayerHolder().getPlayers();
 	}
 
 	public CardHolder getCardHolder() {
@@ -92,4 +92,7 @@ public class Game implements Observer {
 		this.cardHolder = cardHolder;
 	}
 
+	public PlayerHolder getPlayerHolder() {
+		return playerHolder;
+	}
 }
