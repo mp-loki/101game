@@ -1,6 +1,17 @@
 package com.valeriisosliuk.game.state.actionhandler;
 
-import static org.junit.Assert.*;
+import static com.valeriisosliuk.model.Card.ACE_OF_CLUBS;
+import static com.valeriisosliuk.model.Card.ACE_OF_DIAMONDS;
+import static com.valeriisosliuk.model.Card.KING_OF_CLUBS;
+import static com.valeriisosliuk.model.Card._10_OF_CLUBS;
+import static com.valeriisosliuk.model.Card._6_OF_CLUBS;
+import static com.valeriisosliuk.model.Card._7_OF_CLUBS;
+import static com.valeriisosliuk.model.Card._7_OF_DIAMONDS;
+import static com.valeriisosliuk.model.Card._8_OF_CLUBS;
+import static com.valeriisosliuk.model.Card._8_OF_HEARTS;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,14 +32,9 @@ import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.CardHolder;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.game.state.initializer.DealStartInitializer;
 import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Card;
-
-import static com.valeriisosliuk.model.Card.*;
-
 import com.valeriisosliuk.model.CardDeck;
-import com.valeriisosliuk.model.Discard;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

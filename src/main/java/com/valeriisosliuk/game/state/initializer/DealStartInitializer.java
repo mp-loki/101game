@@ -6,14 +6,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.CardHolder;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.CardDeck;
-import com.valeriisosliuk.model.Discard;
 import com.valeriisosliuk.util.Shuffle;
 
 @Component

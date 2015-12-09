@@ -26,7 +26,7 @@ public class TurnStartInitializer extends AbstractStateInitializer {
 	
 	@Override
 	public void initializeState(Game game) {
-		Player activePlayer = game.getPlayerHolder().getNextActivePlayer();
+		Player activePlayer = game.getPlayerHolder().getActivePlayer();
 		Set<Card> turnOptions = turnAdvisor.getValidCardsForTurn(activePlayer.getHand(), 
 				game.getCardHolder().getLastCardInDiscard(), true);
 		activePlayer.getActiveState().setTurnOptions(turnOptions);

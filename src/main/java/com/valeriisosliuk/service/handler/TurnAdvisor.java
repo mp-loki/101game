@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.model.Card;
+import com.valeriisosliuk.model.Suit;
 import com.valeriisosliuk.service.handler.validator.Validator;
 import com.valeriisosliuk.service.handler.validator.ValidatorSupplier;
 
@@ -25,5 +26,15 @@ public class TurnAdvisor {
 			}
 		}
 		return validTurns;
+	}
+	
+	public Set<Card> getValidCardsForRespondSuit(Set<Card> hand, Suit suit) {
+	    EnumSet<Card> validTurns = EnumSet.noneOf(Card.class);
+	    for (Card card : hand) {
+	        if (card.getSuit() == suit) {
+	            validTurns.add(card);
+	        }
+	    }
+	    return validTurns;
 	}
 }

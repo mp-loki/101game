@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.PlayerHolder;
-import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.game.state.actionhandler.GameStartActionHandler;
-import com.valeriisosliuk.model.ActionType;
 
 @Component
 public class InitialStateInitializer extends AbstractStateInitializer {

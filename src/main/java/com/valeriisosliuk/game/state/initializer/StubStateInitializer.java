@@ -2,7 +2,6 @@ package com.valeriisosliuk.game.state.initializer;
 
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 
 @Component

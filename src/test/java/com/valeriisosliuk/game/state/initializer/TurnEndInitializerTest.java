@@ -50,6 +50,7 @@ public class TurnEndInitializerTest {
 		assertEquals("Kyle", game.getActivePlayer().getName());
 		turnEndInitializer.initializeState(game);
 		assertEquals(State.TURN_START, game.getState());
+		assertEquals("Stan", game.getActivePlayer().getName());
 	}
 	
 	@Test
@@ -58,6 +59,7 @@ public class TurnEndInitializerTest {
 		assertEquals("Kyle", game.getActivePlayer().getName());
 		turnEndInitializer.initializeState(game);
 		assertEquals(State.TURN_START, game.getState());
+		assertEquals("Cartman", game.getActivePlayer().getName());
 	}
 	@Test
 	public void testEndTurnSingleEight() {
@@ -69,6 +71,7 @@ public class TurnEndInitializerTest {
 		assertEquals("Stan", skippedPlayer.getName());
 		assertEquals(3, skippedPlayer.getHand().size());
 		assertEquals(EnumSet.of(_9_OF_HEARTS, QUEEN_OF_DIAMONDS, QUEEN_OF_CLUBS), skippedPlayer.getHand());
+		assertEquals("Cartman", game.getActivePlayer().getName());
 	}
 	
 	@Test
@@ -81,6 +84,7 @@ public class TurnEndInitializerTest {
 		assertEquals("Stan", skippedPlayer.getName());
 		assertEquals(5, skippedPlayer.getHand().size());
 		assertEquals(EnumSet.of(_9_OF_HEARTS, QUEEN_OF_DIAMONDS, QUEEN_OF_CLUBS, KING_OF_CLUBS, JACK_OF_DIAMONDS), skippedPlayer.getHand());
+		assertEquals("Cartman", game.getActivePlayer().getName());
 	}
 	
 	@Test
@@ -89,10 +93,9 @@ public class TurnEndInitializerTest {
 		assertEquals("Kyle", game.getActivePlayer().getName());
 		turnEndInitializer.initializeState(game);
 		assertEquals(State.TURN_START, game.getState());
-		Player stan = game.getPlayers().get(1);
-		assertEquals("Stan", stan.getName());
-		assertEquals(2, stan.getHand().size());
-		assertEquals(EnumSet.of(_9_OF_HEARTS, QUEEN_OF_DIAMONDS), stan.getHand());
+		assertEquals("Stan", game.getActivePlayer().getName());
+		assertEquals(2, game.getActivePlayer().getHand().size());
+		assertEquals(EnumSet.of(_9_OF_HEARTS, QUEEN_OF_DIAMONDS), game.getActivePlayer().getHand());
 	}
 	
 	@Test
@@ -102,10 +105,9 @@ public class TurnEndInitializerTest {
 		assertEquals("Kyle", game.getActivePlayer().getName());
 		turnEndInitializer.initializeState(game);
 		assertEquals(State.TURN_START, game.getState());
-		Player stan = game.getPlayers().get(1);
-		assertEquals("Stan", stan.getName());
-		assertEquals(3, stan.getHand().size());
-		assertEquals(EnumSet.of(_9_OF_HEARTS, QUEEN_OF_DIAMONDS, QUEEN_OF_CLUBS), stan.getHand());
+		assertEquals("Stan", game.getActivePlayer().getName());
+        assertEquals(3, game.getActivePlayer().getHand().size());
+		assertEquals(EnumSet.of(_9_OF_HEARTS, QUEEN_OF_DIAMONDS, QUEEN_OF_CLUBS), game.getActivePlayer().getHand());
 	}
 	
 	@Test
@@ -114,7 +116,7 @@ public class TurnEndInitializerTest {
 		game.getActivePlayer().getActiveState().setCurrentTurnCards(EnumSet.of(_6_OF_HEARTS, JACK_OF_SPADES));
 		assertEquals("Kyle", game.getActivePlayer().getName());
 		turnEndInitializer.initializeState(game);
-		assertEquals(State.DEMAND_SUITE, game.getState());
+		assertEquals(State.DEMAND_SUIT, game.getState());
 		assertEquals("Kyle", game.getActivePlayer().getName());
 	}
 	

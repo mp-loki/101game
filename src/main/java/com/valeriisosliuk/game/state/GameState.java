@@ -16,9 +16,6 @@ public class GameState extends AbstractObservable {
 	}
 
 	public void setState(State state) {
-		if (this.state == state) {
-			return;
-		}
 		this.state = state;
 		setChangedAndNotify(state);
 	}

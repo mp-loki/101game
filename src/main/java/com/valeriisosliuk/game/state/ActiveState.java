@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.valeriisosliuk.game.observer.ActivePlayerObserver;
 import com.valeriisosliuk.model.Card;
+import com.valeriisosliuk.model.Suit;
 
 public class ActiveState extends Observable {
 	
@@ -15,6 +16,7 @@ public class ActiveState extends Observable {
 	private Set<Card> turnOptions;
 	private Set<Card> currentTurnCards;
 	private String name;
+	private Suit demandedSuit;
 	
 	public ActiveState(String name) {
 		this.name = name;
@@ -70,4 +72,12 @@ public class ActiveState extends Observable {
 	public void setCurrentTurnCards(Set<Card> currentTurnCards) {
 		this.currentTurnCards = currentTurnCards;
 	}
+
+    public Suit getDemandedSuit() {
+        return demandedSuit;
+    }
+
+    public void setDemandedSuit(Suit demandedSuit) {
+        this.demandedSuit = demandedSuit;
+    }
 }

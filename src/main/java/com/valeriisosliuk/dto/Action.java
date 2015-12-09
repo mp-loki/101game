@@ -1,13 +1,16 @@
 package com.valeriisosliuk.dto;
 
+import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Card;
+import com.valeriisosliuk.model.Suit;
 
 public class Action {
 
     private ActionType type;
     private Card card;
     private String currentPlayer;
+    private Suit demandedSuite;
     
     public Action() {
 	}
@@ -53,5 +56,13 @@ public class Action {
 	public String toString() {
 		return "ActionDto [type=" + type + ", card=" + card + ", currentPlayer=" + currentPlayer + "]";
 	}
+
+    public Suit getDemandedSuit() {
+        return demandedSuite;
+    }
+
+    public void setDemandedSuit(Suit demandedSuite) {
+        this.demandedSuite = demandedSuite;
+    }
 	
 }

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
-import com.valeriisosliuk.game.model.PlayerHolder;
 import com.valeriisosliuk.game.state.State;
 
 import static com.valeriisosliuk.game.state.State.*;
@@ -41,48 +40,50 @@ public class TurnEndInitializer extends AbstractStateInitializer {
 			processDefaultTurn(game);
 		}
 	}
-	
-	private void processJackTurn(Game game) {
-		Player activePlayer = game.getActivePlayer();
-		game.setState(getJackNextState(activePlayer.getHand()));
-	}
 
 	private void processDefaultTurn(Game game) {
 		Player activePlayer = game.getActivePlayer();
-		getDefaultNextPlayer(activePlayer.getHand(), game.getPlayerHolder());
-		game.setState(getDefaultNextState(activePlayer.getHand()));
+		setNextState(game, activePlayer.getHand());
 	}
 
 	private void processEightTurn(Game game, long eightCount) {
 		Player activePlayer = game.getActivePlayer();
 		Player skippedPlayer = game.getPlayerHolder().skipPlayer();
 		pickCardAmount(skippedPlayer, game, eightCount * 2);
-		game.setState(getDefaultNextState(activePlayer.getHand()));
+		setNextState(game, activePlayer.getHand());
 	}
 
 	private void processSevenTurn(Game game, long sevenCount) {
 		Player activePlayer = game.getActivePlayer();
-		Player nextPlayer = getDefaultNextPlayer(activePlayer.getHand(), game.getPlayerHolder());
+		Player nextPlayer = null;
+		if (activePlayer.getHand().size() > 0) {
+		    game.setState(TURN_START);
+		    nextPlayer = game.getPlayerHolder().getNextActivePlayer();
+		} else {
+		    game.setState(DEAL_END);
+		    nextPlayer = game.getPlayerHolder().skipPlayer();
+		}
 		pickCardAmount(nextPlayer, game, sevenCount);
-		game.setState(getDefaultNextState(activePlayer.getHand()));
 	}
 
 	private void processAceTurn(Game game) {
 		Player activePlayer = game.getActivePlayer();
 		game.getPlayerHolder().skipPlayer();
-		game.setState(getDefaultNextState(activePlayer.getHand()));
+		setNextState(game, activePlayer.getHand());
 	}
 	
-	private Player getDefaultNextPlayer(Set<Card> hand, PlayerHolder playerHolder) {
-		return hand.size() > 0 ? playerHolder.getNextActivePlayer() : playerHolder.skipPlayer();
-	}
+    private void setNextState(Game game, Set<Card> hand) {
+        if (hand.size() > 0) {
+            game.setState(TURN_START);
+            game.getPlayerHolder().getNextActivePlayer();
+        } else {
+            game.setState(DEAL_END);
+        }
+    }
 	
-	private State getDefaultNextState(Set<Card> hand) {
-		return hand.size() > 0 ? TURN_START : DEAL_END;
-	}
-	
-	private State getJackNextState(Set<Card> hand) {
-		return hand.size() > 0 ? DEMAND_SUITE : DEAL_END;
+	private void processJackTurn(Game game) {
+		State state = game.getActivePlayer().getHand().size() > 0 ? DEMAND_SUIT : DEAL_END;
+		game.setState(state);
 	}
 	
 	private void pickCardAmount(Player player, Game game, long amount) {
