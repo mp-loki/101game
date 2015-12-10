@@ -12,6 +12,6 @@ public enum State {
 	RESPOND_SUIT,
 	RESPOND_SUIT_END,
 	DEAL_END,
-	GAME_END
+	GAME_OVER
 	
 }

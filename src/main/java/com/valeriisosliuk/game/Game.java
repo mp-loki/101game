@@ -22,6 +22,8 @@ import com.valeriisosliuk.game.state.initializer.TurnStartInitializer;
 
 public class Game implements Observer {
 
+    public static final int MAX_POINTS = 100;
+    
 	private static final Logger log = Logger.getLogger(Game.class);
 
 	private GameState gameState;

@@ -74,5 +74,17 @@ public class PlayerHolder {
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
 	}
+	/**
+	 * Resets iterator to current player. This method is called at the end of a deal to make sure that new deal starts from deal winner
+	 * @param dealWinner <code>Player</code> to set 
+	 */
+    public void resetIterator(Player dealWinner) {
+        if (!players.contains(dealWinner)) {
+            throw new IllegalArgumentException("Player " + dealWinner.getName() + " is not in this game!");
+        }
+        while (!playerIterator.next().getName().equals(dealWinner.getName())) {
+        }
+        
+    }
 
 }
