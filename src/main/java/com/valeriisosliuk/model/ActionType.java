@@ -6,5 +6,6 @@ public enum ActionType {
 	PICK,
 	MOVE,
 	DEMAND,
-	RESPOND
+	RESPOND,
+	QUIT
 }
