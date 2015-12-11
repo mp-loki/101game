@@ -2,11 +2,14 @@ package com.valeriisosliuk.game.state.initializer;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
 
-public class DealEndInitializer implements StateInitinalizer {
+@Component("dealEndStateInitializer")
+public class DealEndStateInitializer implements StateInitinalizer {
 
     @Override
     public void initializeState(Game game) {

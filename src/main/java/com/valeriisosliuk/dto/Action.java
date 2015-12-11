@@ -1,6 +1,5 @@
 package com.valeriisosliuk.dto;
 
-import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Suit;

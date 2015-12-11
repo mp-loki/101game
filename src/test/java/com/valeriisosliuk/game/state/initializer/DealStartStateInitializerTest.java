@@ -6,10 +6,10 @@ import org.junit.Test;
 
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
-import com.valeriisosliuk.game.state.initializer.DealStartInitializer;
+import com.valeriisosliuk.game.state.initializer.DealStartStateInitializer;
 import com.valeriisosliuk.game.state.initializer.StateInitinalizer;
 
-public class DealStartInitializerTest {
+public class DealStartStateInitializerTest {
 	
 	@Test
 	public void testStartDeal() {
@@ -18,8 +18,8 @@ public class DealStartInitializerTest {
 		game.joinGame("Stan");
 		game.joinGame("Cartman");
 		
-		StateInitinalizer dealStartProcessor = new DealStartInitializer();
-		dealStartProcessor.initializeState(game);
+		StateInitinalizer dealStartInitializer = new DealStartStateInitializer();
+		dealStartInitializer.initializeState(game);
 		assertEquals("Kyle", game.getActivePlayer().getName());
 		
 		for (Player player : game.getPlayers()) {

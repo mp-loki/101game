@@ -21,7 +21,6 @@ public class Player extends AbstractObservable {
 		hand = new HashSet<Card>();
 		PlayerObserver observer = new PlayerObserver();
 		addObserver(observer);
-
 	}
 
 	public String getName() {

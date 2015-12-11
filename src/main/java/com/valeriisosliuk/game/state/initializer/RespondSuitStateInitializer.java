@@ -11,9 +11,8 @@ import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Suit;
 import com.valeriisosliuk.service.handler.TurnAdvisor;
 
-@Component
-public class RespondSuitInitializer implements StateInitinalizer {
-
+@Component("respondSuitStateInitializer")
+public class RespondSuitStateInitializer implements StateInitinalizer {
     
     @Autowired
     private TurnAdvisor turnAdvisor;

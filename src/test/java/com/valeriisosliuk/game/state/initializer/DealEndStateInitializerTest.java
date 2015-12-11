@@ -13,9 +13,9 @@ import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.model.Card;
 
-public class DealEndInitializerTest {
+public class DealEndStateInitializerTest {
 
-    private DealEndInitializer dealEndInitializer = new DealEndInitializer();
+    private DealEndStateInitializer dealEndInitializer = new DealEndStateInitializer();
     private Game game;
     
     @Before

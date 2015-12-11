@@ -11,9 +11,9 @@ public class StateProcessors {
 	@Autowired
 	private InitialStateInitializer initialStateProcessor;
 	@Autowired
-	private DealStartInitializer dealStartProcessor;
+	private DealStartStateInitializer dealStartProcessor;
 	@Autowired
-	private TurnStartInitializer turnStartProcessor;
+	private TurnStartStateInitializer turnStartProcessor;
 	@Autowired 
 	private StubStateInitializer stubStateProcessor;
 	

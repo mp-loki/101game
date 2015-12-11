@@ -9,6 +9,7 @@ import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.model.ActionType;
+import com.valeriisosliuk.model.Suit;
 
 public class TurnEndActionHandlerTest {
     
@@ -34,6 +35,17 @@ private TurnEndActionHandler actionHandler = new TurnEndActionHandler();
     public void testEndTurnNegative() {
         Action action = new Action(ActionType.END, "Kyle");
         assertEquals(State.TURN_START, actionHandler.handleAction(game, action));
+    }
+    
+    @Test
+    public void testRespondSuitTurnEnd() {
+        game.setState(State.RESPOND_SUIT);
+        game.getActivePlayer().getActiveState().setDemandedSuit(Suit.HEARTS);
+        game.getActivePlayer().getActiveState().setPassAllowed(true);
+        Action action = new Action(ActionType.END, "Kyle");
+        assertEquals(State.RESPOND_SUIT,  actionHandler.handleAction(game, action));
+        assertEquals("Stan", game.getActivePlayer().getName());
+        assertEquals(Suit.HEARTS, game.getActivePlayer().getActiveState().getDemandedSuit());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.valeriisosliuk.game.state.actionhandler;
 
 import static com.valeriisosliuk.model.Card.ACE_OF_CLUBS;
+import static com.valeriisosliuk.model.Card.KING_OF_HEARTS;
 import static com.valeriisosliuk.model.Card.ACE_OF_DIAMONDS;
 import static com.valeriisosliuk.model.Card.KING_OF_CLUBS;
 import static com.valeriisosliuk.model.Card._10_OF_CLUBS;
@@ -15,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,10 +33,12 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.CardHolder;
+import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.model.ActionType;
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.CardDeck;
+import com.valeriisosliuk.model.Suit;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -50,6 +54,7 @@ public class PickActionHandlerTest {
 	public void setUp() {
 		game = new Game();
         game.joinGame("Kyle");
+        game.joinGame("Stan");
         game.setState(State.TURN_START);
         List<Card> cards = new ArrayList<>(Arrays.asList(Card.values()));
         CardDeck cardDeck = new CardDeck(cards);
@@ -75,6 +80,17 @@ public class PickActionHandlerTest {
 		assertTrue("Pass is not when it should be", game.getActivePlayer().getActiveState().isPassAllowed());
 		cardsInHand = new HashSet<Card>(Arrays.asList(ACE_OF_CLUBS, _6_OF_CLUBS, _7_OF_CLUBS, _8_OF_CLUBS, _10_OF_CLUBS));
 		assertEquals(cardsInHand, game.getActivePlayer().getHand());
+	}
+	@Test
+	public void testPickCardEndTurn() {
+	    Action action = new Action(ActionType.PICK, "Kyle");
+	    game.getCardHolder().putCardInDiscard(KING_OF_HEARTS);
+	    assertTrue(game.getCardHolder().cardDeckHasNext());
+	    State nextState = pickActionHandler.handleAction(game, action);
+	    assertEquals(State.TURN_END, nextState);
+	    assertEquals(5, game.getActivePlayer().getHand().size());
+	    assertFalse("Pick is allowed when it should not be", game.getActivePlayer().getActiveState().isPickAllowed());
+	    assertTrue("Pass is not when it should be", game.getActivePlayer().getActiveState().isPassAllowed());
 	}
 	
 	@Test
@@ -120,6 +136,35 @@ public class PickActionHandlerTest {
 		assertEquals(new HashSet<Card>(Arrays.asList(KING_OF_CLUBS)), game.getActivePlayer().getActiveState().getTurnOptions());
 		assertTrue("Pick is not allowed when it should be", game.getActivePlayer().getActiveState().isPickAllowed());
 	}
+	
+    @Test
+    public void testPickCardRespondSuit() {
+        game.setState(State.RESPOND_SUIT);
+        game.getActivePlayer().getActiveState().setDemandedSuit(Suit.CLUBS);
+        Player player = game.getActivePlayer();
+        player.setHand(EnumSet.of(Card.QUEEN_OF_SPADES));
+        Action action = new Action(ActionType.PICK, "Kyle");
+        State state = pickActionHandler.handleAction(game, action);
+        assertEquals(State.RESPOND_SUIT, state);
+        assertEquals(player, game.getActivePlayer());
+        assertFalse("Pick is allowed when it should not be", player.getActiveState().isPickAllowed());
+        assertTrue("Pass is not allowed when it should be", player.getActiveState().isPassAllowed());
+        assertEquals(EnumSet.of(Card._10_OF_CLUBS), player.getActiveState().getTurnOptions());
+    }
+    
+    @Test
+    public void testPickCardRespondSuitEndTurn() {
+        game.setCardHolder(getCustomCardHolder());
+        game.setState(State.RESPOND_SUIT);
+        game.getActivePlayer().getActiveState().setDemandedSuit(Suit.CLUBS);
+        Player player = game.getActivePlayer();
+        player.setHand(EnumSet.of(Card.QUEEN_OF_SPADES));
+        Action action = new Action(ActionType.PICK, "Kyle");
+        State state = pickActionHandler.handleAction(game, action);
+        assertEquals(State.RESPOND_SUIT, state);
+        assertEquals("Stan", game.getActivePlayer().getName());
+        assertEquals(Suit.CLUBS, game.getActivePlayer().getActiveState().getDemandedSuit());
+    }
 	
 	private CardHolder getCustomCardHolder() {
 		CardHolder cardHolder = new CardHolder();

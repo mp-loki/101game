@@ -12,8 +12,8 @@ import com.valeriisosliuk.game.state.actionhandler.PickActionHandler;
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.service.handler.TurnAdvisor;
 
-@Component
-public class TurnStartInitializer extends AbstractStateInitializer {
+@Component("turnStartStateInitializer")
+public class TurnStartStateInitializer extends AbstractStateInitializer {
 
 	@Autowired
 	private TurnAdvisor turnAdvisor;

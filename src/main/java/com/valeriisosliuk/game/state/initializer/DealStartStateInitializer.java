@@ -14,10 +14,10 @@ import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.CardDeck;
 import com.valeriisosliuk.util.Shuffle;
 
-@Component
-public class DealStartInitializer extends AbstractStateInitializer {
+@Component("dealStartStateInitializer")
+public class DealStartStateInitializer extends AbstractStateInitializer {
 	
-	private static final Logger log = Logger.getLogger(DealStartInitializer.class);
+	private static final Logger log = Logger.getLogger(DealStartStateInitializer.class);
 	@Override
 	public void initializeState(Game game) {
 		log.info("Starting new Deal");
