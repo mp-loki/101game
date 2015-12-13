@@ -32,14 +32,14 @@ public class CardMoveHandlerOld implements ActionHandler {
 	@Override
 	public ActionResult handle(Action action, Table table) {
 		ActionResult result = new ActionResult();
-		if (table.isActivePlayer(action.getPlayer())) {
+		if (table.isActivePlayer(action.getPlayerName())) {
 			Player activePlayer = table.getActivePlayer();
 			Card lastCard = table.getLastCardInDiscard();
 			Card actionCard = action.getCard();
 			boolean firstMove = activePlayer.isFirstMove();
 
 			if (!isValid(actionCard, lastCard, firstMove)) {
-				result.getPlayerUpdates().put(action.getPlayer(), getErrorResponeDto(activePlayer, table));
+				result.getPlayerUpdates().put(action.getPlayerName(), getErrorResponeDto(activePlayer, table));
 			} else {
 				processCardMove(activePlayer, table, actionCard, result);
 				nextTurnProcessor.processNextMove(table, result);

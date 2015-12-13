@@ -4,17 +4,16 @@ import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
-import com.valeriisosliuk.game.model.PlayerHolder;
 import com.valeriisosliuk.game.state.State;
 import static com.valeriisosliuk.game.state.State.*;
 
-@Component
+@Component("gameStartActionHandler")
 public class GameStartActionHandler implements ActionHandler {
 
 	@Override
 	public State handleAction(Game game, Action action) {
-		game.joinGame(action.getPlayer());
-		if (game.getPlayers().size() == PlayerHolder.MAX_PLAYERS) {
+		game.joinGame(action.getPlayerName());
+		if (game.getPlayers().size() == Game.MAX_PLAYERS) {
 			return DEAL_START;
 		}
 		return INITIAL;

@@ -43,7 +43,7 @@ public class Action {
 		this.card = card;
 	}
 
-	public String getPlayer() {
+	public String getPlayerName() {
 		return currentPlayer;
 	}
 

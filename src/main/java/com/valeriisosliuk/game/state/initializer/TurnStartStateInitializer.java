@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
-import com.valeriisosliuk.game.state.actionhandler.CardMoveHandler;
+import com.valeriisosliuk.game.state.actionhandler.CardMoveActionHandler;
 import com.valeriisosliuk.game.state.actionhandler.PickActionHandler;
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.service.handler.TurnAdvisor;
@@ -19,7 +19,7 @@ public class TurnStartStateInitializer extends AbstractStateInitializer {
 	private TurnAdvisor turnAdvisor;
 	
 	@Autowired
-	private CardMoveHandler cardMoveHandler;
+	private CardMoveActionHandler cardMoveHandler;
 	
 	@Autowired 
 	private PickActionHandler pickHandler;

@@ -24,10 +24,12 @@ public class GameStartActionHandlerTest {
 		Action firstAction = new Action(ActionType.START, "Kyle");
 		Action secondAction = new Action(ActionType.START, "Stan");
 		Action thirdAction = new Action(ActionType.START, "Cartman");
+		Action fourthAction = new Action(ActionType.START, "Kenny");
 		Game game = new Game();
 		assertEquals(State.INITIAL, actionHandler.handleAction(game, firstAction));
 		assertEquals(State.INITIAL, actionHandler.handleAction(game, secondAction));
-		assertEquals(State.DEAL_START, actionHandler.handleAction(game, thirdAction));
+		assertEquals(State.INITIAL, actionHandler.handleAction(game, thirdAction));
+		assertEquals(State.DEAL_START, actionHandler.handleAction(game, fourthAction));
 	}
 
 }

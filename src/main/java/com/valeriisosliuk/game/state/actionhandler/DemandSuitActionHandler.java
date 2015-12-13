@@ -7,7 +7,7 @@ import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.model.Suit;
 
-@Component
+@Component("demandSuitActionHandler")
 public class DemandSuitActionHandler implements ActionHandler {
 
     @Override

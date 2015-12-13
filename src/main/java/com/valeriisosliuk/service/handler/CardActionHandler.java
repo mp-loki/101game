@@ -17,7 +17,7 @@ public class CardActionHandler implements ActionHandler{
 		Card actionCard = action.getCard();
 		Card lastCard = table.getLastCardInDiscard();
 		if (!isValid(actionCard, lastCard)) {
-			result.getPlayerUpdates().put(action.getPlayer(), getInvalidCardActionDto());
+			result.getPlayerUpdates().put(action.getPlayerName(), getInvalidCardActionDto());
 		}
 		// TODO Auto-generated method stub
 		return result;

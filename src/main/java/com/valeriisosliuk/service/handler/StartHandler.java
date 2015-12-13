@@ -25,7 +25,7 @@ public class StartHandler implements ActionHandler {
 	@Override
 	public ActionResult handle(Action action, Table table) {
 		ActionResult result = null;
-		String playerName = action.getPlayer();
+		String playerName = action.getPlayerName();
 		boolean started = table.start(playerName);
 
 		if (!started) {

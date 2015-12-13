@@ -65,7 +65,7 @@ public class TableService {
 	}
 
 	public void processAction(Action action) {
-		Table table = getCurrentTableForplayer(action.getPlayer());
+		Table table = getCurrentTableForplayer(action.getPlayerName());
 		ActionResult result = null;
 		ActionHandler actionHandler = handlerSupplier.getActionHandler(action.getType());
 		if (actionHandler != null) {

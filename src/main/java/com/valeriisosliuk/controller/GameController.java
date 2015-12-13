@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.ResponseDto;
+import com.valeriisosliuk.game.service.UserService;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.TableService;
-import com.valeriisosliuk.service.UserService;
 
 @Controller
 public class GameController {

@@ -16,10 +16,10 @@ import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Rank;
 import com.valeriisosliuk.service.handler.TurnAdvisor;
 
-@Component
-public class CardMoveHandler implements ActionHandler {
+@Component("cardMoveActionHandler")
+public class CardMoveActionHandler implements ActionHandler {
 
-	private static final Logger log = Logger.getLogger(CardMoveHandler.class);
+	private static final Logger log = Logger.getLogger(CardMoveActionHandler.class);
 
 	@Autowired
 	private TurnAdvisor turnAdvisor;

@@ -16,7 +16,7 @@ import com.valeriisosliuk.model.Rank;
 import com.valeriisosliuk.model.Suit;
 import com.valeriisosliuk.service.handler.TurnAdvisor;
 
-@Component
+@Component("respondSuitActionHandler")
 public class RespondSuitActionHandler implements ActionHandler {
 
     private static final Logger log = Logger.getLogger(RespondSuitActionHandler.class);

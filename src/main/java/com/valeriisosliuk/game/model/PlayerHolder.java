@@ -8,12 +8,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.google.common.collect.Iterators;
+import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
 
 public class PlayerHolder {
 	private static final Logger log = Logger.getLogger(PlayerHolder.class);
 
-	public static final int MAX_PLAYERS = 3;
 	private Player activePlayer;
 	private List<Player> players;
 	private Iterator<Player> playerIterator;
@@ -21,12 +21,20 @@ public class PlayerHolder {
 	public PlayerHolder() {
 		players = new LinkedList<>();
 	}
-
+	
+	public int getPlayersCount() {
+		return players.size();
+	}
+	
+	public boolean isPlayerAtTheTable(String playerName) {
+		return players.stream().allMatch(p -> p.getName().equals(playerName));
+	}
+	
 	public boolean joinGame(String playerName) {
 		if (players.stream().anyMatch(p -> p.getName().equals(playerName))) {
 			log.info("Player " + playerName + " is already in game!");
 			return true;
-		} else if (players.size() < MAX_PLAYERS) {
+		} else if (players.size() < Game.MAX_PLAYERS) {
 			players.add(new Player(playerName));
 			return true;
 		}

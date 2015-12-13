@@ -9,7 +9,7 @@ import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.model.Suit;
 
-@Component
+@Component("turnEndActionHandler")
 public class TurnEndActionHandler implements ActionHandler {
 
     private static final Logger log = Logger.getLogger(TurnEndActionHandler.class);

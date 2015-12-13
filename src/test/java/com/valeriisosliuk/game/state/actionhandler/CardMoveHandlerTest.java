@@ -37,7 +37,7 @@ public class CardMoveHandlerTest {
 	private Game game;
 	
 	@Autowired
-	private CardMoveHandler cardMoveHandler;
+	private CardMoveActionHandler cardMoveHandler;
 	
 	@Before
 	public void setUp() {

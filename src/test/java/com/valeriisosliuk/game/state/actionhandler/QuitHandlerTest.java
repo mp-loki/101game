@@ -13,7 +13,7 @@ import com.valeriisosliuk.model.ActionType;
 public class QuitHandlerTest {
 
     private Game game;
-    private QuitHandler quitHandler = new QuitHandler();
+    private QuitActionHandler quitHandler = new QuitActionHandler();
     
     @Before
     public void setUp() {

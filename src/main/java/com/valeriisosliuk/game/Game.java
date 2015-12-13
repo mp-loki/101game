@@ -28,6 +28,7 @@ public class Game extends AbstractObservable {
 	}
 
 	public boolean joinGame(String playerName) {
+		// TODO add message sending
 		return getPlayerHolder().joinGame(playerName);
 	}
 
