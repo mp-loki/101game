@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import com.google.common.collect.Iterators;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
+import com.valeriisosliuk.game.observer.PlayerObserver;
 
 public class PlayerHolder {
 	private static final Logger log = Logger.getLogger(PlayerHolder.class);
@@ -34,8 +35,10 @@ public class PlayerHolder {
 		if (players.stream().anyMatch(p -> p.getName().equals(playerName))) {
 			log.info("Player " + playerName + " is already in game!");
 			return true;
-		} else if (players.size() < Game.MAX_PLAYERS) {
-			players.add(new Player(playerName));
+		} else if (players.size() <= Game.MAX_PLAYERS) {
+		    Player player = new Player(playerName);
+		    player.addObserver(new PlayerObserver());
+			players.add(player);
 			return true;
 		}
 		return false;

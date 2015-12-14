@@ -8,4 +8,9 @@ public class AbstractObservable extends Observable{
 		setChanged();
 		notifyObservers(t);
 	}
+	
+	protected <T> void setChangedAndNotify() {
+	    setChanged();
+	    notifyObservers();
+	}
 }

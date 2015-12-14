@@ -12,9 +12,15 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
+import com.valeriisosliuk.security.CustomSecurityContextLogoutHandler;
+
 @Configuration
 @EnableWebMvcSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    
+    @Autowired
+    private CustomSecurityContextLogoutHandler customSecurityContextLogoutHandler;
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -27,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .logout()
+                .addLogoutHandler(customSecurityContextLogoutHandler)
                 .permitAll();
         http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
     }
@@ -43,11 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
-        auth.inMemoryAuthentication().withUser("foo").password("foo").roles("USER");
-        auth.inMemoryAuthentication().withUser("bar").password("bar").roles("USER");
-        auth.inMemoryAuthentication().withUser("marge").password("simpson").roles("USER");
-        auth.inMemoryAuthentication().withUser("aaa").password("aaa").roles("USER");
-        auth.inMemoryAuthentication().withUser("qqq").password("qqq").roles("USER");
+        auth.inMemoryAuthentication().withUser("Kyle").password("Kyle").roles("User");
+        auth.inMemoryAuthentication().withUser("Stan").password("Stan").roles("User");
+        auth.inMemoryAuthentication().withUser("Cartman").password("Cartman").roles("User");
+        auth.inMemoryAuthentication().withUser("Kenny").password("Kenny").roles("User");
+        auth.inMemoryAuthentication().withUser("Wendy").password("Wendy").roles("User");
+        auth.inMemoryAuthentication().withUser("Butters").password("Butters").roles("User");
     }
 }
