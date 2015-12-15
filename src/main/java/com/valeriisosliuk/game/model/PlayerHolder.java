@@ -35,7 +35,7 @@ public class PlayerHolder {
 		if (players.stream().anyMatch(p -> p.getName().equals(playerName))) {
 			log.info("Player " + playerName + " is already in game!");
 			return true;
-		} else if (players.size() <= Game.MAX_PLAYERS) {
+		} else if (players.size() < Game.MAX_PLAYERS) {
 		    Player player = new Player(playerName);
 		    player.addObserver(new PlayerObserver());
 			players.add(player);

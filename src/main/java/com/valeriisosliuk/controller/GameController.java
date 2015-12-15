@@ -56,7 +56,7 @@ public class GameController {
 
     @RequestMapping(value = "/")
     public String root(Model model) {
-        return joinTable(model);
+        return home(model);
     }
 
     @RequestMapping(value = "/game/getState")
@@ -66,8 +66,10 @@ public class GameController {
     }
 
     @RequestMapping(value = "/home")
-    public String index(Model model) {
-        return "index";
+    public String home(Model model) {
+        String currentPlayerName = userService.getCurrentUserName();
+        model.addAttribute("currentPlayer", currentPlayerName);
+        return "home";
     }
 
     @MessageMapping("/game")

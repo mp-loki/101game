@@ -1,5 +1,24 @@
+html {
+	height: 100%;
+}
 body {
 	height: 100%;
+	padding-top: 70px;
+}
+.border_red {
+	border: 1px solid red;
+}
+.color_red {
+	color: red;
+}
+.color_blue {
+	color: blue;
+}
+.list-group-item {
+	border: none;
+}
+.padding_left_10px {
+	padding-left: 10px;
 }
 .width_100 {
 	width: 100%;

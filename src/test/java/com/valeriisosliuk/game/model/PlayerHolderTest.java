@@ -15,8 +15,9 @@ public class PlayerHolderTest {
 		assertTrue(playerHolder.joinGame("Kyle"));
 		assertTrue(playerHolder.joinGame("Stan"));
 		assertTrue(playerHolder.joinGame("Cartman"));
+		assertTrue(playerHolder.joinGame("Kenny"));
 		assertTrue(playerHolder.joinGame("Kyle"));
-		assertFalse(playerHolder.joinGame("Kenny"));
+		assertFalse(playerHolder.joinGame("Wendy"));
 		Player firstPlayer = playerHolder.getActivePlayer();
 		assertEquals("Kyle", firstPlayer.getName());
 		Player secondPlayer = playerHolder.getNextActivePlayer();
