@@ -1,13 +1,15 @@
 package com.valeriisosliuk.game.service;
 
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
+import com.valeriisosliuk.dto.UserDto;
 import com.valeriisosliuk.game.observer.AbstractObservable;
 
 @Component
@@ -24,7 +26,7 @@ public class UserHolder extends AbstractObservable {
         if (loggedInUsers.keySet().contains(username)) {
             return;
         }
-        loggedInUsers.put(username, false);
+        loggedInUsers.put(username, true);
         setChangedAndNotify();
     }
     
@@ -34,16 +36,16 @@ public class UserHolder extends AbstractObservable {
     }
     
     public void setBusy(String username) {
-        loggedInUsers.put(username, true);
+        loggedInUsers.put(username, false);
         setChangedAndNotify();
     }
     
     public void setAvailable(String username) {
-        loggedInUsers.put(username, false);
+        loggedInUsers.put(username, true);
         setChangedAndNotify();
     }
 
-    public Map<String, Boolean> getLoggedInUsers() {
-        return Collections.unmodifiableMap(loggedInUsers);
+    public List<UserDto> getLoggedInUsers() {
+        return loggedInUsers.keySet().stream().map(u -> new UserDto(u, loggedInUsers.get(u))).collect(Collectors.toList());
     }
 }

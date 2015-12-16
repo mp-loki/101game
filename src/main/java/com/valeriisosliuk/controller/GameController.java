@@ -1,6 +1,7 @@
 package com.valeriisosliuk.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.ResponseDto;
+import com.valeriisosliuk.dto.UserDto;
 import com.valeriisosliuk.game.service.UserService;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.TableService;
@@ -63,6 +65,11 @@ public class GameController {
     public @ResponseBody ResponseDto getState(Model model) {
         String currentPlayerName = userService.getCurrentUserName();
         return tableService.getStateDto(currentPlayerName);
+    }
+    
+    @RequestMapping(value = "/game/getUsers")
+    public @ResponseBody List<UserDto> getLoggedInUsers(Model model) {
+        return userService.getLoggedInUsers();
     }
 
     @RequestMapping(value = "/home")

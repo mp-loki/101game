@@ -1,4 +1,4 @@
-package com.valeriisosliuk.service;
+package com.valeriisosliuk.game.service;
 
 import java.util.Map;
 
