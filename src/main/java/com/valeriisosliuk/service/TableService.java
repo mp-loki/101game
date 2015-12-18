@@ -1,6 +1,7 @@
 package com.valeriisosliuk.service;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ import com.valeriisosliuk.service.handler.ActionHandlerSupplier;
 import com.valeriisosliuk.service.handler.DealProcessor;
 import com.valeriisosliuk.service.handler.NextTurnProcessor;
 import com.valeriisosliuk.util.Shuffle;
-
+@Deprecated
 @Component
 public class TableService {
 

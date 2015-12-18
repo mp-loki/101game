@@ -20,7 +20,8 @@ import static com.valeriisosliuk.model.ActionType.START;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,39 +33,39 @@ import com.valeriisosliuk.model.ActionType;
 @Configuration
 public class AppConfig {
     
-    @Autowired
+    @Resource
     private StateInitinalizer initialStateInitializer;
-    @Autowired
+    @Resource
     private StateInitinalizer dealStartStateInitializer;
-    @Autowired
+    @Resource
     private StateInitinalizer turnStartStateInitializer;
-    @Autowired
+    @Resource
     private StateInitinalizer turnEndStateInitializer;
-    @Autowired
+    @Resource
     private StateInitinalizer demandSuitStateInitializer;
-    @Autowired
+    @Resource
     private StateInitinalizer respondSuitStateInitializer;
-    @Autowired
+    @Resource
     private StateInitinalizer dealEndStateInitializer;
-    @Autowired
-    private StateInitinalizer gameOverStateInitializer;
-    @Autowired
+    @Resource
     private StateInitinalizer stubStateInitializer;
-    @Autowired
+    @Resource
+    private StateInitinalizer gameOverStateInitializer;
+    @Resource
     private ActionHandler gameStartActionHandler;
-    @Autowired
+    @Resource
     private ActionHandler turnEndActionHandler;
-    @Autowired
+    @Resource
     private ActionHandler pickActionHandler;
-    @Autowired
+    @Resource
     private ActionHandler cardMoveActionHandler;
-    @Autowired
+    @Resource
     private ActionHandler demandSuitActionHandler;
-    @Autowired
+    @Resource
     private ActionHandler respondSuitActionHandler;
-    @Autowired
+    @Resource
     private ActionHandler quitActionHandler;
-
+    
     @Bean(name = "stateInitializers")
     public Map<State, StateInitinalizer> getStateInitializers() {
         Map<State, StateInitinalizer> stateInitializers = new HashMap<>();

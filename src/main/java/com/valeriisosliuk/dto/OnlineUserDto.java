@@ -1,11 +1,11 @@
 package com.valeriisosliuk.dto;
 
-public class UserDto {
+public class OnlineUserDto {
     
     private String name;
     private Boolean available;
     
-    public UserDto(String name, Boolean available) {
+    public OnlineUserDto(String name, Boolean available) {
         this.name = name;
         this.available = available;
     }
@@ -21,5 +21,10 @@ public class UserDto {
     }
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto [name=" + name + ", available=" + available + "]";
     }
 }

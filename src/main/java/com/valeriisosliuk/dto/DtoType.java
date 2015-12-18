@@ -2,5 +2,6 @@ package com.valeriisosliuk.dto;
 
 public enum DtoType {
     
-    USERS_UPDATE
+    USERS_UPDATE,
+    PENDING_START
 }

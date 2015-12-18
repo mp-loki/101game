@@ -6,7 +6,7 @@ import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.state.State;
 
-@Component
+@Component("stubActionHandler")
 public class StubActionHandler implements ActionHandler {
 
 	@Override

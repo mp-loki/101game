@@ -3,20 +3,17 @@ package com.valeriisosliuk.dto;
 import java.util.Collections;
 import java.util.List;
 
-public class UsersUpdateDto {
-    
-    private final DtoType type = DtoType.USERS_UPDATE;
+public class InitialStateDto extends StateDto{
+
     private final List<OnlineUserDto> players;
     
-    public UsersUpdateDto(List<OnlineUserDto> players) {
+    public InitialStateDto(List<OnlineUserDto> players) {
+        super(ClientState.INITIAL);
         this.players = players;
-    }
-
-    public DtoType getType() {
-        return type;
     }
 
     public List<OnlineUserDto> getPlayers() {
         return Collections.unmodifiableList(players);
     }
+    
 }

@@ -17,7 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.ResponseDto;
-import com.valeriisosliuk.dto.UserDto;
+import com.valeriisosliuk.dto.StateDto;
+import com.valeriisosliuk.dto.OnlineUserDto;
+import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.service.ActionService;
+import com.valeriisosliuk.game.service.GameService;
+import com.valeriisosliuk.game.service.ResponseService;
 import com.valeriisosliuk.game.service.UserService;
 import com.valeriisosliuk.model.Table;
 import com.valeriisosliuk.service.TableService;
@@ -32,7 +37,16 @@ public class GameController {
 
     @Autowired
     private TableService tableService;
-
+    
+    @Autowired
+    private ResponseService responseService;
+    
+    @Autowired
+    private ActionService actionService;
+    
+    @Autowired 
+    GameService gameService;
+ 
     @Autowired
     private SimpMessagingTemplate template;
 
@@ -62,13 +76,13 @@ public class GameController {
     }
 
     @RequestMapping(value = "/game/getState")
-    public @ResponseBody ResponseDto getState(Model model) {
+    public @ResponseBody StateDto getState(Model model) {
         String currentPlayerName = userService.getCurrentUserName();
-        return tableService.getStateDto(currentPlayerName);
+        return responseService.getStateDto(currentPlayerName);
     }
     
     @RequestMapping(value = "/game/getUsers")
-    public @ResponseBody List<UserDto> getLoggedInUsers(Model model) {
+    public @ResponseBody List<OnlineUserDto> getLoggedInUsers(Model model) {
         return userService.getLoggedInUsers();
     }
 
@@ -84,7 +98,9 @@ public class GameController {
         log.info("Got a message: " + dto);
         String currentUser = getCurrentUserName(message);
         dto.setCurrentPlayer(currentUser);
-        tableService.processAction(dto);
+        Game game = gameService.getGame(currentUser);
+        actionService.handleAction(game, dto);
+        //tableService.processAction(dto);
     }
 
     private String getCurrentUserName(Message<Object> message) {

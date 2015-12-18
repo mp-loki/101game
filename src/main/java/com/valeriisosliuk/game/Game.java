@@ -28,10 +28,12 @@ public class Game extends AbstractObservable {
 	}
 
 	public boolean joinGame(String playerName) {
-		// TODO add message sending
 		return getPlayerHolder().joinGame(playerName);
 	}
-
+	
+	public boolean isPlayerInGame(String name) {
+	    return playerHolder.isPlayerInGame(name);
+	}
 
 	public State getState() {
 		return gameState;

@@ -27,8 +27,8 @@ public class PlayerHolder {
 		return players.size();
 	}
 	
-	public boolean isPlayerAtTheTable(String playerName) {
-		return players.stream().allMatch(p -> p.getName().equals(playerName));
+	public boolean isPlayerInGame(String playerName) {
+		return players.stream().anyMatch(p -> p.getName().equals(playerName));
 	}
 	
 	public boolean joinGame(String playerName) {
@@ -97,5 +97,4 @@ public class PlayerHolder {
         }
         
     }
-
 }

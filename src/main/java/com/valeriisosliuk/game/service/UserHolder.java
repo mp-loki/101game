@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.UserDto;
+import com.valeriisosliuk.dto.OnlineUserDto;
 import com.valeriisosliuk.game.observer.AbstractObservable;
 
 @Component
@@ -45,7 +45,7 @@ public class UserHolder extends AbstractObservable {
         setChangedAndNotify();
     }
 
-    public List<UserDto> getLoggedInUsers() {
-        return loggedInUsers.keySet().stream().map(u -> new UserDto(u, loggedInUsers.get(u))).collect(Collectors.toList());
+    public List<OnlineUserDto> getLoggedInUsers() {
+        return loggedInUsers.keySet().stream().map(u -> new OnlineUserDto(u, loggedInUsers.get(u))).collect(Collectors.toList());
     }
 }

@@ -1,18 +1,29 @@
 package com.valeriisosliuk.game.state.initializer;
 
-import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.valeriisosliuk.dto.PendingStartDto;
 import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.service.MessageService;
+import com.valeriisosliuk.game.service.UserService;
 
-@Component("initialStateInitializer")
+@Component
+@Qualifier("initialStateInitializer")
 public class InitialStateInitializer implements StateInitinalizer {
-	
-	private static final Logger log = Logger.getLogger(InitialStateInitializer.class);
+    
+    @Autowired
+    private MessageService messageservice;
+    
+    @Autowired
+    private UserService userService;
+    
 	
 	@Override
 	public void initializeState(Game game) {
-		log.info("Game init");
+	    PendingStartDto dto = new PendingStartDto(userService.getPendingPlayers(game));
+	    messageservice.sendToAll(dto);
 	}
 
 }
