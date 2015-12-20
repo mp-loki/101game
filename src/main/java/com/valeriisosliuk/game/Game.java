@@ -27,7 +27,7 @@ public class Game extends AbstractObservable {
 		this.playerHolder = playerHolder;
 	}
 
-	public boolean joinGame(String playerName) {
+	public Player joinGame(String playerName) {
 		return getPlayerHolder().joinGame(playerName);
 	}
 	
@@ -51,7 +51,11 @@ public class Game extends AbstractObservable {
 	public List<Player> getPlayers() {
 		return getPlayerHolder().getPlayers();
 	}
-
+	
+	public List<Player> getSequencedPlayers(Player player) {
+		return getPlayerHolder().getSequencedPlayers(player);
+	} 
+	
 	public CardHolder getCardHolder() {
 		return cardHolder;
 	}

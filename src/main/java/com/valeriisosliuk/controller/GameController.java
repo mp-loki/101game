@@ -100,7 +100,6 @@ public class GameController {
         dto.setCurrentPlayer(currentUser);
         Game game = gameService.getGame(currentUser);
         actionService.handleAction(game, dto);
-        //tableService.processAction(dto);
     }
 
     private String getCurrentUserName(Message<Object> message) {

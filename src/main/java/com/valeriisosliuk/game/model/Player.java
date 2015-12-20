@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.valeriisosliuk.game.observer.AbstractObservable;
-import com.valeriisosliuk.game.observer.PlayerObserver;
 import com.valeriisosliuk.game.state.ActiveState;
 import com.valeriisosliuk.game.state.PlayerStateChange;
 import com.valeriisosliuk.model.Card;
@@ -19,8 +18,6 @@ public class Player extends AbstractObservable {
 	public Player(String name) {
 		this.name = name;
 		hand = new HashSet<Card>();
-		PlayerObserver observer = new PlayerObserver();
-		addObserver(observer);
 	}
 
 	public String getName() {

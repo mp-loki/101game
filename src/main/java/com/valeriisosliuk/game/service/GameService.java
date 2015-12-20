@@ -2,24 +2,36 @@ package com.valeriisosliuk.game.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.game.Game;
-import com.valeriisosliuk.game.observer.GameObserver;
+import com.valeriisosliuk.game.model.Player;
+import com.valeriisosliuk.game.state.State;
 
-@Component
+@Component("gameService")
 public class GameService {
 	
 	List<Game> games;
 	
+	@Resource
+	private Observer gameObserver;
+	
+	@Resource
+	private Observer playerObserver;
+	
+	@Resource
+	private Observer playerHolderObserver;
+	
 	@Autowired
-	private GameObserver gameObserver;
+	private UserService userService;
 	
 	@PostConstruct
 	public void init() {
@@ -27,9 +39,10 @@ public class GameService {
 	}
 	
 	public Game joinGame(String username) {
-		Game game = getGameInstance((g, m) -> g.getPlayerHolder().getPlayersCount() < m, Game.MAX_PLAYERS)
+		Game game = getGameInstance((g, m) -> g.getState() == State.INITIAL && g.getPlayerHolder().getPlayersCount() < m, Game.MAX_PLAYERS)
 				.orElse(createNewGameInstance());
-		game.joinGame(username);
+		Player player = game.joinGame(username);
+		player.addObserver(playerObserver);
 		return game;
 	}
 	
@@ -44,12 +57,14 @@ public class GameService {
 	private Game createNewGameInstance() {
 		Game game = new Game();
 		game.addObserver(gameObserver);
+		game.getPlayerHolder().addObserver(playerHolderObserver);
 		games.add(game);
 		return game;
 	}
 	
 	public void dismissGame(Game game) {
 		games.remove(game);
+		userService.setAvailable(game.getPlayers());
 	}
 	
 	private <T> Optional<Game> getGameInstance(BiFunction<Game, T, Boolean> function, T t) {

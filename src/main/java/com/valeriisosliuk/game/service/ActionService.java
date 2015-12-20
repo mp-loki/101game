@@ -5,10 +5,12 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.game.state.actionhandler.ActionHandler;
 import com.valeriisosliuk.model.ActionType;
 
@@ -16,7 +18,10 @@ import com.valeriisosliuk.model.ActionType;
 public class ActionService {
 
 	private static final Logger log = Logger.getLogger(ActionService.class);
-
+	
+	@Autowired
+	private GameService gameService;
+	
 	@Resource(name = "actionHandlers")
 	private Map<ActionType, ActionHandler> actionHandlers;
 
@@ -24,7 +29,11 @@ public class ActionService {
 		if (validateAction(game, action)) {
 			ActionHandler actionHandler = actionHandlers.get(action.getType());
 			if (actionHandler != null) {
-				game.setState(actionHandler.handleAction(game, action));
+				State nextState = actionHandler.handleAction(game, action);
+				if (nextState == State.GAME_OVER) {
+					gameService.dismissGame(game);
+				}
+				game.setState(nextState);
 			} else {
 				log.warn("No action handler found for ActionType: " + action.getType());
 			}
@@ -34,6 +43,9 @@ public class ActionService {
 	}
 
 	private boolean validateAction(Game game, Action action) {
+		if (action.getType() == ActionType.START || action.getType() == ActionType.QUIT) {
+			return true;
+		}
 		return action.getPlayerName().equals(game.getActivePlayer().getName());
 	}
 }

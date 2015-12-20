@@ -3,13 +3,13 @@ package com.valeriisosliuk.dto;
 
 public abstract class StateDto {
     
-    private ClientState state;
+    private final DtoType type;
 
-    public StateDto(ClientState state) {
-        this.state = state;
+    public StateDto(DtoType type) {
+        this.type = type;
     }
     
-    public ClientState getState() {
-        return state;
+    public DtoType getState() {
+        return type;
     }
 }

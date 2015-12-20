@@ -5,10 +5,10 @@ import java.util.List;
 
 public class InitialStateDto extends StateDto{
 
-    private final List<OnlineUserDto> players;
+	private final List<OnlineUserDto> players;
     
     public InitialStateDto(List<OnlineUserDto> players) {
-        super(ClientState.INITIAL);
+        super(DtoType.INITIAL);
         this.players = players;
     }
 

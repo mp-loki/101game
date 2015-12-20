@@ -2,14 +2,24 @@ package com.valeriisosliuk.game.state.initializer;
 
 import static org.junit.Assert.*;
 
+import javax.annotation.Resource;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
-import com.valeriisosliuk.game.state.initializer.DealStartStateInitializer;
 import com.valeriisosliuk.game.state.initializer.StateInitinalizer;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes=com.valeriisosliuk.Application.class, loader=AnnotationConfigContextLoader.class)
 public class DealStartStateInitializerTest {
+	
+	@Resource
+	StateInitinalizer dealStartStateInitializer;
 	
 	@Test
 	public void testStartDeal() {
@@ -18,8 +28,7 @@ public class DealStartStateInitializerTest {
 		game.joinGame("Stan");
 		game.joinGame("Cartman");
 		
-		StateInitinalizer dealStartInitializer = new DealStartStateInitializer();
-		dealStartInitializer.initializeState(game);
+		dealStartStateInitializer.initializeState(game);
 		assertEquals("Kyle", game.getActivePlayer().getName());
 		
 		for (Player player : game.getPlayers()) {

@@ -1,5 +1,6 @@
 package com.valeriisosliuk.game.observer;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -24,8 +25,9 @@ public class UserHolderObserver implements Observer {
     
     @Override
     public void update(Observable observable, Object arg) {
-        UserHolder userHolder = (UserHolder) observable;
-        messageService.sendToAll(new UsersUpdateDto(userHolder.getLoggedInUsers()));
+        UserHolder userHolder = (UserHolder) observable;  
+        List<String> pendingUsers = userHolder.getAvailableUsers();
+        messageService.sendToAll(pendingUsers, new UsersUpdateDto(userHolder.getLoggedInUsers()));
         log.info("User holder state changed: " + userHolder.getLoggedInUsers());
     }
 }

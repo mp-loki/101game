@@ -10,9 +10,10 @@ import org.apache.log4j.Logger;
 import com.google.common.collect.Iterators;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
+import com.valeriisosliuk.game.observer.AbstractObservable;
 import com.valeriisosliuk.game.observer.PlayerObserver;
 
-public class PlayerHolder {
+public class PlayerHolder extends AbstractObservable {
 	private static final Logger log = Logger.getLogger(PlayerHolder.class);
 
 	private Player activePlayer;
@@ -22,26 +23,29 @@ public class PlayerHolder {
 	public PlayerHolder() {
 		players = new LinkedList<>();
 	}
-	
+
 	public int getPlayersCount() {
 		return players.size();
 	}
-	
+
 	public boolean isPlayerInGame(String playerName) {
 		return players.stream().anyMatch(p -> p.getName().equals(playerName));
 	}
-	
-	public boolean joinGame(String playerName) {
-		if (players.stream().anyMatch(p -> p.getName().equals(playerName))) {
-			log.info("Player " + playerName + " is already in game!");
-			return true;
-		} else if (players.size() < Game.MAX_PLAYERS) {
-		    Player player = new Player(playerName);
-		    player.addObserver(new PlayerObserver());
+
+	public Player joinGame(String playerName) {
+		return players.stream().filter(p -> p.getName().equals(playerName)).findFirst()
+				.orElse(createNewPlayer(playerName));
+	}
+
+	private Player createNewPlayer(String playerName) {
+		if (players.size() < Game.MAX_PLAYERS) {
+			Player player = new Player(playerName);
 			players.add(player);
-			return true;
+			setChangedAndNotify();
+			return player;
+		} else {
+			return null;
 		}
-		return false;
 	}
 
 	private Iterator<Player> getPlayerIterator() {
@@ -60,7 +64,8 @@ public class PlayerHolder {
 
 	/**
 	 * Advances player iterator without setting a new activePlayer
-	 * @return 
+	 * 
+	 * @return
 	 * 
 	 * @return skipped player
 	 */
@@ -85,16 +90,36 @@ public class PlayerHolder {
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
 	}
+
+	public List<Player> getSequencedPlayers(Player currentPlayer) {
+		if (!players.contains(currentPlayer)) {
+			throw new IllegalArgumentException("Player is not from this game!");
+		}
+		List<Player> result = new LinkedList<Player>();
+		Iterator<Player> playerIter = Iterators.cycle(players);
+		while (!playerIter.next().equals(currentPlayer)) {
+		}
+		Player player = null;
+		while (!((player = playerIter.next()).equals(currentPlayer))) {
+			result.add(player);
+		}
+		return result;
+	}
+
 	/**
-	 * Resets iterator to current player. This method is called at the end of a deal to make sure that new deal starts from deal winner
-	 * @param dealWinner <code>Player</code> to set 
+	 * Resets iterator to current player. This method is called at the end of a
+	 * deal to make sure that new deal starts from deal winner
+	 * 
+	 * @param dealWinner
+	 *            <code>Player</code> to set
 	 */
-    public void resetIterator(Player dealWinner) {
-        if (!players.contains(dealWinner)) {
-            throw new IllegalArgumentException("Player " + dealWinner.getName() + " is not in this game!");
-        }
-        while (!playerIterator.next().getName().equals(dealWinner.getName())) {
-        }
-        
-    }
+	public void resetIterator(Player dealWinner) {
+		if (!players.contains(dealWinner)) {
+			throw new IllegalArgumentException("Player " + dealWinner.getName() + " is not in this game!");
+		}
+		while (!playerIterator.next().getName().equals(dealWinner.getName())) {
+		}
+
+	}
+
 }

@@ -19,4 +19,10 @@ public class UsersUpdateDto {
     public List<OnlineUserDto> getPlayers() {
         return Collections.unmodifiableList(players);
     }
+
+	@Override
+	public String toString() {
+		return "UsersUpdateDto [type=" + type + ", players=" + players + "]";
+	}
+    
 }

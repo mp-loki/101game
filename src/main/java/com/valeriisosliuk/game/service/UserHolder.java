@@ -48,4 +48,11 @@ public class UserHolder extends AbstractObservable {
     public List<OnlineUserDto> getLoggedInUsers() {
         return loggedInUsers.keySet().stream().map(u -> new OnlineUserDto(u, loggedInUsers.get(u))).collect(Collectors.toList());
     }
+    public List<String> getAvailableUsers() {
+    	return loggedInUsers.keySet().stream().filter(u -> loggedInUsers.get(u)).collect(Collectors.toList());
+    }
+
+	public boolean isUserAvailable(String username) {
+		return loggedInUsers.get(username);
+	}
 }

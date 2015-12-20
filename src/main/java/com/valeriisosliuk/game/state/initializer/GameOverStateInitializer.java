@@ -7,18 +7,15 @@ import org.springframework.stereotype.Component;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.service.GameService;
 
-@Component("gameOverStateInitializer")
+@Component(value = "gameOverStateInitializer")
 public class GameOverStateInitializer implements StateInitinalizer {
-    
-    //@Autowired
-    //private GameService gameService;
-    
-    private static final Logger log = Logger.getLogger(GameOverStateInitializerOld.class);
-    @Override
-    public void initializeState(Game game) {
-        // TODO Broadcast message to display winner and total points
-        //gameService.dismissGame(game);
-        log.info("Game Over");
-    }
+
+	private static final Logger log = Logger.getLogger(GameOverStateInitializer.class);
+
+	@Override
+	public void initializeState(Game game) {
+		// TODO Broadcast message to display winner and total points
+		log.info("Game Over");
+	}
 
 }

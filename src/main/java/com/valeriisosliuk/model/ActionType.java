@@ -7,5 +7,6 @@ public enum ActionType {
 	MOVE,
 	DEMAND,
 	RESPOND,
-	QUIT
+	QUIT,
+	SUBMIT_GAME_OVER
 }

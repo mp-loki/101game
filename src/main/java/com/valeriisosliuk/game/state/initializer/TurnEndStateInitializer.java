@@ -16,7 +16,7 @@ import static com.valeriisosliuk.model.Rank.*;
 import static com.valeriisosliuk.util.CardUtil.*;
 
 @Component("turnEndStateInitializer")
-public class TurnEndStateInitializer extends AbstractStateInitializer {
+public class TurnEndStateInitializer implements StateInitinalizer {
 
 	@Override
 	public void initializeState(Game game) {

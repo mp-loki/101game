@@ -1,6 +1,7 @@
 package com.valeriisosliuk.config;
 
 import static com.valeriisosliuk.game.state.State.DEAL_END;
+import static com.valeriisosliuk.game.state.State.GAME_START;
 import static com.valeriisosliuk.game.state.State.DEAL_START;
 import static com.valeriisosliuk.game.state.State.DEMAND_SUIT;
 import static com.valeriisosliuk.game.state.State.GAME_OVER;
@@ -33,10 +34,14 @@ import com.valeriisosliuk.model.ActionType;
 @Configuration
 public class AppConfig {
     
+	@Resource
+	private StateInitinalizer gameOverStateInitializer;
     @Resource
     private StateInitinalizer initialStateInitializer;
     @Resource
     private StateInitinalizer dealStartStateInitializer;
+    @Resource
+    private StateInitinalizer gameStartStateInitializer;
     @Resource
     private StateInitinalizer turnStartStateInitializer;
     @Resource
@@ -49,8 +54,6 @@ public class AppConfig {
     private StateInitinalizer dealEndStateInitializer;
     @Resource
     private StateInitinalizer stubStateInitializer;
-    @Resource
-    private StateInitinalizer gameOverStateInitializer;
     @Resource
     private ActionHandler gameStartActionHandler;
     @Resource
@@ -70,6 +73,7 @@ public class AppConfig {
     public Map<State, StateInitinalizer> getStateInitializers() {
         Map<State, StateInitinalizer> stateInitializers = new HashMap<>();
         stateInitializers.put(INITIAL, initialStateInitializer);
+        stateInitializers.put(GAME_START, gameStartStateInitializer);
         stateInitializers.put(DEAL_START, dealStartStateInitializer);
         stateInitializers.put(TURN_START, turnStartStateInitializer);
         stateInitializers.put(TURN_IN_PROGRESS, stubStateInitializer);

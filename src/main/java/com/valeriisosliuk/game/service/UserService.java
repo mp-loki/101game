@@ -1,5 +1,6 @@
 package com.valeriisosliuk.game.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.valeriisosliuk.dto.OnlineUserDto;
 import com.valeriisosliuk.dto.PendingPlayerDto;
 import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.observer.UserHolderObserver;
 
 @Component
@@ -38,6 +40,13 @@ public class UserService {
         return userHolder.getLoggedInUsers();
     }
     
+    public void setAvailable(Collection<Player> users) {
+    	users.stream().map(p -> p.getName()).forEach(userHolder::setAvailable);
+    }
+    public void setBusy(Collection<Player> users) {
+    	users.stream().map(p -> p.getName()).forEach(userHolder::setBusy);
+    }
+    
     public List<PendingPlayerDto> getPendingPlayers(Game game){
         return game.getPlayers().stream().map(p -> new PendingPlayerDto(p.getName())).collect(Collectors.toList());
     }
@@ -49,5 +58,13 @@ public class UserService {
     public void removeUser(String username) {
         userHolder.removeUser(username);
     }
+
+	public List<String> getAvailabePlayers() {
+		return userHolder.getAvailableUsers();
+	}
+
+	public boolean isUserAvailable(String username) {
+		return userHolder.isUserAvailable(username);
+	}
 
 }
