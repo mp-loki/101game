@@ -3,6 +3,7 @@ package com.valeriisosliuk.dto;
 import java.util.LinkedList;
 import java.util.List;
 
+@Deprecated
 public class TerminalDto {
 	private ResponseDtoType type;
 	private List<String> messages;

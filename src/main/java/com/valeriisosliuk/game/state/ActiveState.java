@@ -5,11 +5,12 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Set;
 
-import com.valeriisosliuk.game.observer.ActivePlayerObserver;
+import com.valeriisosliuk.game.observer.AbstractObservable;
+import com.valeriisosliuk.game.observer.ActiveStateObserver;
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Suit;
 
-public class ActiveState extends Observable {
+public class ActiveState extends AbstractObservable {
 	
 	private boolean pickAllowed;
 	private boolean passAllowed;
@@ -22,12 +23,19 @@ public class ActiveState extends Observable {
 		this.name = name;
 		this.pickAllowed = true;
 		this.passAllowed = false;
-		ActivePlayerObserver observer = new ActivePlayerObserver();
+		ActiveStateObserver observer = new ActiveStateObserver();
 		addObserver(observer);
 	}
 
 	public boolean isPickAllowed() {
 		return pickAllowed;
+	}
+	
+	public void update(boolean pickAllowed, boolean passAllowed, Set<Card> turnOptions) {
+	    this.pickAllowed = pickAllowed;
+	    this.passAllowed = passAllowed;
+	    this.turnOptions = turnOptions;
+	    setChangedAndNotify();
 	}
 
 	public void setPickAllowed(boolean pickAllowed) {

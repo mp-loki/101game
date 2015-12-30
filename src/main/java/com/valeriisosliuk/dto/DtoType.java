@@ -10,5 +10,9 @@ public enum DtoType {
     TURN_START, 
     INACTIVE,
     HAND_UPDATE,
-    ACTIVE;
+    HAND_INFO,
+    ACTIVE,
+    ACTIVATE,
+    DEACTIVATE,
+    STATE;
 }

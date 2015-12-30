@@ -3,6 +3,8 @@ package com.valeriisosliuk.game.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -17,6 +19,11 @@ public class MessageService {
 	
 	private static final Logger log = Logger.getLogger(MessageService.class);
     
+	@PostConstruct
+	public void init() {
+	    MessageServiceLocator.setMessageService(this);
+	}
+	
     @Autowired
     private SimpMessagingTemplate template;
 

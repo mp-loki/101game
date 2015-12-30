@@ -49,9 +49,9 @@ public class AppConfigTest {
     @Test
     public void testActionHandlersInjection() {
         assertNotNull(actionHandlers.get(START));
-        assertNotNull(actionHandlers.get(END));
+        assertNotNull(actionHandlers.get(PASS));
         assertNotNull(actionHandlers.get(PICK));
-        assertNotNull(actionHandlers.get(MOVE));
+        assertNotNull(actionHandlers.get(ACTION));
         assertNotNull(actionHandlers.get(DEMAND));
         assertNotNull(actionHandlers.get(RESPOND));
         assertNotNull(actionHandlers.get(QUIT));

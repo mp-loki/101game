@@ -67,4 +67,8 @@ public class Game extends AbstractObservable {
 	public PlayerHolder getPlayerHolder() {
 		return playerHolder;
 	}
+
+    public boolean isActive(Player player) {
+        return playerHolder.isActive(player);
+    }
 }

@@ -15,9 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.valeriisosliuk.dto.Dto;
 import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.dto.ResponseDto;
-import com.valeriisosliuk.dto.StateDto;
+import com.valeriisosliuk.dto.GameStateDto;
 import com.valeriisosliuk.dto.OnlineUserDto;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.service.ActionService;
@@ -76,7 +77,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/game/getState")
-    public @ResponseBody StateDto getState(Model model) {
+    public @ResponseBody Dto getState(Model model) {
         String currentPlayerName = userService.getCurrentUserName();
         return responseService.getStateDto(currentPlayerName);
     }

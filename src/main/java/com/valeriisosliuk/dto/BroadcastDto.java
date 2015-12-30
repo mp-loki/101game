@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.valeriisosliuk.model.Card;
 
+@Deprecated
 public class BroadcastDto {
 	
 	private ResponseDtoType type = ResponseDtoType.BROADCAST;

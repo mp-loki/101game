@@ -8,6 +8,7 @@ import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Player;
 import com.valeriisosliuk.model.Table;
 
+@Deprecated
 public class DtoFactory {
 	
 	public static ResponseDto getResponseDto(Player player, Table table, String... messages) {

@@ -3,6 +3,7 @@
 <head>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></link>
 <link rel="stylesheet" href="/css/main.css"></link>
+<link rel="stylesheet" href="/css/sprite-cards.css"></link>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <title>101 Game | Home</title>
@@ -22,10 +23,13 @@
 	<div th:replace="fragments/header :: header"></div>
 	<div data-ng-controller="HomeController" class="container-fluid height_100">
 		<div class="row height_100">
-			<div id="containerLeft" class="col-md-2 col-sm-6 height_100 border_red">
+			<div id="containerLeft" class="col-md-2 col-sm-4 height_100 border_red">
 			    <div dynamic="leftContent"></div>
 			</div>
-			<div id="containerRight" class="col-md-10 col-sm-6 height_100 border_red">
+			<div id="containerCenter" class="col-md-8 col-sm-4 height_100 border_red">
+			    <div dynamic="centerContent"></div>
+			</div>
+			<div id="containerRight" class="col-md-2 col-sm-4 height_100 border_red">
 			    <div dynamic="rightContent"></div>
 			</div>
 		</div>

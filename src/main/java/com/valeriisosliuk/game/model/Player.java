@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.valeriisosliuk.game.observer.AbstractObservable;
+import com.valeriisosliuk.game.observer.ActiveStateObserver;
 import com.valeriisosliuk.game.state.ActiveState;
 import com.valeriisosliuk.game.state.PlayerStateChange;
 import com.valeriisosliuk.model.Card;
@@ -52,19 +53,25 @@ public class Player extends AbstractObservable {
 
 	void activate() {
 		activeState = new ActiveState(name);
+		activeState.addObserver(new ActiveStateObserver());
 		setChangedAndNotify(PlayerStateChange.ACTIVATE);
 	}
 
 	void deactivate() {
-		if (activeState != null) {
-			activeState.deleteObservers();
-			activeState = null;
-		}
+	    dismissActiveState();
 		setChangedAndNotify(PlayerStateChange.DEACTIVATE);
 	}
 
 	void skip() {
+	    dismissActiveState();
 		setChangedAndNotify(PlayerStateChange.SKIP);
+	}
+	
+	private void dismissActiveState() {
+        if (activeState != null) {
+            activeState.deleteObservers();
+            activeState = null;
+        } 
 	}
 
 	public int getTotalPoints() {
@@ -83,4 +90,16 @@ public class Player extends AbstractObservable {
 	public String toString() {
 		return "Player [name=" + name + ", totalPoints=" + totalPoints + ", hand=" + hand + "]";
 	}
+
+	
+    public void setTurnOptions(Set<Card> turnOptions) {
+        //if (activeState != null) {
+            activeState.setTurnOptions(turnOptions);
+            //setChangedAndNotify(PlayerStateChange.TURN_OPTIONS);
+        //} else {
+        //    throw new RuntimeException("Setting turn options for an inactive user");
+        //}
+        
+    }
+
 }

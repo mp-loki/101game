@@ -4,5 +4,6 @@ public enum PlayerStateChange {
 	ACTIVATE,
 	DEACTIVATE,
 	HAND_UPDATE, 
-	SKIP
+	SKIP, 
+	TURN_OPTIONS
 }

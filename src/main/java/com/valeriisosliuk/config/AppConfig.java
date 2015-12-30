@@ -11,8 +11,8 @@ import static com.valeriisosliuk.game.state.State.TURN_END;
 import static com.valeriisosliuk.game.state.State.TURN_IN_PROGRESS;
 import static com.valeriisosliuk.game.state.State.TURN_START;
 import static com.valeriisosliuk.model.ActionType.DEMAND;
-import static com.valeriisosliuk.model.ActionType.END;
-import static com.valeriisosliuk.model.ActionType.MOVE;
+import static com.valeriisosliuk.model.ActionType.PASS;
+import static com.valeriisosliuk.model.ActionType.ACTION;
 import static com.valeriisosliuk.model.ActionType.PICK;
 import static com.valeriisosliuk.model.ActionType.QUIT;
 import static com.valeriisosliuk.model.ActionType.RESPOND;
@@ -89,9 +89,9 @@ public class AppConfig {
     public Map<ActionType, ActionHandler> getActionHandlers() {
     	Map<ActionType, ActionHandler> actionHandlers = new HashMap<>();
     	actionHandlers.put(START, gameStartActionHandler);
-    	actionHandlers.put(END, turnEndActionHandler);
+    	actionHandlers.put(PASS, turnEndActionHandler);
     	actionHandlers.put(PICK, pickActionHandler);
-    	actionHandlers.put(MOVE, cardMoveActionHandler);
+    	actionHandlers.put(ACTION, cardMoveActionHandler);
     	actionHandlers.put(DEMAND, demandSuitActionHandler);
     	actionHandlers.put(RESPOND, respondSuitActionHandler);
     	actionHandlers.put(QUIT, quitActionHandler);

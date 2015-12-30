@@ -33,6 +33,6 @@ public class TurnStartStateInitializer implements StateInitinalizer {
 		Player activePlayer = game.getPlayerHolder().getActivePlayer();
 		Set<Card> turnOptions = turnAdvisor.getValidCardsForTurn(activePlayer.getHand(), 
 				game.getCardHolder().getLastCardInDiscard(), true);
-		activePlayer.getActiveState().setTurnOptions(turnOptions);
+		activePlayer.setTurnOptions(turnOptions);
 	}
 }

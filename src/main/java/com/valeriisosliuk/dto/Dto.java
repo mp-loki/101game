@@ -1,15 +1,16 @@
 package com.valeriisosliuk.dto;
 
-
-public abstract class StateDto {
+public abstract class Dto {
     
     private final DtoType type;
 
-    public StateDto(DtoType type) {
+    public Dto(DtoType type) {
+        super();
         this.type = type;
     }
-    
-    public DtoType getState() {
+
+    public DtoType getType() {
         return type;
     }
+    
 }

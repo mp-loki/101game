@@ -4,17 +4,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.apache.log4j.Logger;
+import java.util.Optional;
 
 import com.google.common.collect.Iterators;
 import com.valeriisosliuk.game.Game;
-import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.observer.AbstractObservable;
-import com.valeriisosliuk.game.observer.PlayerObserver;
 
 public class PlayerHolder extends AbstractObservable {
-	private static final Logger log = Logger.getLogger(PlayerHolder.class);
 
 	private Player activePlayer;
 	private List<Player> players;
@@ -71,7 +67,7 @@ public class PlayerHolder extends AbstractObservable {
 	 */
 	public Player skipPlayer() {
 		if (activePlayer != null) {
-			activePlayer.deactivate();
+			activePlayer.skip();
 		}
 		Player skippedPlayer = getPlayerIterator().next();
 		skippedPlayer.skip();
@@ -105,6 +101,11 @@ public class PlayerHolder extends AbstractObservable {
 		}
 		return result;
 	}
+	
+	public List<Player> getSequencedPlayers(String playerName) {
+	   Player player = getPlayer(playerName).get();
+	   return getSequencedPlayers(player);
+	}
 
 	/**
 	 * Resets iterator to current player. This method is called at the end of a
@@ -121,5 +122,14 @@ public class PlayerHolder extends AbstractObservable {
 		}
 
 	}
+	
+	   
+    public Optional<Player> getPlayer(String name) {
+        return players.stream().filter(p -> p.getName().equals(name)).findFirst();
+    }
+
+    public boolean isActive(Player player) {
+        return player.equals(activePlayer);
+    }
 
 }

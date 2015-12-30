@@ -5,27 +5,33 @@ import java.util.Set;
 
 import com.valeriisosliuk.model.Card;
 
-public class HandUpdateDto {
-	
-	private final DtoType type;
-	private final String name;
-	private final Set<Card> hand;
-	
-	public HandUpdateDto(String name, Set<Card> hand) {
-		this.type = DtoType.HAND_UPDATE;
-		this.name = name;
-		this.hand = hand;
-	}
+public class HandUpdateDto extends Dto {
 
-	public DtoType getType() {
-		return type;
-	}
+    private final String name;
+    private final Set<Card> hand;
+    private final ActiveStateDto active;
 
-	public String getName() {
-		return name;
-	}
+    public HandUpdateDto(String name, Set<Card> hand, ActiveStateDto active) {
+        super(DtoType.HAND_UPDATE);
+        this.name = name;
+        this.hand = hand;
+        this.active = active;
+    }
 
-	public Set<Card> getHand() {
-		return Collections.unmodifiableSet(hand);
-	}
+    public String getName() {
+        return name;
+    }
+
+    public Set<Card> getHand() {
+        return Collections.unmodifiableSet(hand);
+    }
+
+    public ActiveStateDto getActive() {
+        return active;
+    }
+
+    @Override
+    public String toString() {
+        return "HandUpdateDto [name=" + name + ", hand=" + hand + ", active=" + active + "]";
+    }
 }

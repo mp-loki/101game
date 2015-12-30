@@ -28,13 +28,13 @@ public class ActionHandlerSupplier {
 	public ActionHandler getActionHandler(ActionType actionType) {
 		ActionHandler handler = null;
 		switch (actionType) {
-		case END:  handler = passHandler;
+		case PASS:  handler = passHandler;
 					break;
 		case PICK:  handler = pickHandler;
 					break;
 		case START: handler = startHandler;
 					break;
-		case MOVE: handler = cardMoveHandler;
+		case ACTION: handler = cardMoveHandler;
 					break;
 		}
 		return handler;

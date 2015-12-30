@@ -3,12 +3,12 @@ package com.valeriisosliuk.dto;
 public class PlayerInfoDto {
 
 	private String name;
-	private int cardCount;
+	private int cardNum;
 	private int points;
 
-	public PlayerInfoDto(String name, int cardCount, int points) {
+	public PlayerInfoDto(String name, int cardNum, int points) {
 		this.name = name;
-		this.cardCount = cardCount;
+		this.cardNum = cardNum;
 		this.points = points;
 	}
 
@@ -20,12 +20,12 @@ public class PlayerInfoDto {
 		this.name = name;
 	}
 
-	public int getCardCount() {
-		return cardCount;
+	public int getCardNum() {
+		return cardNum;
 	}
 
-	public void setCardCount(int cardCount) {
-		this.cardCount = cardCount;
+	public void setCardNum(int cardNum) {
+		this.cardNum = cardNum;
 	}
 
 	public int getPoints() {
@@ -38,6 +38,6 @@ public class PlayerInfoDto {
 
 	@Override
 	public String toString() {
-		return "PlayerInfoDto [name=" + name + ", cardCount=" + cardCount + ", points=" + points + "]";
+		return "PlayerInfoDto [name=" + name + ", cardNum=" + cardNum + ", points=" + points + "]";
 	}
 }

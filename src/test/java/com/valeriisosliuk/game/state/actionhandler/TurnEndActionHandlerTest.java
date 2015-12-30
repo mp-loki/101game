@@ -28,12 +28,12 @@ private TurnEndActionHandler actionHandler = new TurnEndActionHandler();
     @Test
     public void testEndTurn() {
         game.getActivePlayer().getActiveState().setPassAllowed(true);
-        Action action = new Action(ActionType.END, "Kyle");
+        Action action = new Action(ActionType.PASS, "Kyle");
         assertEquals(State.TURN_END, actionHandler.handleAction(game, action));
     }
     @Test
     public void testEndTurnNegative() {
-        Action action = new Action(ActionType.END, "Kyle");
+        Action action = new Action(ActionType.PASS, "Kyle");
         assertEquals(State.TURN_START, actionHandler.handleAction(game, action));
     }
     
@@ -42,7 +42,7 @@ private TurnEndActionHandler actionHandler = new TurnEndActionHandler();
         game.setState(State.RESPOND_SUIT);
         game.getActivePlayer().getActiveState().setDemandedSuit(Suit.HEARTS);
         game.getActivePlayer().getActiveState().setPassAllowed(true);
-        Action action = new Action(ActionType.END, "Kyle");
+        Action action = new Action(ActionType.PASS, "Kyle");
         assertEquals(State.RESPOND_SUIT,  actionHandler.handleAction(game, action));
         assertEquals("Stan", game.getActivePlayer().getName());
         assertEquals(Suit.HEARTS, game.getActivePlayer().getActiveState().getDemandedSuit());

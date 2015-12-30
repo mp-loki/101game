@@ -41,28 +41,29 @@ public class PickActionHandler implements ActionHandler {
     }
 
     private State processDefaultPick(Game game) {
-        Player activePlayer = game.getActivePlayer();
-        Set<Card> turnOptions = turnAdvisor.getValidCardsForTurn(activePlayer.getHand(), game.getCardHolder().getLastCardInDiscard(),
+        Player player = game.getActivePlayer();
+        Set<Card> turnOptions = turnAdvisor.getValidCardsForTurn(player.getHand(), game.getCardHolder().getLastCardInDiscard(),
                 game.getState() == State.TURN_START);
-        activePlayer.getActiveState().setTurnOptions(turnOptions);
+        boolean pickAllowed;
+        boolean passAllowed;
+        State result = game.getState();
         if (game.getCardHolder().getLastCardInDiscard().getRank() == Rank._6) {
-            activePlayer.getActiveState().setPassAllowed(false);
-            activePlayer.getActiveState().setPickAllowed(true);
+            pickAllowed = true;
+            passAllowed = false;
         } else {
-            activePlayer.getActiveState().setPassAllowed(true);
-            activePlayer.getActiveState().setPickAllowed(false);
+            pickAllowed = false;
+            passAllowed = true;
             if (turnOptions.isEmpty()) {
-                return State.TURN_END;
+                result =  State.TURN_END;
             }
         }
-        return game.getState();
+        player.getActiveState().update(pickAllowed, passAllowed, turnOptions);
+        return result;
 
     }
 
     private State processRespondSuitPick(Game game) {
         Player player = game.getActivePlayer();
-        player.getActiveState().setPassAllowed(true);
-        player.getActiveState().setPickAllowed(false);
         Suit demandedSuit = player.getActiveState().getDemandedSuit();
         Set<Card> turnOptions = turnAdvisor.getValidCardsForRespondSuit(player.getHand(), demandedSuit);
         if (turnOptions.isEmpty()) {
@@ -70,7 +71,7 @@ public class PickActionHandler implements ActionHandler {
             player.getActiveState().setDemandedSuit(demandedSuit);
             turnOptions = turnAdvisor.getValidCardsForRespondSuit(player.getHand(), demandedSuit);
         }
-        player.getActiveState().setTurnOptions(turnOptions);
+        player.getActiveState().update(false, true, turnOptions);
         return game.getState();
     }
 }

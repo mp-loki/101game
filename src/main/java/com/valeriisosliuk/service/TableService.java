@@ -76,7 +76,7 @@ public class TableService {
 		if (result != null) {
 			messageService.processActionResult(result);
 		}
-		if (action.getType() == ActionType.MOVE) {
+		if (action.getType() == ActionType.ACTION) {
 			doActionPostProcessing(table);
 		}
 	}
