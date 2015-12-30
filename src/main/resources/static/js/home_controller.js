@@ -126,12 +126,16 @@
 		}
 		
 		var renderHandUpdate = function(data) {
-			//if (isDefined($scope.currentPlayer)) {
+			if (isDefined($scope.currentPlayer)) {
 				$scope.currentPlayer.hand = data.hand;
 				if (isDefined(data.active)) {
 					$scope.currentPlayer.active = data.active;
 				}
-			//}
+			}
+		}
+		
+		var renderCardDeckUpdate = function(data) {
+			$scope.cardDeck = data;
 		}
 		
 		var renderActivate = function(data) {
@@ -209,6 +213,8 @@
 						renderDeactivate(data);
 					case (data.type == "ACTIVE"):
 						renderActiveStateUpdate(data);
+					case (data.type == "CARD_DECK"):
+						renderCardDeckUpdate(data);
 					break;	
 				}
 			}

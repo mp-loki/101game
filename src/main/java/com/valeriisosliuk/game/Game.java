@@ -1,12 +1,14 @@
 package com.valeriisosliuk.game;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.valeriisosliuk.game.model.CardHolder;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.model.PlayerHolder;
 import com.valeriisosliuk.game.observer.AbstractObservable;
 import com.valeriisosliuk.game.state.State;
+import com.valeriisosliuk.model.Card;
 
 public class Game extends AbstractObservable {
 
@@ -52,6 +54,10 @@ public class Game extends AbstractObservable {
 		return getPlayerHolder().getPlayers();
 	}
 	
+    public List<String> getPlayerNames() {
+        return getPlayerHolder().getPlayers().stream().map(Player::getName).collect(Collectors.toList());
+    }
+	
 	public List<Player> getSequencedPlayers(Player player) {
 		return getPlayerHolder().getSequencedPlayers(player);
 	} 
@@ -70,5 +76,10 @@ public class Game extends AbstractObservable {
 
     public boolean isActive(Player player) {
         return playerHolder.isActive(player);
+    }
+
+    public void putCardInDiscard(Card card) {
+        cardHolder.putCardInDiscard(card);
+        setChangedAndNotify(cardHolder);
     }
 }

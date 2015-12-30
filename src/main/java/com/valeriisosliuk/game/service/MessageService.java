@@ -21,7 +21,7 @@ public class MessageService {
     
 	@PostConstruct
 	public void init() {
-	    MessageServiceLocator.setMessageService(this);
+	    ServiceLocator.setMessageService(this);
 	}
 	
     @Autowired

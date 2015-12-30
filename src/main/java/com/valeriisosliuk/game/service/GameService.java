@@ -30,7 +30,10 @@ public class GameService {
     List<Game> games;
 
     @Resource
-    private Observer gameObserver;
+    private Observer gameStateObserver;
+    
+    @Resource
+    private Observer cardHolderObserver;
 
     @Resource
     private Observer playerObserver;
@@ -44,6 +47,7 @@ public class GameService {
     @PostConstruct
     public void init() {
         games = new ArrayList<>();
+        ServiceLocator.setGameService(this);
     }
 
     public Game joinGame(String username) {
@@ -64,7 +68,8 @@ public class GameService {
 
     private Game createNewGameInstance() {
         Game game = new Game();
-        game.addObserver(gameObserver);
+        game.addObserver(gameStateObserver);
+        game.addObserver(cardHolderObserver);
         game.getPlayerHolder().addObserver(playerHolderObserver);
         games.add(game);
         return game;

@@ -14,5 +14,6 @@ public enum DtoType {
     ACTIVE,
     ACTIVATE,
     DEACTIVATE,
-    STATE;
+    STATE, 
+    CARD_DECK;
 }

@@ -33,7 +33,7 @@ public class CardMoveActionHandler implements ActionHandler {
 		Card card = action.getCard();
 
 		if (activePlayer.removeCard(card)) {
-			game.getCardHolder().putCardInDiscard(card);
+			game.putCardInDiscard(card);
 			activePlayer.getActiveState().addCurrentTurnCard(card);
 			Set<Card> nextTurnOptions = getTurnOptions(game, false);
 			activePlayer.getActiveState().setTurnOptions(nextTurnOptions);

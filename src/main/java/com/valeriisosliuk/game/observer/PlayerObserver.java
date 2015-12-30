@@ -3,7 +3,6 @@ package com.valeriisosliuk.game.observer;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +54,7 @@ public class PlayerObserver implements Observer {
 	}
 
 	private void sendDeactivateMessage(Player player) {
-	    List<String> playerNames = gameService.getGameInstance(player.getName()).get().getPlayers().stream().map(Player::getName).collect(Collectors.toList());
+	    List<String> playerNames = gameService.getGameInstance(player.getName()).get().getPlayerNames();
         messageService.sendToAll(playerNames, new DeactivateDto(player.getName()));
     }
 

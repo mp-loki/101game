@@ -37,7 +37,8 @@ public class ActiveState extends AbstractObservable {
 	    this.turnOptions = turnOptions;
 	    setChangedAndNotify();
 	}
-
+	
+	@Deprecated
 	public void setPickAllowed(boolean pickAllowed) {
 		this.pickAllowed = pickAllowed;
 	}
@@ -45,7 +46,7 @@ public class ActiveState extends AbstractObservable {
 	public boolean isPassAllowed() {
 		return passAllowed;
 	}
-
+	@Deprecated
 	public void setPassAllowed(boolean passAllowed) {
 		this.passAllowed = passAllowed;
 	}
