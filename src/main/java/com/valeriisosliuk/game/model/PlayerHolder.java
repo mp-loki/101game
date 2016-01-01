@@ -55,6 +55,8 @@ public class PlayerHolder extends AbstractObservable {
 		if (activePlayer == null) {
 			getNextActivePlayer();
 		}
+		if (activePlayer.getActiveState() == null) {
+		}
 		return activePlayer;
 	}
 

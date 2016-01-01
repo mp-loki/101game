@@ -56,7 +56,7 @@ public class TurnEndStateInitializer implements StateInitinalizer {
 	private void processSevenTurn(Game game, long sevenCount) {
 		Player activePlayer = game.getActivePlayer();
 		Player nextPlayer = null;
-		if (activePlayer.getHand().size() > 0) {
+		if (activePlayer.getHandSize() > 0) {
 		    game.setState(TURN_START);
 		    nextPlayer = game.getPlayerHolder().getNextActivePlayer();
 		} else {
@@ -74,15 +74,15 @@ public class TurnEndStateInitializer implements StateInitinalizer {
 	
     private void setNextState(Game game, Set<Card> hand) {
         if (hand.size() > 0) {
+        	game.getPlayerHolder().getNextActivePlayer();
             game.setState(TURN_START);
-            game.getPlayerHolder().getNextActivePlayer();
         } else {
             game.setState(DEAL_END);
         }
     }
 	
 	private void processJackTurn(Game game) {
-		State state = game.getActivePlayer().getHand().size() > 0 ? DEMAND_SUIT : DEAL_END;
+		State state = game.getActivePlayer().getHandSize() > 0 ? DEMAND_SUIT : DEAL_END;
 		game.setState(state);
 	}
 	

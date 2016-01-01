@@ -32,9 +32,17 @@ public class Player extends AbstractObservable {
 	public Set<Card> getHand() {
 		return Collections.unmodifiableSet(hand);
 	}
+	
+	public int getHandSize(){
+		return hand.size();
+	}
 
 	public boolean removeCard(Card card) {
-		return hand.remove(card);
+		if(hand.remove(card)) {
+			setChangedAndNotify(PlayerStateChange.HAND_UPDATE);
+			return true;
+		}
+		return false;
 	}
 
 	public void pickCard(Card card) {

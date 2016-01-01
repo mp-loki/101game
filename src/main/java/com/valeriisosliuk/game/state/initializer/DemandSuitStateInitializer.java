@@ -1,18 +1,25 @@
 package com.valeriisosliuk.game.state.initializer;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.valeriisosliuk.dto.Dto;
+import com.valeriisosliuk.dto.DtoType;
 import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.service.MessageService;
 
 @Component("demandSuitStateInitializer")
 public class DemandSuitStateInitializer implements StateInitinalizer {
+	
+	@Autowired
+	private MessageService messageService;
 
     private static final Logger log = Logger.getLogger(DemandSuitStateInitializer.class);
     @Override
     public void initializeState(Game game) {
-        // TODO Add sending message to user logic
-        log.info("Sending suite demand message to " + game.getActivePlayer().getName());
+    	String playerName = game.getActivePlayer().getName();
+        log.info("Sending suit demand message to " + game.getActivePlayer().getName());
+        messageService.send(playerName, new Dto(DtoType.DEMAND_SUIT));
     }
-
 }

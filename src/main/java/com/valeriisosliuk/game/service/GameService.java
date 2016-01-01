@@ -13,15 +13,9 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.CardDeckDto;
-import com.valeriisosliuk.dto.GameStateDto;
-import com.valeriisosliuk.dto.HandInfoDto;
 import com.valeriisosliuk.dto.PlayerInfoDto;
-import com.valeriisosliuk.dto.ActiveStateDto;
-import com.valeriisosliuk.dto.PlayerStateDto;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
-import com.valeriisosliuk.game.state.ActiveState;
 import com.valeriisosliuk.game.state.State;
 
 @Component("gameService")

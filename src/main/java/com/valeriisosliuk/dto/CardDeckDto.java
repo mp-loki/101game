@@ -20,4 +20,10 @@ public class CardDeckDto extends Dto {
     public boolean isCardDeckHasNext() {
         return cardDeckHasNext;
     }
+
+	@Override
+	public String toString() {
+		return "CardDeckDto [lastCard=" + lastCard + ", cardDeckHasNext=" + cardDeckHasNext + "]";
+	}
+    
 }

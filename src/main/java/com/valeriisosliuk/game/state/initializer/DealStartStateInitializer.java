@@ -1,6 +1,5 @@
 package com.valeriisosliuk.game.state.initializer;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +16,8 @@ import com.valeriisosliuk.game.model.CardHolder;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.service.MessageService;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.CardDeck;
-import com.valeriisosliuk.util.Shuffle;
+import com.valeriisosliuk.util.CardUtil;
 
 @Component("dealStartStateInitializer")
 public class DealStartStateInitializer implements StateInitinalizer {
@@ -32,8 +30,7 @@ public class DealStartStateInitializer implements StateInitinalizer {
     @Override
     public void initializeState(Game game) {
         log.info("Starting new Deal");
-        List<Card> allCards = Arrays.asList(Card.values());
-        CardDeck cardDeck = new CardDeck(Shuffle.shuffle(allCards));
+        CardDeck cardDeck = CardUtil.getShuffledCardDeck();
         CardHolder cardHolder = new CardHolder();
         cardHolder.setCardDeck(cardDeck);
         for (Player player : game.getPlayers()) {
@@ -41,7 +38,6 @@ public class DealStartStateInitializer implements StateInitinalizer {
         }
         game.setCardHolder(cardHolder);
         sendDealStartMessage(game);
-        //game.getActivePlayer();
         game.setState(State.TURN_START);
     }
 

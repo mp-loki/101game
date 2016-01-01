@@ -54,6 +54,12 @@ body {
 .position-absolute {
 	position: absolute;
 }
+.demand-suit {
+	position: absolute;
+	top: 5em;
+	margin: auto;
+	width: 100%;
+}
 .card_0 {
 	left: 15px;
 }
@@ -438,7 +444,6 @@ body {
 .left-player-card-31 {
     top : 465px;
 }
-
 .deck {
 	cursor: pointer;
 }
@@ -451,3 +456,7 @@ body {
 .display-inline-block {
 	display: inline-block !important;
 }
+.btn-black {
+	color: black;
+	text-color: white;
+}S

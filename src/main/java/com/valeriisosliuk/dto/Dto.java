@@ -1,6 +1,6 @@
 package com.valeriisosliuk.dto;
 
-public abstract class Dto {
+public class Dto {
     
     private final DtoType type;
 

@@ -2,7 +2,6 @@ package com.valeriisosliuk.game.state;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Observable;
 import java.util.Set;
 
 import com.valeriisosliuk.game.observer.AbstractObservable;
@@ -89,4 +88,12 @@ public class ActiveState extends AbstractObservable {
     public void setDemandedSuit(Suit demandedSuit) {
         this.demandedSuit = demandedSuit;
     }
+
+	@Override
+	public String toString() {
+		return "ActiveState [name=" + name + ", pickAllowed=" + pickAllowed + ", passAllowed=" + passAllowed
+				+ ", turnOptions=" + turnOptions + ", currentTurnCards=" + currentTurnCards + ", demandedSuit="
+				+ demandedSuit + "]";
+	}
+    
 }

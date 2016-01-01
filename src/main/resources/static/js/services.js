@@ -15,6 +15,17 @@
     service.receive = function() {
       return listener.promise;
     };
+    //TODO: make single generic send method
+    service.demandSuit = function(type, player, demandedSuit) {
+        var id = Math.floor(Math.random() * 1000000);
+        socket.stomp.send(service.GAME_BROKER, {
+          priority: 9
+        }, JSON.stringify({
+          type: type,
+          currentPlayer: player,
+          demandedSuit: demandedSuit
+        }));
+      };
     
     service.send = function(type, player, card) {
       var id = Math.floor(Math.random() * 1000000);

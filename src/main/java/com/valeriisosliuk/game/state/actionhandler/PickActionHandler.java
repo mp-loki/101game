@@ -29,7 +29,6 @@ public class PickActionHandler implements ActionHandler {
         if (!activePlayer.getActiveState().isPickAllowed()) {
             log.warn("Pick not allowed");
             return game.getState();
-            // TODO send message
         } else {
             activePlayer.pickCard(game.getCardHolder().pickCard());
             if (game.getState() == State.RESPOND_SUIT) {
@@ -67,11 +66,13 @@ public class PickActionHandler implements ActionHandler {
         Suit demandedSuit = player.getActiveState().getDemandedSuit();
         Set<Card> turnOptions = turnAdvisor.getValidCardsForRespondSuit(player.getHand(), demandedSuit);
         if (turnOptions.isEmpty()) {
-            player = game.getPlayerHolder().getNextActivePlayer();
-            player.getActiveState().setDemandedSuit(demandedSuit);
+            Player nextPlayer = player = game.getPlayerHolder().getNextActivePlayer();
+            nextPlayer.getActiveState().setDemandedSuit(demandedSuit);
             turnOptions = turnAdvisor.getValidCardsForRespondSuit(player.getHand(), demandedSuit);
+            nextPlayer.getActiveState().update(true, false, turnOptions);
+        } else {
+        	player.getActiveState().update(false, true, turnOptions);
         }
-        player.getActiveState().update(false, true, turnOptions);
         return game.getState();
     }
 }

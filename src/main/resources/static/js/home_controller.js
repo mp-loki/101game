@@ -9,9 +9,15 @@
 	  	var usersPointsTemplate = '<div><h4>Score</h4><table class="table table-striped"><thead><tr><th>Player</th><th>Points</th></tr></thead><tbody><tr><td>{{currentPlayer.name}}</td><td>{{isDefined(currentPlayer.points) ? currentPlayer.points : 0}}</td></tr><tr data-ng-repeat="player in players"><td>{{player.name}}</td><td>{{isDefined(player.points) ? player.points : 0}}</td></tr></tbody></table></div>'
 	  	
 	  	var messagesTemplate ='<ul ><li data-ng-repeat="message in messages track by $index">{{message}}</li></ul>';
-	
+	  	var demandSuitTemplate = '<div class="demand-suit" ng-show="demand">\
+	  		<button type="button" class="btn" ng-click="demandSuit(\'SPADES\')">Spades</button>\
+	  		<button type="button" class="btn  btn-danger" ng-click="demandSuit(\'HEARTS\')">Hearts</button>\
+	  		<button type="button" class="btn  btn-danger" ng-click="demandSuit(\'DIAMONDS\')">Diamonds</button>\
+	  		<button type="button" class="btn" ng-click="demandSuit(\'CLUBS\')">Clubs</button>\</div>'
 	  		
 	  	var state = null;
+	  	
+	  	
 	  	
 	  	var cardDeckTemplate = '<div class="row height_120px margin_bottom_30px">\
 									<div class="col-sm-4 col-sm-offset-4 text-align-center height_100">\
@@ -30,7 +36,7 @@
 										<p>{{currentPlayer.name}}</p>\
 	  								<div data-ng-show="currentPlayer.active.passAllowed"><button type="button" class="btn btn-success btn-lg" ng-click="send(\'PASS\')">Pass</button></div>'
 	  		
-	  	var twoPlayersTemplate = '<div>' + frontPlayerTemplate + cardDeckTemplate + currentPlayerTemplate + '</div>'
+	  	var twoPlayersTemplate = '<div>' + frontPlayerTemplate + cardDeckTemplate + currentPlayerTemplate + demandSuitTemplate + '</div>'
 	  	
 	  	var initial = "INITIAL";
 	  	var pending = "PENDING_START";
@@ -48,14 +54,6 @@
 	         });
 	    }
 	
-		/*
-		$scope.start = function() {
-			GameService.send("START");
-		}
-		$scope.quit = function() {
-			GameService.send("QUIT");
-		}
-		*/
 		$scope.send = function(code) {
 			GameService.send(code);
 		}
@@ -68,6 +66,17 @@
 				}
 			}
 		} 
+		
+		$scope.demandSuit = function(suit) {
+			console.log(suit);
+			GameService.demandSuit("DEMAND", $scope.currentPlayer.name, suit);
+			$scope.demand = false;
+		}
+		
+		$scope.respondSuit = function(card) {
+			console.log(card);
+			GameService.send("RESPOND_SUIT", $scope.currentPlayer.name, card);
+		}
 		
 	    $scope.action = function(card) {
 	    	console.log(card);
@@ -170,6 +179,10 @@
 			}
 		}
 		
+		renderDemandSuit = function() {
+			$scope.demand = true;
+		}
+		
 		var getcenterContent = function(data) {
 			var size = data.players.length;
 			var template = null;
@@ -208,13 +221,18 @@
 						break;	
 					case (data.type == "ACTIVATE"):
 						renderActivate(data);
-					break;	
+						break;	
 					case (data.type == "DEACTIVATE"):
 						renderDeactivate(data);
+						break;
 					case (data.type == "ACTIVE"):
 						renderActiveStateUpdate(data);
+						break;
 					case (data.type == "CARD_DECK"):
 						renderCardDeckUpdate(data);
+						break;	
+					case (data.type == "DEMAND_SUIT"):
+						renderDemandSuit();
 					break;	
 				}
 			}

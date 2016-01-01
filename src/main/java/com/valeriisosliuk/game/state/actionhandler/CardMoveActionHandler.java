@@ -11,7 +11,9 @@ import com.valeriisosliuk.dto.Action;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
+
 import static com.valeriisosliuk.game.state.State.*;
+
 import com.valeriisosliuk.model.Card;
 import com.valeriisosliuk.model.Rank;
 import com.valeriisosliuk.service.handler.TurnAdvisor;
@@ -43,24 +45,26 @@ public class CardMoveActionHandler implements ActionHandler {
 				return processCardMove(game, card);
 			}
 		} else {
-			log.warn("Unable to remove " + action.getCard() + " fron hand " + activePlayer.getHand());
+			log.warn("Unable to remove " + action.getCard() + " from hand " + activePlayer.getHand());
 			return game.getState();
 		}
 	}
 
 	private State processSixCardMove(Game game, Card card) {
 		Player activePlayer = game.getActivePlayer();
-		activePlayer.getActiveState().setPickAllowed(true);
-		activePlayer.getActiveState().setPassAllowed(false);
+		activePlayer.getActiveState().update(true, false, getTurnOptions(game, false));
+		//activePlayer.getActiveState().setPickAllowed(true);
+		//activePlayer.getActiveState().setPassAllowed(false);
 		return TURN_IN_PROGRESS;
 	}
-
+	
 	private State processCardMove(Game game, Card card) {
 		Player activePlayer = game.getActivePlayer();
 		if (CollectionUtils.isEmpty(activePlayer.getActiveState().getTurnOptions())) {
 			return TURN_END;
 		} else {
-			activePlayer.getActiveState().setPassAllowed(true);
+			boolean pickAllowed = activePlayer.getActiveState().isPickAllowed();
+			activePlayer.getActiveState().update(pickAllowed, true, getTurnOptions(game, false));
 			return TURN_IN_PROGRESS;
 		}
 	}

@@ -20,7 +20,7 @@ import com.valeriisosliuk.model.ActionType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=com.valeriisosliuk.Application.class, loader=AnnotationConfigContextLoader.class)
-public class GameServiceIntegrationTest {
+public class GameServiceJoinIntegrationTest {
 	
 	@Resource
 	private GameService gameService;
