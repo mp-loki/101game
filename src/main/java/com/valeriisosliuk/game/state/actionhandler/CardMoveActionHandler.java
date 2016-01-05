@@ -53,8 +53,6 @@ public class CardMoveActionHandler implements ActionHandler {
 	private State processSixCardMove(Game game, Card card) {
 		Player activePlayer = game.getActivePlayer();
 		activePlayer.getActiveState().update(true, false, getTurnOptions(game, false));
-		//activePlayer.getActiveState().setPickAllowed(true);
-		//activePlayer.getActiveState().setPassAllowed(false);
 		return TURN_IN_PROGRESS;
 	}
 	

@@ -16,5 +16,6 @@ public enum DtoType {
     DEACTIVATE,
     STATE, 
     CARD_DECK,
-    DEMAND_SUIT;
+    DEMAND_SUIT, 
+    DEAL_END;
 }

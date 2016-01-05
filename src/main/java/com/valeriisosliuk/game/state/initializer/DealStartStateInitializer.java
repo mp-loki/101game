@@ -43,7 +43,7 @@ public class DealStartStateInitializer implements StateInitinalizer {
 
     private void sendDealStartMessage(Game game) {
         for (Player player : game.getPlayers()) {
-            PlayerStateDto playerStateDto = new PlayerStateDto(player.getName(), player.getHand(), null);
+            PlayerStateDto playerStateDto = new PlayerStateDto(player.getName(), player.getHand(), player.getTotalPoints());
             List<PlayerInfoDto> matesInfo = game.getPlayerHolder().getSequencedPlayers(player).stream()
                     .map(p -> new PlayerInfoDto(p.getName(), p.getHand().size(), p.getTotalPoints())).collect(Collectors.toList());
             CardDeckDto cardDeckDto = new CardDeckDto(game.getCardHolder().getLastCardInDiscard(), game.getCardHolder().cardDeckHasNext());

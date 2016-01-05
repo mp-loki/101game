@@ -56,6 +56,7 @@ public class PlayerHolder extends AbstractObservable {
 			getNextActivePlayer();
 		}
 		if (activePlayer.getActiveState() == null) {
+		    activePlayer.activate();
 		}
 		return activePlayer;
 	}
@@ -120,9 +121,11 @@ public class PlayerHolder extends AbstractObservable {
 		if (!players.contains(dealWinner)) {
 			throw new IllegalArgumentException("Player " + dealWinner.getName() + " is not in this game!");
 		}
-		while (!playerIterator.next().getName().equals(dealWinner.getName())) {
+		Player player = null;
+		while (!(player = playerIterator.next()).getName().equals(dealWinner.getName())) {
 		}
-
+		activePlayer = player;
+		activePlayer.activate();
 	}
 	
 	   

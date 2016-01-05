@@ -5,17 +5,26 @@ import static org.junit.Assert.*;
 import java.util.EnumSet;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.model.Card;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes=com.valeriisosliuk.Application.class, loader=AnnotationConfigContextLoader.class)
 public class DealEndStateInitializerTest {
-
-    private DealEndStateInitializer dealEndInitializer = new DealEndStateInitializer();
+    
+    @Resource
+    private StateInitinalizer dealEndStateInitializer;
     private Game game;
     
     @Before
@@ -33,7 +42,7 @@ public class DealEndStateInitializerTest {
     
     @Test
     public void testEndDealZeroCounts() {
-        dealEndInitializer.initializeState(game);
+        dealEndStateInitializer.initializeState(game);
         assertEquals(State.DEAL_START, game.getState());
         List<Player> players = game.getPlayerHolder().getPlayers();
         assertEquals(0, players.get(0).getTotalPoints());
@@ -47,7 +56,7 @@ public class DealEndStateInitializerTest {
         players.get(0).addPoints(50);
         players.get(1).addPoints(50);
         players.get(2).addPoints(50);
-        dealEndInitializer.initializeState(game);
+        dealEndStateInitializer.initializeState(game);
         assertEquals(State.DEAL_START, game.getState());
         assertEquals(50, players.get(0).getTotalPoints());
         assertEquals(60, players.get(1).getTotalPoints());
@@ -60,7 +69,7 @@ public class DealEndStateInitializerTest {
         players.get(0).addPoints(50);
         players.get(1).addPoints(50);
         players.get(2).addPoints(90);
-        dealEndInitializer.initializeState(game);
+        dealEndStateInitializer.initializeState(game);
         assertEquals(State.GAME_OVER, game.getState());
         assertEquals(50, players.get(0).getTotalPoints());
         assertEquals(60, players.get(1).getTotalPoints());

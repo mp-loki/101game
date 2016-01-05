@@ -40,6 +40,7 @@ public class ResponseService {
                 return getInactiveStateDto(game);
             }
             */
+            /*
             switch (game.getState()) {
                 case DEAL_START:
                 case TURN_START:
@@ -61,12 +62,14 @@ public class ResponseService {
                     break; 
                 }
             return null;
+            */
+            return getGameStateDto(playerName, game);
         }
     }
 
     public GameStateDto getGameStateDto(String playerName, Game game) {
         Optional<Player> playerOpt = game.getPlayerHolder().getPlayer(playerName);
-        if (equals(Optional.empty())) {
+        if (playerOpt.equals(Optional.empty())) {
             throw new RuntimeException("Wrong Game instanc epicked for player: " + playerName);
         }
         Player player = playerOpt.get();
@@ -75,7 +78,7 @@ public class ResponseService {
             ActiveState activeState = player.getActiveState();
             active = new ActiveStateDto(activeState.isPickAllowed(), activeState.isPassAllowed(), activeState.getTurnOptions());
         }
-        PlayerStateDto userState = new PlayerStateDto(playerName, player.getHand(), active);
+        PlayerStateDto userState = new PlayerStateDto(playerName, player.getHand(), active, player.getTotalPoints());
         List<PlayerInfoDto> matesInfo = gameService.getMatesInfo(player, game);
         CardDeckDto cardDeck = new CardDeckDto(game.getCardHolder().getLastCardInDiscard(), game.getCardHolder().cardDeckHasNext());
         return new GameStateDto(game.getState(), userState, matesInfo, cardDeck);

@@ -28,7 +28,7 @@ public class MessageService {
     private SimpMessagingTemplate template;
 
     public <T> void send(String player, T t) {
-    	log.info("Sending unicast message: " + t);
+    	log.info("Sending unicast message to " + player +": " + t);
         template.convertAndSendToUser(player, "/queue/messages", t);
     }
     

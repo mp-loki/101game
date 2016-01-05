@@ -12,5 +12,9 @@ public class Dto {
     public DtoType getType() {
         return type;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Dto [type=" + type + "]";
+    }
 }

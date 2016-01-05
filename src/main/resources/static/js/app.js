@@ -28,3 +28,12 @@ app.filter('range', function() {
     return input;
   };
 });
+app.filter('reverse', function() {
+	return function(items) {
+		if (items !== undefined && items != null) {
+			return items.slice().reverse();
+		} else {
+			return [];
+		}
+	};
+});

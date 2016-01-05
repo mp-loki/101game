@@ -8,16 +8,16 @@
 	  	var fourPlayersTemplate = '<div>this is a four-player game</div>';
 	  	var usersPointsTemplate = '<div><h4>Score</h4><table class="table table-striped"><thead><tr><th>Player</th><th>Points</th></tr></thead><tbody><tr><td>{{currentPlayer.name}}</td><td>{{isDefined(currentPlayer.points) ? currentPlayer.points : 0}}</td></tr><tr data-ng-repeat="player in players"><td>{{player.name}}</td><td>{{isDefined(player.points) ? player.points : 0}}</td></tr></tbody></table></div>'
 	  	
-	  	var messagesTemplate ='<ul ><li data-ng-repeat="message in messages track by $index">{{message}}</li></ul>';
+	  	var messagesTemplate = '<ul ><li data-ng-repeat="message in messages | reverse track by $index ">{{message}}</li></ul>';
 	  	var demandSuitTemplate = '<div class="demand-suit" ng-show="demand">\
 	  		<button type="button" class="btn" ng-click="demandSuit(\'SPADES\')">Spades</button>\
 	  		<button type="button" class="btn  btn-danger" ng-click="demandSuit(\'HEARTS\')">Hearts</button>\
 	  		<button type="button" class="btn  btn-danger" ng-click="demandSuit(\'DIAMONDS\')">Diamonds</button>\
 	  		<button type="button" class="btn" ng-click="demandSuit(\'CLUBS\')">Clubs</button>\</div>'
 	  		
+	  	var endDealPointsTemplate = '<div class="col-sm-4 col-sm-offset-4 dealEndPoints">' + usersPointsTemplate + '</div>';
+	  		
 	  	var state = null;
-	  	
-	  	
 	  	
 	  	var cardDeckTemplate = '<div class="row height_120px margin_bottom_30px">\
 									<div class="col-sm-4 col-sm-offset-4 text-align-center height_100">\
@@ -25,18 +25,33 @@
 									<div class="sprite coverv display-inline-block deck" data-ng-click="pick()"/></div>'
 	  		
 	  	var frontPlayerTemplate = '<div class="row text-center height_120px margin_bottom_30px">\
-									<div class="col-sm-4 col-sm-offset-4">\
-									<p>{{players[0].name}}</p>\
-									<div data-ng-repeat="n in [] | range:players[0].cardNum" class="sprite coverv position-absolute front-player-card-{{n}}"/></div></div>'	
+								       <div class="col-sm-4 col-sm-offset-4">\
+									   <p>{{players[0].name}}</p>\
+									   <div data-ng-repeat="n in [] | range:players[0].cardNum" class="sprite coverv position-absolute front-player-card-{{n}}"/></div></div>';
+	  	var frontPlayerEndDealTemplate = '<div class="row text-center height_120px margin_bottom_30px">\
+										     <div class="col-sm-4 col-sm-offset-4 height_120px">\
+										     <p>{{dealEnd.players[0].name}}</p>\
+										     <div data-ng-repeat="card in dealEnd.players[0].hand" class="sprite card {{card}} position-absolute front-player-card-{{$index + 1}}"/></div></div>';
+	  	
 	  	var currentPlayerTemplate = '<div class="row col-sm-4 col-sm-offset-4 {{active}}">\
 										<div class="width_100 height_96px">\
 											<div data-ng-repeat="card in currentPlayer.hand" id="{{card}}" data-ng-click="action(card)"\
 									                    class="sprite card {{card}} card_{{$index + 1}} position-absolute"/>\
 										</div>\
 										<p>{{currentPlayer.name}}</p>\
-	  								<div data-ng-show="currentPlayer.active.passAllowed"><button type="button" class="btn btn-success btn-lg" ng-click="send(\'PASS\')">Pass</button></div>'
-	  		
-	  	var twoPlayersTemplate = '<div>' + frontPlayerTemplate + cardDeckTemplate + currentPlayerTemplate + demandSuitTemplate + '</div>'
+	  								<div data-ng-show="currentPlayer.active.passAllowed"><button type="button" class="btn btn-success btn-lg" ng-click="send(\'PASS\')">Pass</button>'
+	  								+ '</div>'  + demandSuitTemplate;
+	  	
+	  	var currentPlayerDealEndTemplate = '<div class="row col-sm-4 col-sm-offset-4 {{active}}">\
+									  		<div class="width_100 height_96px">\
+									  		<div data-ng-repeat="card in  dealEnd.currentPlayer.hand" id="{{card}}" data-ng-click="action(card)"\
+									  		class="sprite card {{card}} card_{{$index + 1}} position-absolute"/>\
+									  		</div>\
+									  		<p>{{currentPlayer.name}}</p>';
+	  	var dealEndOkButtonTemplate = '<button type="button" class="btn btn-success btn-lg" ng-click="dealEnd = null">Ok</button></div>';	
+	  	var dealEndTwoPlayersTemplate = '<div class="dealEnd" ng-show="dealEnd">' + frontPlayerEndDealTemplate + endDealPointsTemplate + currentPlayerDealEndTemplate + dealEndOkButtonTemplate;
+	  	
+	  	var twoPlayersTemplate = '<div class="width_100 height_100">' + frontPlayerTemplate + cardDeckTemplate + currentPlayerTemplate + '</div>' + dealEndTwoPlayersTemplate;
 	  	
 	  	var initial = "INITIAL";
 	  	var pending = "PENDING_START";
@@ -44,6 +59,7 @@
 	  	var state = "STATE";
 	  	$scope.rightContent = messagesTemplate;
 	  	$scope.currentPlayer = null;
+	  	$scope.dealEnd = false;
 		$scope.players = [];
 		$scope.messages = [];
 		
@@ -62,11 +78,13 @@
 				if ($scope.currentPlayer.active.pickAllowed) {
 					GameService.send("PICK");
 				} else {
-					$scope.messages.push("You cannot pick more cards");
+					addMessage("You cannot pick more cards");
 				}
 			}
 		} 
-		
+		$scope.getFrontPlayerHand = function() {
+			return $scope.players[0].hand;
+		}
 		$scope.demandSuit = function(suit) {
 			console.log(suit);
 			GameService.demandSuit("DEMAND", $scope.currentPlayer.name, suit);
@@ -88,6 +106,12 @@
 	    }
 	    
 	    $scope.isDefined = isDefined;
+	    
+	    var addMessage = function(message) {
+	    	$scope.messages.push(message);
+	    	//$scope.messages.reverse();
+        	//$scope.messages = $scope.messages.concat(message);
+	    }
 	    
 	    var renderState = function(data) {
 	    	this.state = data.state;
@@ -118,6 +142,7 @@
 			$scope.leftContent = usersPointsTemplate;
 			$scope.cardDeck = data.cardDeck;
 			$scope.centerContent = getcenterContent(data);
+			addMessage("New Deal started");
 		}
 		
 		var renderPendingState = function(data) {
@@ -150,18 +175,18 @@
 		var renderActivate = function(data) {
 			if ($scope.currentPlayer.name == data.name) {
 				$scope.currentPlayer.active = data.active;
-				$scope.messages.push("Your turn");
+				addMessage("Your turn");
 			} else {
-				$scope.messages.push(data.name + "'s turn");
+				addMessage(data.name + "'s turn");
 			}
 		}
 		
 		var renderDeactivate = function(data) {
 			if ($scope.currentPlayer.name == data.name) {
 				$scope.currentPlayer.active = null;
-				$scope.messages.push("Your turn ended");
+				addMessage("Your turn ended");
 			} else {
-				$scope.messages.push(data.name + " ends  turn");
+				addMessage(data.name + " ends  turn");
 			}
 		}
 		var renderHandInfo = function(data) {
@@ -173,14 +198,23 @@
 			}
 		}
 		
-		renderActiveStateUpdate = function(data) {
+		var renderActiveStateUpdate = function(data) {
 			if (isDefined($scope.currentPlayer.active)) {
 				$scope.currentPlayer.active = data;
 			}
 		}
 		
-		renderDemandSuit = function() {
+		var renderDemandSuit = function() {
 			$scope.demand = true;
+		}
+		
+		var renderDealEnd = function(data) {
+			$scope.dealEnd = {};
+			$scope.currentPlayer.points = data.currentPlayer.points;
+			$scope.dealEnd.currentPlayer = data.currentPlayer;
+			$scope.players = data.players;
+			$scope.dealEnd.players = data.players;
+			addMessage("Deal ended")
 		}
 		
 		var getcenterContent = function(data) {
@@ -233,7 +267,10 @@
 						break;	
 					case (data.type == "DEMAND_SUIT"):
 						renderDemandSuit();
-					break;	
+						break;	
+					case (data.type == "DEAL_END"):
+						renderDealEnd(data);
+						break;	
 				}
 			}
 		}
