@@ -7,6 +7,7 @@
 	  	var threePlayersTemplate = '<div>this is a three-player game</div>';
 	  	var fourPlayersTemplate = '<div>this is a four-player game</div>';
 	  	var usersPointsTemplate = '<div><h4>Score</h4><table class="table table-striped"><thead><tr><th>Player</th><th>Points</th></tr></thead><tbody><tr><td>{{currentPlayer.name}}</td><td>{{isDefined(currentPlayer.points) ? currentPlayer.points : 0}}</td></tr><tr data-ng-repeat="player in players"><td>{{player.name}}</td><td>{{isDefined(player.points) ? player.points : 0}}</td></tr></tbody></table></div>'
+	  	var gameOverPointsTemplate = '<div class="semiModalPoints"><h3 style="color_red">Game Over</h3><table class="table table-striped"><thead><tr><th>Player</th><th>Points</th></tr></thead><tbody><tr data-ng-repeat="player in gameOver.players"><td>{{player.name}}</td><td>{{isDefined(player.points) ? player.points : 0}}</td></tr></tbody></table></div>'
 	  	
 	  	var messagesTemplate = '<ul ><li data-ng-repeat="message in messages | reverse track by $index ">{{message}}</li></ul>';
 	  	var demandSuitTemplate = '<div class="demand-suit" ng-show="demand">\
@@ -15,7 +16,7 @@
 	  		<button type="button" class="btn  btn-danger" ng-click="demandSuit(\'DIAMONDS\')">Diamonds</button>\
 	  		<button type="button" class="btn" ng-click="demandSuit(\'CLUBS\')">Clubs</button>\</div>'
 	  		
-	  	var endDealPointsTemplate = '<div class="col-sm-4 col-sm-offset-4 dealEndPoints">' + usersPointsTemplate + '</div>';
+	  	var endDealPointsTemplate = '<div class="col-sm-4 col-sm-offset-4 semiModalPoints">' + usersPointsTemplate + '</div>';
 	  		
 	  	var state = null;
 	  	
@@ -49,9 +50,11 @@
 									  		</div>\
 									  		<p>{{currentPlayer.name}}</p>';
 	  	var dealEndOkButtonTemplate = '<button type="button" class="btn btn-success btn-lg" ng-click="dealEnd = null">Ok</button></div>';	
-	  	var dealEndTwoPlayersTemplate = '<div class="dealEnd" ng-show="dealEnd">' + frontPlayerEndDealTemplate + endDealPointsTemplate + currentPlayerDealEndTemplate + dealEndOkButtonTemplate;
+	  	var gameOverOkButtonTemplate = '<button type="button" class="btn btn-success btn-lg" ng-click="reload()">Ok</button></div>';	
+	  	var dealEndTwoPlayersTemplate = '<div class="semiModal" ng-show="dealEnd">' + frontPlayerEndDealTemplate + endDealPointsTemplate + currentPlayerDealEndTemplate + dealEndOkButtonTemplate + '</div>';
 	  	
-	  	var twoPlayersTemplate = '<div class="width_100 height_100">' + frontPlayerTemplate + cardDeckTemplate + currentPlayerTemplate + '</div>' + dealEndTwoPlayersTemplate;
+	  	var gameOverTemplate = '<div class="semiModal" ng-show="gameOver"><div class="col-sm-4 col-sm-offset-4 height_100">' + gameOverPointsTemplate + gameOverOkButtonTemplate +'</div></div>';
+	  	var twoPlayersTemplate = '<div class="width_100 height_100">' + frontPlayerTemplate + cardDeckTemplate + currentPlayerTemplate + '</div>' + dealEndTwoPlayersTemplate + gameOverTemplate;
 	  	
 	  	var initial = "INITIAL";
 	  	var pending = "PENDING_START";
@@ -63,10 +66,14 @@
 		$scope.players = [];
 		$scope.messages = [];
 		
+		$scope.reload = function() {
+			location.reload();
+		}
+		
 	    $scope.init = function() {
 	    	 $http.get('/game/getState').
 	         success(function(data) {
-	        	 renderState(data);
+	        	 processdata(data);
 	         });
 	    }
 	
@@ -109,27 +116,8 @@
 	    
 	    var addMessage = function(message) {
 	    	$scope.messages.push(message);
-	    	//$scope.messages.reverse();
-        	//$scope.messages = $scope.messages.concat(message);
 	    }
 	    
-	    var renderState = function(data) {
-	    	this.state = data.state;
-	    	switch(true) {
-		    	case (data.state == initial):
-		    		renderInitialState(data);
-		    		break;
-		    	case (data.state == pending):
-		    		renderPendingState(data);
-		    		break;
-		    	case (data.state == dealStart):
-		    		renderDealStart(data);
-		    		break;
-		    	case (data.type == state):
-		    		renderGameState(data);
-		    	    break;
-	    	}
-	    }
 		var renderInitialState = function(data) {
 			$scope.players = data.players;
 			$scope.leftContent = onlinePlayersTemplate;
@@ -205,6 +193,7 @@
 		}
 		
 		var renderDemandSuit = function() {
+			$scope.currentPlayer.active.passAllowed = false;
 			$scope.demand = true;
 		}
 		
@@ -215,6 +204,13 @@
 			$scope.players = data.players;
 			$scope.dealEnd.players = data.players;
 			addMessage("Deal ended")
+		}
+		
+		var renderGameOver = function(data) {
+			$scope.gameOver = {};
+			$scope.gameOver.winner = data.winner;
+			$scope.gameOver.players = data.players;
+			addMessage("Game Over. " + data.winner + " wins");
 		}
 		
 		var getcenterContent = function(data) {
@@ -237,9 +233,12 @@
 		var processdata = function(data) {
 			if (isDefined(data)) {
 				switch (true) {
+					case (data.type == "INITIAL"):
+						renderInitialState(data);
+						break;
 					case(data.type == "USERS_UPDATE"):
-						if (this.state = initial)
-							renderInitialState(data);
+						//if (this.state = initial)
+						renderInitialState(data);
 						break;
 					case (data.type == "PENDING_START"):
 						renderPendingState(data);
@@ -270,6 +269,9 @@
 						break;	
 					case (data.type == "DEAL_END"):
 						renderDealEnd(data);
+						break;	
+					case (data.type == "GAME_OVER"):
+						renderGameOver(data);
 						break;	
 				}
 			}

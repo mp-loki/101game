@@ -33,7 +33,6 @@ public class AppConfigTest {
     
     @Test
     public void testStateInitializersInjection() {
-    	/*
         assertNotNull(stateInitializers.get(INITIAL));
         assertNotNull(stateInitializers.get(DEAL_START));
         assertNotNull(stateInitializers.get(TURN_START));
@@ -42,7 +41,6 @@ public class AppConfigTest {
         assertNotNull(stateInitializers.get(DEMAND_SUIT));
         assertNotNull(stateInitializers.get(RESPOND_SUIT));
         assertNotNull(stateInitializers.get(DEAL_END));
-        */
         assertNotNull(stateInitializers.get(GAME_OVER));
     }
     

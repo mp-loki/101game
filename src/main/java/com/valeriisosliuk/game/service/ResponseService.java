@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.Dto;
 import com.valeriisosliuk.dto.CardDeckDto;
-import com.valeriisosliuk.dto.HandInfoDto;
 import com.valeriisosliuk.dto.InitialStateDto;
 import com.valeriisosliuk.dto.GameStateDto;
 import com.valeriisosliuk.dto.PlayerInfoDto;

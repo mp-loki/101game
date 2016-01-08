@@ -55,8 +55,6 @@ body {
 	position: absolute;
 }
 .demand-suit {
-	position: absolute;
-	top: 5em;
 	margin: auto;
 	width: 100%;
 }
@@ -460,7 +458,7 @@ body {
 	color: black;
 	text-color: white;
 }
-.dealEnd {
+.semiModal {
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -468,8 +466,9 @@ body {
 	background: transparent; /* Fall-back for browsers that don't support rgba */
     background: rgba(0, 0, 0, .5);
 }
-.dealEndPoints {
+.semiModalPoints {
 	margin-bottom: 20px;
 	text-align: center;
 	background-color: white;
 }
+

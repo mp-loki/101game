@@ -17,5 +17,6 @@ public enum DtoType {
     STATE, 
     CARD_DECK,
     DEMAND_SUIT, 
-    DEAL_END;
+    DEAL_END, 
+    GAME_OVER;
 }

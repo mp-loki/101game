@@ -46,6 +46,11 @@ public class ActionService {
 		if (action.getType() == ActionType.START || action.getType() == ActionType.QUIT) {
 			return true;
 		}
-		return action.getPlayerName().equals(game.getActivePlayer().getName());
+		boolean valid = action.getPlayerName().equals(game.getActivePlayer().getName());
+		if (valid && action.getType() == ActionType.ACTION && game.getState() == State.RESPOND_SUIT) {
+		    action.setType(ActionType.RESPOND);
+		    
+		}
+		return valid;
 	}
 }

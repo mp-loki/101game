@@ -8,9 +8,9 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.dto.PlayerInfoDto;
@@ -23,17 +23,8 @@ public class GameService {
 
     List<Game> games;
 
-    @Resource
-    private Observer gameStateObserver;
-    
-    @Resource
-    private Observer cardHolderObserver;
-
-    @Resource
-    private Observer playerObserver;
-
-    @Resource
-    private Observer playerHolderObserver;
+    @Autowired 
+    private ApplicationContext applicationContext;
 
     @Autowired
     private UserService userService;
@@ -48,7 +39,7 @@ public class GameService {
         Game game = getGameInstance((g, m) -> g.getState() == State.INITIAL && g.getPlayerHolder().getPlayersCount() < m, Game.MAX_PLAYERS).orElse(
                 createNewGameInstance());
         Player player = game.joinGame(username);
-        player.addObserver(playerObserver);
+        player.addObserver((Observer) applicationContext.getBean("playerObserver"));
         return game;
     }
 
@@ -62,9 +53,9 @@ public class GameService {
 
     private Game createNewGameInstance() {
         Game game = new Game();
-        game.addObserver(gameStateObserver);
-        game.addObserver(cardHolderObserver);
-        game.getPlayerHolder().addObserver(playerHolderObserver);
+        game.addObserver((Observer) applicationContext.getBean("gameStateObserver"));
+        game.addObserver((Observer) applicationContext.getBean("cardHolderObserver"));
+        game.getPlayerHolder().addObserver((Observer) applicationContext.getBean("playerHolderObserver"));
         games.add(game);
         return game;
     }

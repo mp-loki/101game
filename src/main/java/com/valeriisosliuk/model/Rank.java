@@ -1,6 +1,7 @@
 package com.valeriisosliuk.model;
 
 public enum Rank {
+    
 	ACE("Ace", 15),
 	_6("6", 0), 
 	_7("7", 0), 

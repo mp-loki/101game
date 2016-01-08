@@ -22,7 +22,7 @@ public class RespondSuitStateInitializer implements StateInitinalizer {
         Player activePlayer = game.getActivePlayer();
         Suit demand = activePlayer.getActiveState().getDemandedSuit();
         Set<Card> validTurns = turnAdvisor.getValidCardsForRespondSuit(activePlayer.getHand(), demand);
-        game.getActivePlayer().getActiveState().setTurnOptions(validTurns);
+        game.getActivePlayer().getActiveState().update(true, false, validTurns);
     }
 
 }

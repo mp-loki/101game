@@ -43,6 +43,10 @@ public class UserService {
     public void setAvailable(Collection<Player> users) {
     	users.stream().map(p -> p.getName()).forEach(userHolder::setAvailable);
     }
+    
+    public void setAvailable(String user) {
+        userHolder.setAvailable(user);
+    }
     public void setBusy(Collection<Player> users) {
     	users.stream().map(p -> p.getName()).forEach(userHolder::setBusy);
     }

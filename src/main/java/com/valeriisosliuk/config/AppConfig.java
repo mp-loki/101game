@@ -41,8 +41,6 @@ public class AppConfig {
     @Resource
     private StateInitinalizer dealStartStateInitializer;
     @Resource
-    private StateInitinalizer gameStartStateInitializer;
-    @Resource
     private StateInitinalizer turnStartStateInitializer;
     @Resource
     private StateInitinalizer turnEndStateInitializer;
@@ -73,7 +71,6 @@ public class AppConfig {
     public Map<State, StateInitinalizer> getStateInitializers() {
         Map<State, StateInitinalizer> stateInitializers = new HashMap<>();
         stateInitializers.put(INITIAL, initialStateInitializer);
-        stateInitializers.put(GAME_START, gameStartStateInitializer);
         stateInitializers.put(DEAL_START, dealStartStateInitializer);
         stateInitializers.put(TURN_START, turnStartStateInitializer);
         stateInitializers.put(TURN_IN_PROGRESS, stubStateInitializer);
@@ -82,6 +79,7 @@ public class AppConfig {
         stateInitializers.put(RESPOND_SUIT, respondSuitStateInitializer);
         stateInitializers.put(DEAL_END, dealEndStateInitializer);
         stateInitializers.put(GAME_OVER, gameOverStateInitializer);
+        stateInitializers.put(GAME_START, stubStateInitializer);
         return stateInitializers;
     }
     

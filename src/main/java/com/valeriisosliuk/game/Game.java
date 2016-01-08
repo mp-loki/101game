@@ -82,4 +82,8 @@ public class Game extends AbstractObservable {
         cardHolder.putCardInDiscard(card);
         setChangedAndNotify(cardHolder);
     }
+
+    public String getWinner() {
+        return playerHolder.getWinner();
+    }
 }

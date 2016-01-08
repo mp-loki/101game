@@ -15,18 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.valeriisosliuk.dto.Dto;
 import com.valeriisosliuk.dto.Action;
-import com.valeriisosliuk.dto.ResponseDto;
-import com.valeriisosliuk.dto.GameStateDto;
+import com.valeriisosliuk.dto.Dto;
 import com.valeriisosliuk.dto.OnlineUserDto;
 import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.service.ActionService;
 import com.valeriisosliuk.game.service.GameService;
 import com.valeriisosliuk.game.service.ResponseService;
 import com.valeriisosliuk.game.service.UserService;
-import com.valeriisosliuk.model.Table;
-import com.valeriisosliuk.service.TableService;
 
 @Controller
 public class GameController {
@@ -35,9 +31,6 @@ public class GameController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private TableService tableService;
     
     @Autowired
     private ResponseService responseService;
@@ -54,21 +47,6 @@ public class GameController {
     @RequestMapping(value = "/login")
     public String login(Model model) {
         return "login";
-    }
-
-    @RequestMapping(value = "/join")
-    public String joinTable(Model model) {
-        String currentPlayerName = userService.getCurrentUserName();
-        Table table = tableService.joinTable(currentPlayerName);
-        model.addAttribute("currentPlayer", currentPlayerName);
-        if (table.isStarted()) {
-            model.addAttribute("state", table.getPlayer(currentPlayerName));
-            model.addAttribute("lastCard", table.getLastCardInDiscard());
-        } else {
-            model.addAttribute("message", "Waiting for players");
-
-        }
-        return "table";
     }
 
     @RequestMapping(value = "/")
