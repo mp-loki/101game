@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.google.common.collect.Iterators;
-import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.observer.AbstractObservable;
 
 public class PlayerHolder extends AbstractObservable {

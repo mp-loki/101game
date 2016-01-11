@@ -1,15 +1,15 @@
 package com.valeriisosliuk.game.state.actionhandler;
 
-import static com.valeriisosliuk.model.Card.ACE_OF_CLUBS;
-import static com.valeriisosliuk.model.Card.KING_OF_HEARTS;
-import static com.valeriisosliuk.model.Card.ACE_OF_DIAMONDS;
-import static com.valeriisosliuk.model.Card.KING_OF_CLUBS;
-import static com.valeriisosliuk.model.Card._10_OF_CLUBS;
-import static com.valeriisosliuk.model.Card._6_OF_CLUBS;
-import static com.valeriisosliuk.model.Card._7_OF_CLUBS;
-import static com.valeriisosliuk.model.Card._7_OF_DIAMONDS;
-import static com.valeriisosliuk.model.Card._8_OF_CLUBS;
-import static com.valeriisosliuk.model.Card._8_OF_HEARTS;
+import static com.valeriisosliuk.game.model.Card.ACE_OF_CLUBS;
+import static com.valeriisosliuk.game.model.Card.ACE_OF_DIAMONDS;
+import static com.valeriisosliuk.game.model.Card.KING_OF_CLUBS;
+import static com.valeriisosliuk.game.model.Card.KING_OF_HEARTS;
+import static com.valeriisosliuk.game.model.Card._10_OF_CLUBS;
+import static com.valeriisosliuk.game.model.Card._6_OF_CLUBS;
+import static com.valeriisosliuk.game.model.Card._7_OF_CLUBS;
+import static com.valeriisosliuk.game.model.Card._7_OF_DIAMONDS;
+import static com.valeriisosliuk.game.model.Card._8_OF_CLUBS;
+import static com.valeriisosliuk.game.model.Card._8_OF_HEARTS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -30,19 +30,19 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.valeriisosliuk.dto.Action;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.Action;
+import com.valeriisosliuk.game.model.ActionType;
+import com.valeriisosliuk.game.model.Card;
+import com.valeriisosliuk.game.model.CardDeck;
 import com.valeriisosliuk.game.model.CardHolder;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
+import com.valeriisosliuk.game.model.Suit;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.model.ActionType;
-import com.valeriisosliuk.model.Card;
-import com.valeriisosliuk.model.CardDeck;
-import com.valeriisosliuk.model.Suit;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=com.valeriisosliuk.Application.class, loader=AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes=com.valeriisosliuk.game.Application.class, loader=AnnotationConfigContextLoader.class)
 public class PickActionHandlerTest {
 	
 	@Autowired

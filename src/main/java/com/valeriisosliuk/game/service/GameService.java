@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.PlayerInfoDto;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.PlayerInfoDto;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
 

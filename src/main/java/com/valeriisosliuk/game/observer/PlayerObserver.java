@@ -8,11 +8,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.ActivateDto;
-import com.valeriisosliuk.dto.ActiveStateDto;
-import com.valeriisosliuk.dto.DeactivateDto;
-import com.valeriisosliuk.dto.HandInfoDto;
-import com.valeriisosliuk.dto.HandUpdateDto;
+import com.valeriisosliuk.game.dto.ActivateDto;
+import com.valeriisosliuk.game.dto.ActiveStateDto;
+import com.valeriisosliuk.game.dto.DeactivateDto;
+import com.valeriisosliuk.game.dto.HandInfoDto;
+import com.valeriisosliuk.game.dto.HandUpdateDto;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.service.GameService;
 import com.valeriisosliuk.game.service.MessageService;

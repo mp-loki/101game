@@ -7,17 +7,17 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.CardDeckDto;
-import com.valeriisosliuk.dto.DealStartDto;
-import com.valeriisosliuk.dto.PlayerInfoDto;
-import com.valeriisosliuk.dto.PlayerStateDto;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.CardDeckDto;
+import com.valeriisosliuk.game.dto.DealStartDto;
+import com.valeriisosliuk.game.dto.PlayerInfoDto;
+import com.valeriisosliuk.game.dto.PlayerStateDto;
+import com.valeriisosliuk.game.model.CardDeck;
 import com.valeriisosliuk.game.model.CardHolder;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.service.MessageService;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.model.CardDeck;
-import com.valeriisosliuk.util.CardUtil;
+import com.valeriisosliuk.game.util.CardUtil;
 
 @Component("dealStartStateInitializer")
 public class DealStartStateInitializer implements StateInitinalizer {

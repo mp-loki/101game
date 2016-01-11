@@ -1,20 +1,20 @@
 package com.valeriisosliuk.game.state.initializer;
 
-import static com.valeriisosliuk.model.Card.JACK_OF_DIAMONDS;
-import static com.valeriisosliuk.model.Card.JACK_OF_SPADES;
-import static com.valeriisosliuk.model.Card.KING_OF_CLUBS;
-import static com.valeriisosliuk.model.Card.QUEEN_OF_CLUBS;
-import static com.valeriisosliuk.model.Card.QUEEN_OF_DIAMONDS;
-import static com.valeriisosliuk.model.Card.QUEEN_OF_SPADES;
-import static com.valeriisosliuk.model.Card._6_OF_CLUBS;
-import static com.valeriisosliuk.model.Card._6_OF_HEARTS;
-import static com.valeriisosliuk.model.Card._7_OF_DIAMONDS;
-import static com.valeriisosliuk.model.Card._7_OF_HEARTS;
-import static com.valeriisosliuk.model.Card._8_OF_HEARTS;
-import static com.valeriisosliuk.model.Card._8_OF_SPADES;
-import static com.valeriisosliuk.model.Card._9_OF_CLUBS;
-import static com.valeriisosliuk.model.Card._9_OF_HEARTS;
-import static com.valeriisosliuk.model.Card._9_OF_SPADES;
+import static com.valeriisosliuk.game.model.Card.JACK_OF_DIAMONDS;
+import static com.valeriisosliuk.game.model.Card.JACK_OF_SPADES;
+import static com.valeriisosliuk.game.model.Card.KING_OF_CLUBS;
+import static com.valeriisosliuk.game.model.Card.QUEEN_OF_CLUBS;
+import static com.valeriisosliuk.game.model.Card.QUEEN_OF_DIAMONDS;
+import static com.valeriisosliuk.game.model.Card.QUEEN_OF_SPADES;
+import static com.valeriisosliuk.game.model.Card._6_OF_CLUBS;
+import static com.valeriisosliuk.game.model.Card._6_OF_HEARTS;
+import static com.valeriisosliuk.game.model.Card._7_OF_DIAMONDS;
+import static com.valeriisosliuk.game.model.Card._7_OF_HEARTS;
+import static com.valeriisosliuk.game.model.Card._8_OF_HEARTS;
+import static com.valeriisosliuk.game.model.Card._8_OF_SPADES;
+import static com.valeriisosliuk.game.model.Card._9_OF_CLUBS;
+import static com.valeriisosliuk.game.model.Card._9_OF_HEARTS;
+import static com.valeriisosliuk.game.model.Card._9_OF_SPADES;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
@@ -30,15 +30,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.model.Card;
+import com.valeriisosliuk.game.model.CardDeck;
 import com.valeriisosliuk.game.model.CardHolder;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.model.Card;
-import com.valeriisosliuk.model.CardDeck;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=com.valeriisosliuk.Application.class, loader=AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes=com.valeriisosliuk.game.Application.class, loader=AnnotationConfigContextLoader.class)
 public class TurnEndStateInitializerTest {
 	
 	@Autowired

@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.PendingPlayerDto;
-import com.valeriisosliuk.dto.PendingStartDto;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.PendingPlayerDto;
+import com.valeriisosliuk.game.dto.PendingStartDto;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.service.MessageService;
 import com.valeriisosliuk.game.service.UserService;

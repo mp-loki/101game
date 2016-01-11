@@ -12,14 +12,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.valeriisosliuk.dto.Action;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.Action;
+import com.valeriisosliuk.game.model.ActionType;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.service.UserHolder;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.model.ActionType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = com.valeriisosliuk.Application.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = com.valeriisosliuk.game.Application.class, loader = AnnotationConfigContextLoader.class)
 public class GameStartActionHandlerTest {
 
 	@Resource

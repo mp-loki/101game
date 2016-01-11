@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.valeriisosliuk.game.model.Card;
+import com.valeriisosliuk.game.model.Suit;
 import com.valeriisosliuk.game.observer.AbstractObservable;
 import com.valeriisosliuk.game.observer.ActiveStateObserver;
-import com.valeriisosliuk.model.Card;
-import com.valeriisosliuk.model.Suit;
 
 public class ActiveState extends AbstractObservable {
 	

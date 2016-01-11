@@ -5,7 +5,7 @@ import java.util.Observer;
 
 import org.apache.log4j.Logger;
 
-import com.valeriisosliuk.dto.ActiveStateDto;
+import com.valeriisosliuk.game.dto.ActiveStateDto;
 import com.valeriisosliuk.game.service.ServiceLocator;
 import com.valeriisosliuk.game.state.ActiveState;
 

@@ -3,9 +3,6 @@ package com.valeriisosliuk.game.model;
 import com.valeriisosliuk.game.observer.AbstractObservable;
 import com.valeriisosliuk.game.observer.CardHolderObserver;
 import com.valeriisosliuk.game.state.CardHolderStateChange;
-import com.valeriisosliuk.model.Card;
-import com.valeriisosliuk.model.CardDeck;
-import com.valeriisosliuk.model.Discard;
 
 public class CardHolder extends AbstractObservable {
 	

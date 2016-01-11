@@ -16,22 +16,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.util.CollectionUtils;
 
-import com.valeriisosliuk.dto.Action;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.Action;
+import com.valeriisosliuk.game.model.ActionType;
+import com.valeriisosliuk.game.model.Card;
+import com.valeriisosliuk.game.model.CardDeck;
 import com.valeriisosliuk.game.model.CardHolder;
+import com.valeriisosliuk.game.model.Game;
 
+import static com.valeriisosliuk.game.model.Card.*;
 import static com.valeriisosliuk.game.state.State.*;
-
-import com.valeriisosliuk.model.ActionType;
-import com.valeriisosliuk.model.Card;
-
-import static com.valeriisosliuk.model.Card.*;
 import static org.junit.Assert.*;
 
-import com.valeriisosliuk.model.CardDeck;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=com.valeriisosliuk.Application.class, loader=AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes=com.valeriisosliuk.game.Application.class, loader=AnnotationConfigContextLoader.class)
 public class CardMoveHandlerTest {
 	
 	private Game game;

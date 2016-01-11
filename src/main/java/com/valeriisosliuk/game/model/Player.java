@@ -8,7 +8,6 @@ import com.valeriisosliuk.game.observer.AbstractObservable;
 import com.valeriisosliuk.game.observer.ActiveStateObserver;
 import com.valeriisosliuk.game.state.ActiveState;
 import com.valeriisosliuk.game.state.PlayerStateChange;
-import com.valeriisosliuk.model.Card;
 
 public class Player extends AbstractObservable {
 	private String name;

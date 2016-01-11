@@ -5,11 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.valeriisosliuk.dto.Action;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.Action;
+import com.valeriisosliuk.game.model.ActionType;
+import com.valeriisosliuk.game.model.Game;
+import com.valeriisosliuk.game.model.Suit;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.model.ActionType;
-import com.valeriisosliuk.model.Suit;
 
 public class TurnEndActionHandlerTest {
     

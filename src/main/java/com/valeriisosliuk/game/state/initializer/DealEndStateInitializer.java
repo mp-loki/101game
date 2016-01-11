@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.DealEndDto;
-import com.valeriisosliuk.dto.PlayerStateDto;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.DealEndDto;
+import com.valeriisosliuk.game.dto.PlayerStateDto;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.service.MessageService;
 import com.valeriisosliuk.game.state.State;
