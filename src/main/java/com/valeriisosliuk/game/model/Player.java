@@ -58,6 +58,10 @@ public class Player extends AbstractObservable {
 	public ActiveState getActiveState() {
 		return activeState;
 	}
+	
+	void nullifyActiveState() {
+		activeState = null;
+	}
 
 	void activate() {
 		activeState = new ActiveState(name);

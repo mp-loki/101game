@@ -125,7 +125,9 @@ public class PlayerHolder extends AbstractObservable {
 		while (!(player = playerIterator.next()).getName().equals(dealWinner.getName())) {
 		}
 		activePlayer = player;
-		activePlayer.activate();
+		activePlayer.nullifyActiveState();
+		//activePlayer.activate();
+		
 	}
 	
 	   
