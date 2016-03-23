@@ -5,11 +5,11 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.model.Card;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
-import com.valeriisosliuk.model.Card;
-import com.valeriisosliuk.model.Suit;
-import com.valeriisosliuk.service.handler.TurnAdvisor;
+import com.valeriisosliuk.game.model.Suit;
+import com.valeriisosliuk.game.turnadvisor.TurnAdvisor;
 
 @Component("respondSuitStateInitializer")
 public class RespondSuitStateInitializer implements StateInitinalizer {
@@ -22,7 +22,7 @@ public class RespondSuitStateInitializer implements StateInitinalizer {
         Player activePlayer = game.getActivePlayer();
         Suit demand = activePlayer.getActiveState().getDemandedSuit();
         Set<Card> validTurns = turnAdvisor.getValidCardsForRespondSuit(activePlayer.getHand(), demand);
-        game.getActivePlayer().getActiveState().setTurnOptions(validTurns);
+        game.getActivePlayer().getActiveState().update(true, false, validTurns);
     }
 
 }

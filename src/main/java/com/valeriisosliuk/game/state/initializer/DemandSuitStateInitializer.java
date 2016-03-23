@@ -4,9 +4,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.Dto;
-import com.valeriisosliuk.dto.DtoType;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.Dto;
+import com.valeriisosliuk.game.dto.DtoType;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.service.MessageService;
 
 @Component("demandSuitStateInitializer")

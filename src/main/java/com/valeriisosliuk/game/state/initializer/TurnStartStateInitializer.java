@@ -5,13 +5,13 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.model.Card;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.service.MessageService;
 import com.valeriisosliuk.game.state.actionhandler.CardMoveActionHandler;
 import com.valeriisosliuk.game.state.actionhandler.PickActionHandler;
-import com.valeriisosliuk.model.Card;
-import com.valeriisosliuk.service.handler.TurnAdvisor;
+import com.valeriisosliuk.game.turnadvisor.TurnAdvisor;
 
 @Component("turnStartStateInitializer")
 public class TurnStartStateInitializer implements StateInitinalizer {

@@ -4,16 +4,14 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.model.Card;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
 
+import static com.valeriisosliuk.game.model.Rank.*;
 import static com.valeriisosliuk.game.state.State.*;
-
-import com.valeriisosliuk.model.Card;
-
-import static com.valeriisosliuk.model.Rank.*;
-import static com.valeriisosliuk.util.CardUtil.*;
+import static com.valeriisosliuk.game.util.CardUtil.*;
 
 @Component("turnEndStateInitializer")
 public class TurnEndStateInitializer implements StateInitinalizer {

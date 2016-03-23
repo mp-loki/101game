@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.OnlineUserDto;
+import com.valeriisosliuk.game.dto.OnlineUserDto;
 import com.valeriisosliuk.game.observer.AbstractObservable;
 
 @Component

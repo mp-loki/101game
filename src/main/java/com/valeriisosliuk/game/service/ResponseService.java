@@ -6,15 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.Dto;
-import com.valeriisosliuk.dto.CardDeckDto;
-import com.valeriisosliuk.dto.HandInfoDto;
-import com.valeriisosliuk.dto.InitialStateDto;
-import com.valeriisosliuk.dto.GameStateDto;
-import com.valeriisosliuk.dto.PlayerInfoDto;
-import com.valeriisosliuk.dto.ActiveStateDto;
-import com.valeriisosliuk.dto.PlayerStateDto;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.ActiveStateDto;
+import com.valeriisosliuk.game.dto.CardDeckDto;
+import com.valeriisosliuk.game.dto.Dto;
+import com.valeriisosliuk.game.dto.GameStateDto;
+import com.valeriisosliuk.game.dto.InitialStateDto;
+import com.valeriisosliuk.game.dto.PlayerInfoDto;
+import com.valeriisosliuk.game.dto.PlayerStateDto;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.ActiveState;
 

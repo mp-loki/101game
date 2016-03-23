@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.google.common.collect.Iterators;
-import com.valeriisosliuk.game.Game;
 import com.valeriisosliuk.game.observer.AbstractObservable;
 
 public class PlayerHolder extends AbstractObservable {
@@ -137,6 +136,12 @@ public class PlayerHolder extends AbstractObservable {
 
     public boolean isActive(Player player) {
         return player.equals(activePlayer);
+    }
+
+    public String getWinner() {
+        // Technically it's possible that multiple players have same minimal amount of points, in this case both are considered winners
+        // TODO: implement returninng list of names in the case described above
+        return players.stream().min((p1, p2) -> Integer.compare(p1.getTotalPoints(), p2.getTotalPoints())).get().getName();
     }
 
 }

@@ -1,7 +1,7 @@
 package com.valeriisosliuk.game.state.actionhandler;
 
-import com.valeriisosliuk.dto.Action;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.Action;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.state.State;
 
 public interface ActionHandler {

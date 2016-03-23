@@ -14,13 +14,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.model.Card;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.model.Card;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=com.valeriisosliuk.Application.class, loader=AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes=com.valeriisosliuk.game.Application.class, loader=AnnotationConfigContextLoader.class)
 public class DealEndStateInitializerTest {
     
     @Resource

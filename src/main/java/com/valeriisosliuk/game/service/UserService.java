@@ -11,9 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.OnlineUserDto;
-import com.valeriisosliuk.dto.PendingPlayerDto;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.OnlineUserDto;
+import com.valeriisosliuk.game.dto.PendingPlayerDto;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.observer.UserHolderObserver;
 
@@ -42,6 +42,10 @@ public class UserService {
     
     public void setAvailable(Collection<Player> users) {
     	users.stream().map(p -> p.getName()).forEach(userHolder::setAvailable);
+    }
+    
+    public void setAvailable(String user) {
+        userHolder.setAvailable(user);
     }
     public void setBusy(Collection<Player> users) {
     	users.stream().map(p -> p.getName()).forEach(userHolder::setBusy);

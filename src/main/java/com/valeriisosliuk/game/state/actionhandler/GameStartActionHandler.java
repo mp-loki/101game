@@ -4,8 +4,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.Action;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.Action;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.service.UserService;
 import com.valeriisosliuk.game.state.State;
 

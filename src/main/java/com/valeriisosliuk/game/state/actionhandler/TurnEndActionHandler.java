@@ -3,11 +3,11 @@ package com.valeriisosliuk.game.state.actionhandler;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.Action;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.Action;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
+import com.valeriisosliuk.game.model.Suit;
 import com.valeriisosliuk.game.state.State;
-import com.valeriisosliuk.model.Suit;
 
 @Component("turnEndActionHandler")
 public class TurnEndActionHandler implements ActionHandler {

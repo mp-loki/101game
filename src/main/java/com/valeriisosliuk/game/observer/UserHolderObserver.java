@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.valeriisosliuk.dto.UsersUpdateDto;
+import com.valeriisosliuk.game.dto.UsersUpdateDto;
 import com.valeriisosliuk.game.service.MessageService;
 import com.valeriisosliuk.game.service.UserHolder;
 import com.valeriisosliuk.game.service.UserService;

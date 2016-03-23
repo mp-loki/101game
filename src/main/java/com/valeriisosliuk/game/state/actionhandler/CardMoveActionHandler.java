@@ -7,16 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.valeriisosliuk.dto.Action;
-import com.valeriisosliuk.game.Game;
+import com.valeriisosliuk.game.dto.Action;
+import com.valeriisosliuk.game.model.Card;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
+import com.valeriisosliuk.game.model.Rank;
 import com.valeriisosliuk.game.state.State;
+import com.valeriisosliuk.game.turnadvisor.TurnAdvisor;
 
 import static com.valeriisosliuk.game.state.State.*;
-
-import com.valeriisosliuk.model.Card;
-import com.valeriisosliuk.model.Rank;
-import com.valeriisosliuk.service.handler.TurnAdvisor;
 
 @Component("cardMoveActionHandler")
 public class CardMoveActionHandler implements ActionHandler {
