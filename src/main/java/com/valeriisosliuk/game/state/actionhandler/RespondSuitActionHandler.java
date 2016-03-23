@@ -53,7 +53,7 @@ public class RespondSuitActionHandler implements ActionHandler {
         Player player = game.getActivePlayer();
         player.removeCard(card);
         player.getActiveState().addCurrentTurnCard(card);
-        game.getCardHolder().putCardInDiscard(card);
+        game.putCardInDiscard(card);
         Set<Card> nextTurnOptions = turnAdvisor.getValidCardsForTurn(game.getActivePlayer().getHand(), game.getCardHolder().getLastCardInDiscard(), false);
         game.getActivePlayer().getActiveState().setTurnOptions(nextTurnOptions);
     }

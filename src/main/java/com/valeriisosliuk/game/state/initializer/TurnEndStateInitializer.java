@@ -2,6 +2,7 @@ package com.valeriisosliuk.game.state.initializer;
 
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.game.model.Card;
@@ -15,6 +16,8 @@ import static com.valeriisosliuk.game.util.CardUtil.*;
 
 @Component("turnEndStateInitializer")
 public class TurnEndStateInitializer implements StateInitinalizer {
+	
+	private static final Logger log = Logger.getLogger(TurnEndStateInitializer.class);
 
 	@Override
 	public void initializeState(Game game) {
@@ -85,6 +88,7 @@ public class TurnEndStateInitializer implements StateInitinalizer {
 	}
 	
 	private void pickCardAmount(Player player, Game game, long amount) {
+		log.info("Player " + player.getName() + " picks " + amount + " cards");
 		for (int i = 0; i < amount; i++) {
 			player.pickCard(game.getCardHolder().pickCard());
 		}
