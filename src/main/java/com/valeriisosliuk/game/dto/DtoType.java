@@ -2,21 +2,23 @@ package com.valeriisosliuk.game.dto;
 
 public enum DtoType {
     
-	INITIAL,
-    USERS_UPDATE,
-    PENDING_START,
-    GAME_START,
-    DEAL_START,
-    TURN_START, 
-    INACTIVE,
-    HAND_UPDATE,
-    HAND_INFO,
     ACTIVE,
     ACTIVATE,
-    DEACTIVATE,
+	INITIAL,
+	CARD_DECK,
+	DEACTIVATE,
+	DEAL_END, 
+	DEAL_START,
+	DEMAND_SUIT, 
+	GAME_OVER,
+    GAME_START,
+    HAND_INFO,
+    HAND_UPDATE,
+    INACTIVE,
+    INFO,
+    PENDING_START,
     STATE, 
-    CARD_DECK,
-    DEMAND_SUIT, 
-    DEAL_END, 
-    GAME_OVER;
+    TURN_START, 
+    USERS_UPDATE;
+    
 }

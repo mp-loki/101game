@@ -14,7 +14,7 @@ public class ServiceLocator {
         return messageService;
     }
 
-    static void setMessageService(MessageService messageService) {
+    static void setMessageService(MessageServiceImpl messageService) {
         ServiceLocator.messageService = messageService;
     }
 

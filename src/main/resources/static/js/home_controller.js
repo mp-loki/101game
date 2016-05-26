@@ -213,6 +213,10 @@
 			addMessage("Game Over. " + data.winner + " wins");
 		}
 		
+		var renderInfoMessage = function(data) {
+			addMessage(data.message);
+		}
+		
 		var getcenterContent = function(data) {
 			var size = data.players.length;
 			var template = null;
@@ -273,6 +277,9 @@
 					case (data.type == "GAME_OVER"):
 						renderGameOver(data);
 						break;	
+					case (data.type == "INFO"): 
+						renderInfoMessage(data);
+					    break;
 				}
 			}
 		}

@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.valeriisosliuk.game.dto.Action;
+import com.valeriisosliuk.game.dto.InfoDto;
 import com.valeriisosliuk.game.model.Card;
 import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.model.Rank;
+import com.valeriisosliuk.game.service.MessageService;
 import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.game.turnadvisor.TurnAdvisor;
 
@@ -24,6 +26,9 @@ public class CardMoveActionHandler implements ActionHandler {
 
 	@Autowired
 	private TurnAdvisor turnAdvisor;
+	
+	@Autowired
+	private MessageService messageService;
 
 	@Override
 	public State handleAction(Game game, Action action) {
@@ -80,8 +85,11 @@ public class CardMoveActionHandler implements ActionHandler {
 		if (turnOptions != null && turnOptions.contains(card)) {
 			return true;
 		} else {
-			log.warn("Card Move " + action.getCard() + " over " + game.getCardHolder().getLastCardInDiscard()
-					+ " is not valid");
+		    String message = 
+			"Card Move " + action.getCard() + " over " + game.getCardHolder().getLastCardInDiscard()
+					+ " is not valid";
+		    log.info(message);
+			messageService.send(game.getActivePlayer().getName(), new InfoDto(message));
 			return false;
 		}
 	}
