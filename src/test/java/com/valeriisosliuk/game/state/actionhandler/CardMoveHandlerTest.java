@@ -31,6 +31,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes=com.valeriisosliuk.game.Application.class, loader=AnnotationConfigContextLoader.class)
 public class CardMoveHandlerTest {
 	
+    @Autowired
 	private Game game;
 	
 	@Autowired
@@ -38,9 +39,7 @@ public class CardMoveHandlerTest {
 	
 	@Before
 	public void setUp() {
-		game = new Game();
         game.joinGame("Kyle");
-        game.setState(TURN_START);
         List<Card> cards = new LinkedList<Card>();
         cards.add(ACE_OF_HEARTS);
         cards.add(KING_OF_CLUBS);
@@ -55,6 +54,7 @@ public class CardMoveHandlerTest {
 	public void testCardMove() {
 		Set<Card> hand = new HashSet<Card>(Arrays.asList(_9_OF_HEARTS, _9_OF_SPADES, _7_OF_CLUBS, KING_OF_SPADES));
 		game.getActivePlayer().setHand(hand);
+		game.setState(TURN_START);
 		Action firstAction = new Action(ActionType.ACTION, _9_OF_HEARTS, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, firstAction));
 		assertEquals(EnumSet.of(_9_OF_SPADES, _7_OF_CLUBS, KING_OF_SPADES), game.getActivePlayer().getHand());
@@ -73,6 +73,7 @@ public class CardMoveHandlerTest {
 	public void testJackCardMove() {
 		Set<Card> hand = new HashSet<Card>(Arrays.asList(JACK_OF_CLUBS, JACK_OF_SPADES, _7_OF_CLUBS, KING_OF_SPADES));
 		game.getActivePlayer().setHand(hand);
+		game.setState(TURN_START);
 		Action firstAction = new Action(ActionType.ACTION, JACK_OF_CLUBS, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, firstAction));
 		assertEquals(EnumSet.of(JACK_OF_SPADES, _7_OF_CLUBS, KING_OF_SPADES), game.getActivePlayer().getHand());
@@ -86,6 +87,7 @@ public class CardMoveHandlerTest {
 	public void testJackNotAvailableAfterFirstMove() {
 		Set<Card> hand = new HashSet<Card>(Arrays.asList(JACK_OF_CLUBS, JACK_OF_SPADES, _7_OF_HEARTS, _7_OF_DIAMONDS));
 		game.getActivePlayer().setHand(hand);
+		game.setState(TURN_START);
 		Action firstAction = new Action(ActionType.ACTION, _7_OF_HEARTS, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, firstAction));
 		assertEquals(EnumSet.of(_7_OF_DIAMONDS, JACK_OF_CLUBS, JACK_OF_SPADES), game.getActivePlayer().getHand());
@@ -99,6 +101,7 @@ public class CardMoveHandlerTest {
 	public void testSixCardMove() {
 		Set<Card> hand = new HashSet<Card>(Arrays.asList(_6_OF_HEARTS, _6_OF_SPADES, _10_OF_HEARTS, _7_OF_DIAMONDS, JACK_OF_CLUBS));
 		game.getActivePlayer().setHand(hand);
+		game.setState(TURN_START);
 		Action firstAction = new Action(ActionType.ACTION, _6_OF_HEARTS, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, firstAction));
 		assertEquals(EnumSet.of(_6_OF_SPADES, _10_OF_HEARTS, _7_OF_DIAMONDS, JACK_OF_CLUBS), game.getActivePlayer().getHand());
@@ -129,6 +132,7 @@ public class CardMoveHandlerTest {
 	public void testSixCardMoveSeveralCardsToCover() {
 		Set<Card> hand = new HashSet<Card>(Arrays.asList(_6_OF_HEARTS, _6_OF_SPADES, _9_OF_SPADES, _9_OF_DIAMONDS));
 		game.getActivePlayer().setHand(hand);
+		game.setState(TURN_START);
 		Action firstAction = new Action(ActionType.ACTION, _6_OF_HEARTS, "Kyle");
 		assertEquals(TURN_IN_PROGRESS, cardMoveHandler.handleAction(game, firstAction));
 		assertEquals(EnumSet.of(_6_OF_SPADES, _9_OF_SPADES, _9_OF_DIAMONDS), game.getActivePlayer().getHand());
@@ -166,6 +170,7 @@ public class CardMoveHandlerTest {
 	public void testNoValidTurnOptions() {
 		Set<Card> hand = new HashSet<Card>(Arrays.asList(_6_OF_SPADES, _9_OF_SPADES, _9_OF_DIAMONDS));
 		game.getActivePlayer().setHand(hand);
+		game.setState(TURN_START);
 		Action firstAction = new Action(ActionType.ACTION, _6_OF_SPADES, "Kyle");
 		assertEquals(TURN_START, cardMoveHandler.handleAction(game, firstAction));
 		assertEquals(hand, game.getActivePlayer().getHand());

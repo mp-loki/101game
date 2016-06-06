@@ -8,33 +8,53 @@ import static com.valeriisosliuk.game.model.ActionType.QUIT;
 import static com.valeriisosliuk.game.model.ActionType.RESPOND;
 import static com.valeriisosliuk.game.model.ActionType.START;
 import static com.valeriisosliuk.game.state.State.DEAL_END;
-import static com.valeriisosliuk.game.state.State.GAME_START;
 import static com.valeriisosliuk.game.state.State.DEAL_START;
 import static com.valeriisosliuk.game.state.State.DEMAND_SUIT;
 import static com.valeriisosliuk.game.state.State.GAME_OVER;
+import static com.valeriisosliuk.game.state.State.GAME_START;
 import static com.valeriisosliuk.game.state.State.INITIAL;
 import static com.valeriisosliuk.game.state.State.RESPOND_SUIT;
 import static com.valeriisosliuk.game.state.State.TURN_END;
 import static com.valeriisosliuk.game.state.State.TURN_IN_PROGRESS;
 import static com.valeriisosliuk.game.state.State.TURN_START;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Observer;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 
 import com.valeriisosliuk.game.model.ActionType;
+import com.valeriisosliuk.game.model.Card;
+import com.valeriisosliuk.game.model.CardDeck;
+import com.valeriisosliuk.game.model.CardHolder;
+import com.valeriisosliuk.game.model.Game;
+import com.valeriisosliuk.game.model.Player;
+import com.valeriisosliuk.game.model.PlayerHolder;
+import com.valeriisosliuk.game.observer.ActiveStateObserver;
+import com.valeriisosliuk.game.service.GameProvider;
+import com.valeriisosliuk.game.service.MessageService;
+import com.valeriisosliuk.game.state.ActiveState;
 import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.game.state.actionhandler.ActionHandler;
 import com.valeriisosliuk.game.state.initializer.StateInitinalizer;
+import com.valeriisosliuk.game.util.Shuffle;
 
 @Configuration
+@PropertySource("classpath:game.properties")
 public class AppConfig {
     
-	@Resource
+	@Autowired
+	private MessageService messageService;
+    @Resource
 	private StateInitinalizer gameOverStateInitializer;
     @Resource
     private StateInitinalizer initialStateInitializer;
@@ -52,6 +72,8 @@ public class AppConfig {
     private StateInitinalizer dealEndStateInitializer;
     @Resource
     private StateInitinalizer stubStateInitializer;
+    @Resource
+    private StateInitinalizer turnInProgressStateInitializer;
     @Resource
     private ActionHandler gameStartActionHandler;
     @Resource
@@ -73,7 +95,7 @@ public class AppConfig {
         stateInitializers.put(INITIAL, initialStateInitializer);
         stateInitializers.put(DEAL_START, dealStartStateInitializer);
         stateInitializers.put(TURN_START, turnStartStateInitializer);
-        stateInitializers.put(TURN_IN_PROGRESS, stubStateInitializer);
+        stateInitializers.put(TURN_IN_PROGRESS, turnInProgressStateInitializer);
         stateInitializers.put(TURN_END, turnEndStateInitializer);
         stateInitializers.put(DEMAND_SUIT, demandSuitStateInitializer);
         stateInitializers.put(RESPOND_SUIT, respondSuitStateInitializer);
@@ -94,5 +116,92 @@ public class AppConfig {
     	actionHandlers.put(RESPOND, respondSuitActionHandler);
     	actionHandlers.put(QUIT, quitActionHandler);
     	return actionHandlers;
+    }
+    
+    @Resource
+    private Observer gameStateObserver;
+    @Resource
+    private Observer cardHolderObserver;
+    @Resource
+    private Observer playerHolderObserver;
+    @Resource
+    private Observer playerObserver;
+    
+    @Bean(name="player")
+    @Scope("prototype")
+    public Player getPlayer(String name) {
+        Player player = new Player(name) {
+
+            @Override
+            protected ActiveState getNewActiveState(String name) {
+                return AppConfig.this.getActiveState(name);
+            }
+            
+        };
+        player.addObserver(playerObserver);
+        return player;
+    }
+    
+    protected ActiveState getActiveState(String name) {
+        ActiveState activeState = new ActiveState(name);
+        activeState.addObserver(getActiveStateObserver());
+        return activeState;
+    }
+
+    @Bean(name="playerHolder")
+    @Scope("prototype")
+    public PlayerHolder getPlayerHolder() {
+        PlayerHolder playerHolder = new PlayerHolder() {
+            @Override
+            protected Player getNewPlayer(String playerName) {
+                return AppConfig.this.getPlayer(playerName);
+            }
+        };
+        playerHolder.addObserver(playerHolderObserver);
+        return playerHolder;
+    }
+    
+    @Bean(name="game")
+    @Scope("prototype")
+    public Game getGame() {
+        Game game = new Game();
+        game.addObserver(gameStateObserver);
+        game.addObserver(cardHolderObserver);
+        game.setPlayerHolder(getPlayerHolder());
+        game.setCardHolder(getCardHolder());
+        return game;
+    }
+    
+    @Bean(name="cardHolder")
+    @Scope("prototype")
+    public CardHolder getCardHolder() {
+        CardHolder cardHolder = new CardHolder();
+        cardHolder.setCardDeck(getShuffledCardDeck());
+        cardHolder.addObserver(cardHolderObserver);
+        return cardHolder;
+    }
+    
+    @Bean(name="shuffledCardDeck")
+    @Scope("prototype")
+    public CardDeck getShuffledCardDeck() {
+        List<Card> allCards = Arrays.asList(Card.values());
+        return new CardDeck(Shuffle.shuffle(allCards));
+    }
+
+    @Bean(name="activeStateObserver")
+    @Scope("prototype")
+    public ActiveStateObserver getActiveStateObserver() {
+        return new ActiveStateObserver();
+    }
+    
+    @Bean(name="gameProvider")
+    public GameProvider getGameProvider() {
+        return new GameProvider() {
+            
+            @Override
+            public Game getNewGame() {
+                return getGame();
+            }
+        };
     }
 }

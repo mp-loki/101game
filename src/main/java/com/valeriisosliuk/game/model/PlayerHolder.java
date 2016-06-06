@@ -6,12 +6,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.google.common.collect.Iterators;
 import com.valeriisosliuk.game.observer.AbstractObservable;
 
-public class PlayerHolder extends AbstractObservable {
+public abstract class PlayerHolder extends AbstractObservable {
 
-	private Player activePlayer;
+    @Value("${game.players.max}")
+    private Integer MAX_PLAYERS;
+    
+    private Player activePlayer;
 	private List<Player> players;
 	private Iterator<Player> playerIterator;
 
@@ -33,8 +38,8 @@ public class PlayerHolder extends AbstractObservable {
 	}
 
 	private Player createNewPlayer(String playerName) {
-		if (players.size() < Game.MAX_PLAYERS) {
-			Player player = new Player(playerName);
+		if (players.size() < MAX_PLAYERS) {
+			Player player = getNewPlayer(playerName);
 			players.add(player);
 			setChangedAndNotify();
 			return player;
@@ -43,7 +48,9 @@ public class PlayerHolder extends AbstractObservable {
 		}
 	}
 
-	private Iterator<Player> getPlayerIterator() {
+	protected abstract Player getNewPlayer(String playerName);
+
+    private Iterator<Player> getPlayerIterator() {
 		if (playerIterator == null) {
 			playerIterator = Iterators.cycle(players);
 		}

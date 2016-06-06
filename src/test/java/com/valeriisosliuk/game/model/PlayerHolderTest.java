@@ -5,16 +5,25 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.model.PlayerHolder;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes=com.valeriisosliuk.game.Application.class, loader=AnnotationConfigContextLoader.class)
 public class PlayerHolderTest {
 	
+    @Autowired
+    private PlayerHolder playerHolder;
+    
 	@Test
 	public void testPlayerHolder() {
-		PlayerHolder playerHolder = new PlayerHolder();
-		assertNotNull(playerHolder.joinGame("Kyle") != null);
+		assertNotNull(playerHolder.joinGame("Kyle"));
 		assertNotNull(playerHolder.joinGame("Stan"));
 		assertNotNull(playerHolder.joinGame("Cartman"));
 		assertNotNull(playerHolder.joinGame("Kenny"));
@@ -28,7 +37,6 @@ public class PlayerHolderTest {
 	
 	@Test
 	public void testSkipPlayer() {
-		PlayerHolder playerHolder = new PlayerHolder();
 		assertNotNull(playerHolder.joinGame("Kyle"));
 		assertNotNull(playerHolder.joinGame("Stan"));
 		assertNotNull(playerHolder.joinGame("Cartman"));
@@ -42,7 +50,6 @@ public class PlayerHolderTest {
 	
 	@Test
 	public void testSGetSequencedTwoPlayers() {
-		PlayerHolder playerHolder = new PlayerHolder();
 		assertNotNull(playerHolder.joinGame("Kyle"));
 		assertNotNull(playerHolder.joinGame("Stan"));
 		
@@ -57,7 +64,6 @@ public class PlayerHolderTest {
 	
 	@Test
 	public void testSGetSequencedThreePlayers() {
-		PlayerHolder playerHolder = new PlayerHolder();
 		assertNotNull(playerHolder.joinGame("Kyle"));
 		assertNotNull(playerHolder.joinGame("Stan"));
 		assertNotNull(playerHolder.joinGame("Cartman"));

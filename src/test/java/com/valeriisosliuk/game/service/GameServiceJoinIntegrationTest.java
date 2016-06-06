@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,7 +30,15 @@ public class GameServiceJoinIntegrationTest {
 	private UserService userService;
 	
 	@Resource
+	private UserHolder userHolder;
+	
+	@Resource
 	private ActionService actionService;
+	
+	@Before
+	public void setUp() {
+	    userHolder.init();
+	}
 	
 	@Test
 	public void testSinglePlayerJoined() {

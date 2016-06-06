@@ -28,6 +28,7 @@ import com.valeriisosliuk.game.state.State;
 @ContextConfiguration(classes=com.valeriisosliuk.game.Application.class, loader=AnnotationConfigContextLoader.class)
 public class RespondSuitActionHandlerTest {
     
+    @Autowired
     private Game game;
     
     @Autowired
@@ -35,7 +36,6 @@ public class RespondSuitActionHandlerTest {
 
     @Before
     public void setUp() {
-        game = new Game();
         game.joinGame("Kyle");
         game.joinGame("Stan");
         game.setState(State.RESPOND_SUIT);
@@ -47,7 +47,7 @@ public class RespondSuitActionHandlerTest {
     }
     
     @Test
-    public void testRespondSuiteTurnEnd() {
+    public void testRespondSuitTurnEnd() {
         game.getActivePlayer().getActiveState().setDemandedSuit(Suit.HEARTS);
         game.getActivePlayer().setHand(EnumSet.of(Card.KING_OF_CLUBS));;
         Action action = new Action(ActionType.RESPOND, Card._8_OF_HEARTS, "Kyle");
@@ -57,7 +57,7 @@ public class RespondSuitActionHandlerTest {
     }
     
     @Test
-    public void testRespondSuiteTurnInProgress() {
+    public void testRespondSuitTurnInProgress() {
         game.getActivePlayer().getActiveState().setDemandedSuit(Suit.HEARTS);
         game.getActivePlayer().setHand(EnumSet.of(Card._8_OF_CLUBS));;
         Action action = new Action(ActionType.RESPOND, Card._8_OF_HEARTS, "Kyle");
@@ -67,7 +67,7 @@ public class RespondSuitActionHandlerTest {
     }
     
     @Test
-    public void testRespondSuiteJack() {
+    public void testRespondSuitJack() {
         game.getActivePlayer().getActiveState().setDemandedSuit(Suit.HEARTS);
         game.getActivePlayer().setHand(EnumSet.of(Card._8_OF_CLUBS));;
         Action action = new Action(ActionType.RESPOND, Card.JACK_OF_CLUBS, "Kyle");
@@ -77,12 +77,23 @@ public class RespondSuitActionHandlerTest {
     }
     
     @Test
-    public void testRespondSuiteNegative() {
+    public void testRespondSuitSix() {
+        game.getActivePlayer().getActiveState().setDemandedSuit(Suit.HEARTS);
+        game.getActivePlayer().setHand(EnumSet.of(Card._8_OF_CLUBS));;
+        Action action = new Action(ActionType.RESPOND, Card._6_OF_HEARTS, "Kyle");
+        State state = respondSuitActionHandler.handleAction(game, action);
+        assertEquals(State.TURN_IN_PROGRESS, state);
+        assertEquals(Card._6_OF_HEARTS, game.getCardHolder().getLastCardInDiscard());
+    }
+    
+    @Test
+    public void testRespondSuitNegative() {
         game.getActivePlayer().getActiveState().setDemandedSuit(Suit.HEARTS);
         game.getActivePlayer().setHand(EnumSet.of(Card.KING_OF_CLUBS));;
         Action action = new Action(ActionType.RESPOND, Card._8_OF_CLUBS, "Kyle");
         State state = respondSuitActionHandler.handleAction(game, action);
         assertEquals(State.RESPOND_SUIT, state);
+        assertFalse(game.getActivePlayer().getActiveState().isPassAllowed());
     }
 
 

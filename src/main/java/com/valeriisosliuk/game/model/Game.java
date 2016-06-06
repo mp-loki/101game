@@ -7,21 +7,20 @@ import com.valeriisosliuk.game.observer.AbstractObservable;
 import com.valeriisosliuk.game.state.State;
 
 public class Game extends AbstractObservable {
-
+    
+    @Deprecated
     public static final int MIN_PLAYERS = 2;
+    @Deprecated
     public static final int MAX_PLAYERS = 4;
+    @Deprecated
     public static final int MAX_POINTS = 100;
     
 	private State gameState;
 	private CardHolder cardHolder;
 	
 	private PlayerHolder playerHolder;
-
-	public Game() {
-		setPlayerHolder(new PlayerHolder());
-	}
-
-	private void setPlayerHolder(PlayerHolder playerHolder) {
+	
+	public void setPlayerHolder(PlayerHolder playerHolder) {
 		this.playerHolder = playerHolder;
 	}
 

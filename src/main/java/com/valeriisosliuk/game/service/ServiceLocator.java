@@ -6,7 +6,7 @@ package com.valeriisosliuk.game.service;
  *
  */
 public class ServiceLocator {
-
+/*
     private static MessageService messageService;
     private static GameService gameService;
 
@@ -25,4 +25,5 @@ public class ServiceLocator {
     static void setGameService(GameService gameService) {
         ServiceLocator.gameService = gameService;
     }
+    */
 }

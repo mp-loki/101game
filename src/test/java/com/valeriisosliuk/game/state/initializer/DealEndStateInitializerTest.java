@@ -1,6 +1,6 @@
 package com.valeriisosliuk.game.state.initializer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -25,14 +26,16 @@ public class DealEndStateInitializerTest {
     
     @Resource
     private StateInitinalizer dealEndStateInitializer;
+    
+    @Autowired
     private Game game;
     
     @Before
     public void setUp() {
-        game = new Game();
         game.joinGame("Kyle");
         game.joinGame("Stan");
         game.joinGame("Cartman");
+        game.deleteObservers();
         game.setState(State.DEAL_END);
         List<Player> players = game.getPlayerHolder().getPlayers();
         players.get(0).setHand(EnumSet.noneOf(Card.class));

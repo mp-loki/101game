@@ -2,8 +2,6 @@ package com.valeriisosliuk.game.service;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -13,11 +11,6 @@ import org.springframework.stereotype.Component;
 public class MessageServiceImpl implements MessageService {
 	
 	private static final Logger log = Logger.getLogger(MessageServiceImpl.class);
-    
-	@PostConstruct
-	public void init() {
-	    ServiceLocator.setMessageService(this);
-	}
 	
     @Autowired
     private SimpMessagingTemplate template;

@@ -14,6 +14,7 @@ public class CardUtil {
 		return cards.stream().filter(c -> c.getRank() == rank).count();
 	}
 	
+	@Deprecated
 	public static CardDeck getShuffledCardDeck() {
 		List<Card> allCards = Arrays.asList(Card.values());
         return new CardDeck(Shuffle.shuffle(allCards));

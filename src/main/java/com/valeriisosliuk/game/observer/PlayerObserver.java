@@ -3,6 +3,7 @@ package com.valeriisosliuk.game.observer;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.valeriisosliuk.game.dto.ActiveStateDto;
 import com.valeriisosliuk.game.dto.DeactivateDto;
 import com.valeriisosliuk.game.dto.HandInfoDto;
 import com.valeriisosliuk.game.dto.HandUpdateDto;
+import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Player;
 import com.valeriisosliuk.game.service.GameService;
 import com.valeriisosliuk.game.service.MessageService;
@@ -54,8 +56,11 @@ public class PlayerObserver implements Observer {
 	}
 
 	private void sendDeactivateMessage(Player player) {
-	    List<String> playerNames = gameService.getGameInstance(player.getName()).get().getPlayerNames();
-        messageService.sendToAll(playerNames, new DeactivateDto(player.getName()));
+	    Optional<Game> gameOpt = gameService.getGameInstance(player.getName());
+	    if (gameOpt.isPresent()) {
+	        List<String> playerNames = gameOpt.get().getPlayerNames();
+	        messageService.sendToAll(playerNames, new DeactivateDto(player.getName()));
+	    }
     }
 
     private void sendActivateMessage(Player player) {

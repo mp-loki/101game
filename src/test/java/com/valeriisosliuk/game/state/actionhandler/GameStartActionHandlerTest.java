@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -27,6 +28,9 @@ public class GameStartActionHandlerTest {
 
 	@Resource
 	private ActionHandler gameStartActionHandler;
+	
+	@Autowired
+	private Game game;
 
 	@Before
 	public void setUp() {
@@ -50,7 +54,6 @@ public class GameStartActionHandlerTest {
 		Action secondAction = new Action(ActionType.START, "Stan");
 		Action thirdAction = new Action(ActionType.START, "Cartman");
 		Action fourthAction = new Action(ActionType.START, "Kenny");
-		Game game = new Game();
 		game.joinGame("Kyle");
 		assertEquals(State.INITIAL, gameStartActionHandler.handleAction(game, firstAction));
 		game.joinGame("Stan");

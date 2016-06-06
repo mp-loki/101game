@@ -46,7 +46,7 @@ public class RespondSuitActionHandler implements ActionHandler {
 
     private State processRespondCardMove(Game game, Card card) {
         processCard(game, card);
-        return CollectionUtils.isEmpty(game.getActivePlayer().getActiveState().getTurnOptions()) ? State.TURN_END : State.TURN_IN_PROGRESS;
+        return CollectionUtils.isEmpty(game.getActivePlayer().getActiveState().getTurnOptions()) && card.getRank() != Rank._6 ? State.TURN_END : State.TURN_IN_PROGRESS;
     }
 
     private void processCard(Game game, Card card) {

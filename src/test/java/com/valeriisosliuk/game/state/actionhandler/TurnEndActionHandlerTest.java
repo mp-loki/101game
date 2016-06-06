@@ -4,6 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.valeriisosliuk.game.dto.Action;
 import com.valeriisosliuk.game.model.ActionType;
@@ -11,15 +16,17 @@ import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.model.Suit;
 import com.valeriisosliuk.game.state.State;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes=com.valeriisosliuk.game.Application.class, loader=AnnotationConfigContextLoader.class)
 public class TurnEndActionHandlerTest {
     
 private TurnEndActionHandler actionHandler = new TurnEndActionHandler();
     
+    @Autowired
     private Game game;
     
     @Before
     public void setUp() {
-        game = new Game();
         game.joinGame("Kyle");
         game.joinGame("Stan");
         game.setState(State.TURN_START);

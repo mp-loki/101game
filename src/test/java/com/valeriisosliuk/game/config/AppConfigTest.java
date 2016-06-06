@@ -19,7 +19,6 @@ import com.valeriisosliuk.game.state.State;
 import com.valeriisosliuk.game.state.actionhandler.ActionHandler;
 import com.valeriisosliuk.game.state.initializer.StateInitinalizer;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=com.valeriisosliuk.game.Application.class, loader=AnnotationConfigContextLoader.class)
 public class AppConfigTest {

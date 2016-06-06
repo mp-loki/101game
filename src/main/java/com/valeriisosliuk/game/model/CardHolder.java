@@ -1,18 +1,12 @@
 package com.valeriisosliuk.game.model;
 
 import com.valeriisosliuk.game.observer.AbstractObservable;
-import com.valeriisosliuk.game.observer.CardHolderObserver;
 import com.valeriisosliuk.game.state.CardHolderStateChange;
 
 public class CardHolder extends AbstractObservable {
 	
 	private CardDeck cardDeck;
 	private Discard discard;
-	
-	public CardHolder() {
-		CardHolderObserver observer = new CardHolderObserver();
-		addObserver(observer);
-	}
 	
 	public void setCardDeck(CardDeck cardDeck) {
 		this.cardDeck = cardDeck; 

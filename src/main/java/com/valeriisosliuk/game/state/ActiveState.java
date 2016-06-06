@@ -7,7 +7,6 @@ import java.util.Set;
 import com.valeriisosliuk.game.model.Card;
 import com.valeriisosliuk.game.model.Suit;
 import com.valeriisosliuk.game.observer.AbstractObservable;
-import com.valeriisosliuk.game.observer.ActiveStateObserver;
 
 public class ActiveState extends AbstractObservable {
 	
@@ -22,8 +21,6 @@ public class ActiveState extends AbstractObservable {
 		this.name = name;
 		this.pickAllowed = true;
 		this.passAllowed = false;
-		ActiveStateObserver observer = new ActiveStateObserver();
-		addObserver(observer);
 	}
 
 	public boolean isPickAllowed() {

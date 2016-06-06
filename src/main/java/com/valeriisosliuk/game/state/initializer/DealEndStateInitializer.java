@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.game.dto.DealEndDto;
@@ -16,6 +17,9 @@ import com.valeriisosliuk.game.state.State;
 @Component("dealEndStateInitializer")
 public class DealEndStateInitializer implements StateInitinalizer {
 
+    @Value("${game.points.max}")
+    private Integer MAX_POINTS;
+    
     @Autowired
     private MessageService messageService;
     
@@ -54,7 +58,7 @@ public class DealEndStateInitializer implements StateInitinalizer {
         boolean gameOver = false;
         for (Player player : players) {
             player.addPoints(player.getHand().stream().mapToInt(c -> c.getRank().getPoints()).sum());
-            if (player.getTotalPoints() > Game.MAX_POINTS) {
+            if (player.getTotalPoints() > MAX_POINTS) {
                 gameOver = true;
             } 
         } 

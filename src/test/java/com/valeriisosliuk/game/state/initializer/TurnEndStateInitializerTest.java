@@ -44,15 +44,17 @@ public class TurnEndStateInitializerTest {
 	@Autowired
 	private TurnEndStateInitializer turnEndInitializer;
 	
+	@Autowired
 	private Game game;
+	
 	@Before
 	public void setUp() {
-		game = new Game();
 		game.joinGame("Kyle");
 		game.joinGame("Stan");
 		game.joinGame("Cartman");
 		game.setCardHolder(getCustomCardHolder());
 		initOneCardInHand(game);
+	    game.deleteObservers();
 		game.setState(State.TURN_END);
 	}
 	

@@ -19,8 +19,9 @@ public class DemandSuitActionHandler implements ActionHandler {
     @Override
     public State handleAction(Game game, Action action) {
         Suit demandedSuit = action.getDemandedSuit();
+        String name = game.getActivePlayer().getName();
+        String message = name + " demands " + demandedSuit;
         game.getPlayerHolder().getNextActivePlayer().getActiveState().setDemandedSuit(demandedSuit);
-        String message = game.getActivePlayer().getName() + " demands " + demandedSuit;
         messageService.sendToAll(game.getPlayerNames(), new InfoDto(message));
         return State.RESPOND_SUIT;
     }

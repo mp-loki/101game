@@ -1,8 +1,8 @@
 package com.valeriisosliuk.game.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Observer;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.valeriisosliuk.game.dto.PlayerInfoDto;
@@ -22,24 +22,27 @@ import com.valeriisosliuk.game.state.State;
 public class GameServiceImpl implements GameService {
 
     List<Game> games;
-
-    @Autowired
-    private ApplicationContext applicationContext;
+    
+    @Value("${game.players.min}")
+    private Integer MIN_PLAYERS;
+    @Value("${game.players.max}")
+    private Integer MAX_PLAYERS;
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private GameProvider gameProvider;
 
     @PostConstruct
     public void init() {
         games = new ArrayList<>();
-        ServiceLocator.setGameService(this);
     }
 
     private Game joinGame(String username) {
-        Game game = getGameInstance((g, m) -> g.getState() == State.INITIAL && g.getPlayerHolder().getPlayersCount() < m, Game.MAX_PLAYERS).orElse(
+        Game game = getGameInstance((g, m) -> g.getState() == State.INITIAL && g.getPlayerHolder().getPlayersCount() < m, MAX_PLAYERS).orElse(
                 createNewGameInstance());
-        Player player = game.joinGame(username);
-        player.addObserver((Observer) applicationContext.getBean("playerObserver"));
+        game.joinGame(username);
         return game;
     }
 
@@ -54,10 +57,7 @@ public class GameServiceImpl implements GameService {
     }
 
     private Game createNewGameInstance() {
-        Game game = new Game();
-        game.addObserver((Observer) applicationContext.getBean("gameStateObserver"));
-        game.addObserver((Observer) applicationContext.getBean("cardHolderObserver"));
-        game.getPlayerHolder().addObserver((Observer) applicationContext.getBean("playerHolderObserver"));
+        Game game = gameProvider.getNewGame();
         games.add(game);
         return game;
     }
@@ -74,8 +74,16 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<String> getGameMates(String playerName) {
+        Optional<Game> gameOpt = games.stream().filter(g -> g.getPlayerHolder().isPlayerInGame(playerName)).findFirst();
+        if (gameOpt.isPresent()) {
+            return gameOpt.get().getPlayerHolder().getSequencedPlayers(playerName).stream().map(p -> p.getName()).collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
+        /*
         return games.stream().filter(g -> g.getPlayerHolder().isPlayerInGame(playerName)).findFirst().get().getPlayerHolder().getSequencedPlayers(playerName)
                 .stream().map(p -> p.getName()).collect(Collectors.toList());
+         */
     }
 
     @Override

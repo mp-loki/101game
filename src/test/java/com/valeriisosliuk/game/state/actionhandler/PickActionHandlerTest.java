@@ -48,11 +48,11 @@ public class PickActionHandlerTest {
 	@Autowired
 	private PickActionHandler pickActionHandler;
 	
+	@Autowired
 	private Game game;
 	
 	@Before
 	public void setUp() {
-		game = new Game();
         game.joinGame("Kyle");
         game.joinGame("Stan");
         game.setState(State.TURN_START);
