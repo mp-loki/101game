@@ -19,6 +19,7 @@ import static com.valeriisosliuk.game.state.State.TURN_IN_PROGRESS;
 import static com.valeriisosliuk.game.state.State.TURN_START;
 
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,10 +89,18 @@ public class AppConfig {
     private ActionHandler respondSuitActionHandler;
     @Resource
     private ActionHandler quitActionHandler;
+    @Resource
+    private Observer gameStateObserver;
+    @Resource
+    private Observer cardHolderObserver;
+    @Resource
+    private Observer playerHolderObserver;
+    @Resource
+    private Observer playerObserver;
     
     @Bean(name = "stateInitializers")
     public Map<State, StateInitinalizer> getStateInitializers() {
-        Map<State, StateInitinalizer> stateInitializers = new HashMap<>();
+        Map<State, StateInitinalizer> stateInitializers = new EnumMap<>(State.class);
         stateInitializers.put(INITIAL, initialStateInitializer);
         stateInitializers.put(DEAL_START, dealStartStateInitializer);
         stateInitializers.put(TURN_START, turnStartStateInitializer);
@@ -107,7 +116,7 @@ public class AppConfig {
     
     @Bean(name="actionHandlers")
     public Map<ActionType, ActionHandler> getActionHandlers() {
-    	Map<ActionType, ActionHandler> actionHandlers = new HashMap<>();
+    	Map<ActionType, ActionHandler> actionHandlers = new EnumMap<>(ActionType.class);
     	actionHandlers.put(START, gameStartActionHandler);
     	actionHandlers.put(PASS, turnEndActionHandler);
     	actionHandlers.put(PICK, pickActionHandler);
@@ -117,15 +126,6 @@ public class AppConfig {
     	actionHandlers.put(QUIT, quitActionHandler);
     	return actionHandlers;
     }
-    
-    @Resource
-    private Observer gameStateObserver;
-    @Resource
-    private Observer cardHolderObserver;
-    @Resource
-    private Observer playerHolderObserver;
-    @Resource
-    private Observer playerObserver;
     
     @Bean(name="player")
     @Scope("prototype")
