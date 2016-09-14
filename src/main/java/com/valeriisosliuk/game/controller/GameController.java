@@ -73,7 +73,7 @@ public class GameController {
     }
 
     @MessageMapping("/game")
-    public void game(Message<Object> message, @Payload Action dto) throws Exception {
+    public void game(Message<Object> message, @Payload Action dto) {
         log.info("Got a message: " + dto);
         String currentUser = getCurrentUserName(message);
         dto.setCurrentPlayer(currentUser);

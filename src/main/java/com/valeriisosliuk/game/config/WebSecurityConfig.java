@@ -17,44 +17,39 @@ import com.valeriisosliuk.game.security.CustomSecurityContextLogoutHandler;
 @Configuration
 @EnableWebMvcSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    
-    @Autowired
-    private CustomSecurityContextLogoutHandler customSecurityContextLogoutHandler;
-    
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-                .antMatchers("/css/*", "/js/*").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-            .logout()
-                .addLogoutHandler(customSecurityContextLogoutHandler)
-                .permitAll();
-        http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
-    }
-    
-    @Bean
-    public SessionRegistry sessionRegistry() {
-        return new SessionRegistryImpl();
-    }
 
-    @Bean
-    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
-        return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
-    }
+	@Autowired
+	private CustomSecurityContextLogoutHandler customSecurityContextLogoutHandler;
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("Kyle").password("Kyle").roles("User");
-        auth.inMemoryAuthentication().withUser("Stan").password("Stan").roles("User");
-        auth.inMemoryAuthentication().withUser("Cartman").password("Cartman").roles("User");
-        auth.inMemoryAuthentication().withUser("Kenny").password("Kenny").roles("User");
-        auth.inMemoryAuthentication().withUser("Wendy").password("Wendy").roles("User");
-        auth.inMemoryAuthentication().withUser("Butters").password("Butters").roles("User");
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/css/*", "/js/*").permitAll().anyRequest().authenticated().and()
+				.formLogin().loginPage("/login").permitAll().and().logout()
+				.addLogoutHandler(customSecurityContextLogoutHandler).permitAll();
+		http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
+	}
+
+	@Bean
+	public SessionRegistry sessionRegistry() {
+		return new SessionRegistryImpl();
+	}
+
+	@Bean
+	public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+		return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
+	}
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws AuthenticationException {
+		try {
+			auth.inMemoryAuthentication().withUser("Kyle").password("Kyle").roles("User");
+			auth.inMemoryAuthentication().withUser("Stan").password("Stan").roles("User");
+			auth.inMemoryAuthentication().withUser("Cartman").password("Cartman").roles("User");
+			auth.inMemoryAuthentication().withUser("Kenny").password("Kenny").roles("User");
+			auth.inMemoryAuthentication().withUser("Wendy").password("Wendy").roles("User");
+			auth.inMemoryAuthentication().withUser("Butters").password("Butters").roles("User");
+		} catch (Exception e) {
+			throw new AuthenticationException("Authentication failed. Reason: " + e.getMessage(), e);
+		}
+	}
 }

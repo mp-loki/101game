@@ -40,7 +40,7 @@ public class ResponseServiceImpl implements ResponseService {
     public GameStateDto getGameStateDto(String playerName, Game game) {
         Optional<Player> playerOpt = game.getPlayerHolder().getPlayer(playerName);
         if (playerOpt.equals(Optional.empty())) {
-            throw new RuntimeException("Wrong Game instanc epicked for player: " + playerName);
+            throw new WrongGameInstancePickedException("Wrong Game instance picked for player: " + playerName);
         }
         Player player = playerOpt.get();
         ActiveStateDto active = null;
