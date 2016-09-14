@@ -10,6 +10,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -21,6 +22,7 @@ import com.valeriisosliuk.game.state.State;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=com.valeriisosliuk.game.Application.class, loader=AnnotationConfigContextLoader.class)
+@DirtiesContext
 public class GameServiceJoinIntegrationTest {
 	
 	@Resource

@@ -23,7 +23,6 @@ public class GameStartActionHandler implements ActionHandler {
 		if (game.getPlayers().size() == Game.MAX_PLAYERS || joinedPlayersCount >= Game.MIN_PLAYERS 
 				&& CollectionUtils.isEmpty(userService.getAvailabePlayers())) {
 			return DEAL_START;
-			//return GAME_START; ???
 		}
 		return INITIAL;
 	}

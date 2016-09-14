@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.valeriisosliuk.game.dto.Action;
+import com.valeriisosliuk.game.dto.OnlineUserDto;
 import com.valeriisosliuk.game.model.ActionType;
 import com.valeriisosliuk.game.model.Game;
 import com.valeriisosliuk.game.service.UserHolder;
@@ -34,22 +35,29 @@ public class GameStartActionHandlerTest {
 
 	@Before
 	public void setUp() {
+		if (userHolder.getLoggedInUsers().size() > 0) {
+			cleanUp();
+		}
 		userHolder.addUser("Kyle");
 		userHolder.addUser("Stan");
 		userHolder.addUser("Cartman");
 		userHolder.addUser("Kenny");
 	}
 	
+	private void cleanUp() {
+		for (OnlineUserDto user : userHolder.getLoggedInUsers()) {
+			userHolder.removeUser(user.getName());
+		}
+	}
+
 	@After
 	public void tearDown() {
-		userHolder.removeUser("Kyle");
-		userHolder.removeUser("Stan");
-		userHolder.removeUser("Cartman");
-		userHolder.removeUser("Kenny");
+		cleanUp();
 	}
 
 	@Test
 	public void testGameStart() {
+		System.out.println("Available users: " + userHolder.getAvailableUsers().size());
 		Action firstAction = new Action(ActionType.START, "Kyle");
 		Action secondAction = new Action(ActionType.START, "Stan");
 		Action thirdAction = new Action(ActionType.START, "Cartman");

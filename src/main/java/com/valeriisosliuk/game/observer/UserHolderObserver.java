@@ -11,14 +11,10 @@ import org.springframework.stereotype.Component;
 import com.valeriisosliuk.game.dto.UsersUpdateDto;
 import com.valeriisosliuk.game.service.MessageService;
 import com.valeriisosliuk.game.service.UserHolder;
-import com.valeriisosliuk.game.service.UserService;
 
 @Component
 public class UserHolderObserver implements Observer {
     private static final Logger log = Logger.getLogger(UserHolderObserver.class);
-    
-    @Autowired
-    private UserService userService;
     
     @Autowired
     private MessageService messageService;
